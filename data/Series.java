@@ -15,7 +15,9 @@ public class Series {
     public String target;
     public List<Slice> slices = new ArrayList<>();
     
-    public double gridspacing = 0; //??!!
+    public double pixelnanos = 1000;
+    public double gridmicrons = 1000;
+//    public double gridspacing = 0; //??!!
     
     public void toJSON(Writer w) throws IOException {
         w.append('{');
@@ -24,7 +26,9 @@ public class Series {
         JSON.writeString("target", w).append(':');
         JSON.writeString(target, w).append(',');
         JSON.writeString("target-resolution", w).append(":").append(resolution.toString()).append(',');
-        JSON.writeString("gridspacing", w).append(':').append(Integer.toString((int)gridspacing)).append(',');
+        JSON.writeString("pixelnanos", w).append(':').append(Integer.toString((int)pixelnanos)).append(',');
+        JSON.writeString("gridmicrons", w).append(':').append(Integer.toString((int)gridmicrons)).append(',');
+//        JSON.writeString("gridspacing", w).append(':').append(Integer.toString((int)gridspacing)).append(',');
         JSON.writeString("slices", w).append(":").append(slices.toString());
         w.append('}');
     }

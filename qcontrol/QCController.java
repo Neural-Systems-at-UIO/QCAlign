@@ -1,3 +1,4 @@
+//!!gridspacing
 package qcontrol;
 
 import java.awt.Desktop;
@@ -45,6 +46,7 @@ import javafx.scene.control.Spinner;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.SpinnerValueFactory.DoubleSpinnerValueFactory;
 import javafx.scene.control.SpinnerValueFactory.IntegerSpinnerValueFactory;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
@@ -111,6 +113,18 @@ public class QCController implements ChangeListener<Number> {
     
     @FXML
     private IntegerSpinnerValueFactory spnVal;
+    
+    @FXML
+    private Spinner<Integer> nmSpn;
+    
+    @FXML
+    private IntegerSpinnerValueFactory nmSpnVal;
+
+    @FXML
+    private Spinner<Integer> umSpn;
+    
+    @FXML
+    private IntegerSpinnerValueFactory umSpnVal;
 
     @FXML
     void onClick(MouseEvent event) {
@@ -152,11 +166,11 @@ public class QCController implements ChangeListener<Number> {
         mouseY = event.getY();
         drawPop();
         
-        if(slice!=null) {
+        if(slice!=null && gridspacing!=0) {
             pickx = (mouseX - imgx) * slice.width / imgw;
-            pickx = Math.round((pickx - slice.gridx)/series.gridspacing);
+            pickx = Math.round((pickx - slice.gridx)/gridspacing);
             picky = (mouseY - imgy) * slice.height / imgh;
-            picky = Math.round((picky - slice.gridy)/series.gridspacing);
+            picky = Math.round((picky - slice.gridy)/gridspacing);
         }
     }
     
@@ -203,17 +217,19 @@ public class QCController implements ChangeListener<Number> {
 
     @FXML
     void mousePressed(MouseEvent event) {
+    	if(noGrid())
+    		return;
 //        updatePick();
 //        if (picked != null) {
 //            basex = picked.get(2);
 //            basey = picked.get(3);
 //        }
-        int gridspacing=(int)series.gridspacing;
+//xx        int gridspacing=(int)series.gridspacing;
         int xp=(int)(slice.width-slice.gridx+gridspacing-1)/gridspacing;
         int yp=(int)(slice.height-slice.gridy+gridspacing-1)/gridspacing;
         if(pickx>=0 && pickx<xp && picky>=0 && picky<yp) {
             int i=(int)(pickx+picky*xp);
-            slice.grid.set(i, slice.grid.get(i)<3?slice.grid.get(i)+1:1);
+            slice.grid.set(i, slice.grid.get(i)<3?slice.grid.get(i)+1:0);
         }
         drawGrid();
     }
@@ -272,6 +288,8 @@ public class QCController implements ChangeListener<Number> {
     @FXML
     void initialize() throws Exception {
         spn.getStyleClass().clear(); //!!
+        nmSpn.getStyleClass().clear(); //!!
+        umSpn.getStyleClass().clear(); //!!
 //        spn.getStyleableNode().setStyle("-fx-text-alignment: center;");
         
 //        markers.add(new Marker(0, 0));
@@ -338,16 +356,21 @@ public class QCController implements ChangeListener<Number> {
 //        System.out.printf("Before: %d, after: %d\n",arg1+" "+arg2);
 //    }
     
+    boolean skiphack=false;
     @FXML
-    public void gridSpacing(ObservableValue<? extends Number> arg0, Number arg1, Number arg2) {
-        if(series==null)
+//    public void gridSpacing(ObservableValue<? extends Number> arg0, Number arg1, Number arg2) {
+    public void gridSpacing() {
+        if(series==null || skiphack)
             return;
 //        System.out.println(series.gridspacing=arg2.intValue());
-        series.gridspacing=arg2.intValue();
+        series.pixelnanos=nmSpnVal.getValue();
+        series.gridmicrons=umSpnVal.getValue();
+//        series.gridspacing=arg2.intValue();
         for(Slice s:series.slices)
             s.grid.clear();
-        if(slice.width/series.gridspacing>150)
-            series.gridspacing=slice.width/150;
+//        if(slice.width/series.gridspacing>150)
+//            series.gridspacing=slice.width/150;
+        setSpacing();
         setGrid();
 //        slice.gridx=slice.gridy=0;
         reDraw();
@@ -484,12 +507,21 @@ public class QCController implements ChangeListener<Number> {
 //        }
 //    }
 
+    int gridspacing=0;
+    void setSpacing() {
+        gridspacing=0;
+        if(series.gridmicrons!=0)
+        	gridspacing=(int)(series.gridmicrons*1000/series.pixelnanos);
+    }
+    boolean noGrid() {
+    	return slice==null || gridspacing==0;
+    }
     Random rnd=new Random();
     private void setGrid() {
-        int gridspacing=(int)series.gridspacing;
-        if(gridspacing==0) {
-            System.out.println(series.gridspacing=gridspacing=(int)Math.min(slice.width, slice.height)/15);
-        }
+//        int gridspacing=(int)series.gridspacing;
+//        if(gridspacing==0) {
+//            System.out.println(series.gridspacing=gridspacing=(int)Math.min(slice.width, slice.height)/15);
+//        }
         slice.gridx=rnd.nextInt(gridspacing);
         slice.gridy=rnd.nextInt(gridspacing);
         int xp=(int)(slice.width-slice.gridx+gridspacing-1)/gridspacing;
@@ -506,10 +538,9 @@ public class QCController implements ChangeListener<Number> {
     private void drawGrid() {
         GraphicsContext ctx = gridcnv.getGraphicsContext2D();
         ctx.clearRect(0, 0, gridcnv.getWidth(), gridcnv.getHeight());
-        if (slice == null)
-            return; // !!
-        int gridspacing=(int)series.gridspacing;
-        if(gridspacing>0) {
+    	if(noGrid())
+    		return;
+//        if(gridspacing>0) {
             if(!override) {
                 int gridx=(int)slice.gridx;
                 int gridy=(int)slice.gridy;
@@ -551,20 +582,20 @@ public class QCController implements ChangeListener<Number> {
                         double ybase=imgy+(slice.gridy+y*gridspacing)*imgh/slice.height-2;
                         switch(res) {
                             case 0:
-                                ctx.setStroke(Color.BLACK);
-                                ctx.strokeText("+", xbase,ybase);
+//                                ctx.setStroke(Color.BLACK);
+//                                ctx.strokeText("+", xbase,ybase);
                                 break;
                             case 1:
+                                ctx.setStroke(Color.GREEN);
+                                ctx.strokeText("+", xbase,ybase);
+                                break;
+                            case 2:
                                 ctx.setStroke(Color.RED);
                                 ctx.strokeText("-", xbase,ybase);
                                 break;
-                            case 2:
+                            case 3:
                                 ctx.setStroke(Color.BLACK);
                                 ctx.strokeText("?", xbase,ybase);
-                                break;
-                            case 3:
-                                ctx.setStroke(Color.GREEN);
-                                ctx.strokeText("+", xbase,ybase);
                                 break;
                         }
                     } else {
@@ -572,20 +603,20 @@ public class QCController implements ChangeListener<Number> {
                         double ybase=imgy+(slice.gridy+(y-0.5)*gridspacing)*imgh/slice.height;
                         switch(res) {
                             case 1:
-                                ctx.setFill(Color.RED);
+                                ctx.setFill(Color.GREEN);
                                 break;
                             case 2:
-                                ctx.setFill(Color.BLACK);
+                                ctx.setFill(Color.RED);
                                 break;
                             case 3:
-                                ctx.setFill(Color.GREEN);
+                                ctx.setFill(Color.BLACK);
                                 break;
                         }
                         if(res!=0)
                             ctx.fillRect(xbase, ybase, gridspacing*imgw/slice.width, gridspacing*imgh/slice.height);
                     }
                 }
-        }
+//        }
     }
 
 //    private void drawDebug() {
@@ -672,6 +703,12 @@ public class QCController implements ChangeListener<Number> {
                 series.resolution.add((double)slicer.YDIM);
                 series.resolution.add((double)slicer.ZDIM);
             }
+//            System.out.println(series.pixelnanos);
+//            System.out.println(series.gridmicrons);
+            skiphack=true;
+            nmSpnVal.setValue((int)series.pixelnanos);
+            umSpnVal.setValue((int)series.gridmicrons);
+            skiphack=false;
             spnVal.setMin(1);
             spnVal.setMax(series.slices.size());
             spnVal.setValue(spnVal.getMax()/2);
@@ -699,6 +736,7 @@ public class QCController implements ChangeListener<Number> {
                     System.out.println(l[x]);
                 }
         }
+        setSpacing();
         if(slice.grid.isEmpty())
             setGrid();
         reDraw();
