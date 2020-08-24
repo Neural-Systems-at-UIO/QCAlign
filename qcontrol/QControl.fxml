@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.collections.*?>
+<?import javafx.scene.Group?>
+<?import javafx.scene.canvas.Canvas?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox fx:id="vbox" minHeight="600.0" minWidth="1024.0" onKeyPressed="#keyPressed" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="qcontrol.QCController">
+   <children>
+      <MenuBar>
+        <menus>
+          <Menu text="File">
+            <items>
+              <MenuItem onAction="#open" text="Open" />
+              <!--<MenuItem onAction="#save" text="Save" />-->
+              <MenuItem onAction="#saveas" text="Save As..." />
+              <MenuItem onAction="#close" text="Close" />
+              <SeparatorMenuItem />
+              <MenuItem onAction="#exit" text="Exit" />
+            </items>
+          </Menu>
+          <Menu text="Help">
+            <items>
+              <MenuItem onAction="#minidoc" text="Quick reference" />
+              <MenuItem onAction="#about" text="About" />
+            </items>
+          </Menu>
+        </menus>
+      </MenuBar>
+      <HBox alignment="CENTER_LEFT" VBox.vgrow="NEVER">
+         <children>
+            <ChoiceBox fx:id="gridType" value="Grid" onAction="#reGrid" >
+			   <items>
+			      <FXCollections fx:factory="observableArrayList">
+			         <String fx:value="Grid" />
+			         <String fx:value="Dots" />
+			         <String fx:value="Circles" />
+			      </FXCollections>
+			   </items>
+            </ChoiceBox>
+            <ColorPicker fx:id="gridColor" onAction="#reGrid" />
+            <Slider fx:id="gridAlpha" value="100.0" prefWidth="100.0"/>
+            <ToggleButton fx:id="setup" text="Setup mode"/>
+            <HBox alignment="CENTER_LEFT" VBox.vgrow="NEVER" visible="${setup.selected}" managed="${setup.selected}">
+               <children>
+                  <Slider fx:id="gridSpacing" onValueChange="#gridSpacing" min="10" max="1000" value="1000"/>
+                  <Slider fx:id="gridX" onValueChange="#gridX" visible="false" managed="false"/>
+                  <Slider fx:id="gridY" onValueChange="#gridY" visible="false" managed="false"/>
+               </children>
+            </HBox>
+            <HBox alignment="CENTER_LEFT" VBox.vgrow="NEVER" visible="${!setup.selected}" managed="${!setup.selected}">
+            <Label text=" Overlay: Opacity: " />
+            <Slider fx:id="opacitySlider" value="50.0" prefWidth="100.0"/>
+            <HBox alignment="CENTER_LEFT" VBox.vgrow="NEVER" disable="${opacitySlider.value!=100.0}">
+               <children>
+                  <Label text=" Outline: " />
+                  <ColorPicker fx:id="outColor" onAction="#reOvly" />
+               </children>
+            </HBox>
+            </HBox>
+            
+            <Region HBox.hgrow="ALWAYS" />
+            <Button onAction="#goFirst" text="|&lt;&lt;" />
+            <Button onAction="#less10" text="&lt; 10 &lt;" />
+            <Button onAction="#less" text="&lt;" />
+            <Spinner fx:id="spn" prefWidth="40.0">
+                <valueFactory>
+                    <SpinnerValueFactory.IntegerSpinnerValueFactory fx:id="spnVal" max="1" min="1" />
+                </valueFactory>
+            </Spinner>
+            <Button onAction="#more" text="&gt;" />
+            <Button onAction="#more10" text="&gt; 10 &gt;" />
+            <Button onAction="#goLast" text="&gt;&gt;|" />
+            <Label text=" of " /><Label text="${spnVal.max}" /><Label text=" " />
+         </children>
+      </HBox>
+      <Pane fx:id="pane" onMouseDragged="#mouseDragged" onMouseMoved="#mouseMoved" onMousePressed="#mousePressed" VBox.vgrow="ALWAYS">
+         <children>
+            <Canvas fx:id="imgcnv" height="${pane.height}" width="${pane.width}" />
+            <Canvas fx:id="ovlycnv" height="${pane.height}" width="${pane.width}" />
+            <Canvas fx:id="gridcnv" height="${pane.height}" width="${pane.width}" />
+            <Canvas fx:id="lblcnv" height="${pane.height}" width="${pane.width}" />
+         </children>
+      </Pane>
+   </children>
+</VBox>
