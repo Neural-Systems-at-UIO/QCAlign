@@ -45,16 +45,16 @@
             <ToggleButton fx:id="setup" text="Setup mode"/>
             <HBox alignment="CENTER_LEFT" VBox.vgrow="NEVER" visible="${setup.selected}" managed="${setup.selected}">
                <children>
-<Spinner fx:id="nmSpn" prefWidth="60.0" editable="true" onValueChange="#gridSpacing">
+<Label text=" Pixel size:"/><Spinner fx:id="nmSpn" prefWidth="60.0" editable="true" onValueChange="#gridSpacing">
     <valueFactory>
         <SpinnerValueFactory.IntegerSpinnerValueFactory fx:id="nmSpnVal" min="1" max="1000000" initialValue="1000"/>
     </valueFactory>
-</Spinner>
+</Spinner><Label text="[nm] Grid spacing:"/>
 <Spinner fx:id="umSpn" prefWidth="60.0" editable="true" onValueChange="#gridSpacing">
     <valueFactory>
         <SpinnerValueFactory.IntegerSpinnerValueFactory fx:id="umSpnVal" min="1" max="1000000" initialValue="1000"/>
     </valueFactory>
-</Spinner>
+</Spinner><Label text="[&#xB5;m]"/>
 
                   <Slider fx:id="gridX" onValueChange="#gridX" visible="false" managed="false"/>
                   <Slider fx:id="gridY" onValueChange="#gridY" visible="false" managed="false"/>

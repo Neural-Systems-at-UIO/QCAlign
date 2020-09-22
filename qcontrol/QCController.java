@@ -1041,6 +1041,6 @@ public class QCController implements ChangeListener<Number> {
     public void setTitle(String filename) {
         stage.setTitle(filename==null?title:(title+": "+filename+" (registered to "+(series.target.replaceAll("_", " ").replace(".cutlas", ""))+")"));
     }
-    public static final String version="v0.1";
+    public static final String version="v0.2";
     public static final String title="QQuality "+version;
 }
