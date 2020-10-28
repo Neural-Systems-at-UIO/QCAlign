@@ -28,10 +28,12 @@ import data.Palette;
 import data.SegLabel;
 import data.Series;
 import data.Slice;
+import data.TreeLabel;
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.geometry.VPos;
 import javafx.scene.canvas.Canvas;
@@ -48,6 +50,9 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.SpinnerValueFactory.DoubleSpinnerValueFactory;
 import javafx.scene.control.SpinnerValueFactory.IntegerSpinnerValueFactory;
+import javafx.scene.control.TreeItem;
+import javafx.scene.control.TreeItem.TreeModificationEvent;
+import javafx.scene.control.TreeView;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.image.PixelFormat;
@@ -74,7 +79,7 @@ import parsers.JSON;
 import slicer.Int32Slices;
 import static data.Marker.marker;
 
-public class QCController implements ChangeListener<Number> {
+public class QCController implements ChangeListener<Number>, EventHandler<TreeModificationEvent<String>> {
     @FXML
     private VBox vbox;
 
@@ -125,6 +130,9 @@ public class QCController implements ChangeListener<Number> {
     
     @FXML
     private IntegerSpinnerValueFactory umSpnVal;
+    
+    @FXML
+    private TreeView<String> tree;
 
     @FXML
     void onClick(MouseEvent event) {
@@ -647,12 +655,14 @@ public class QCController implements ChangeListener<Number> {
     void exit(ActionEvent event) {
         Platform.exit();
     }
-
+    
     String current;
     Palette palette;
     Int32Slices slicer;
     Path baseFolder;
     String filename;
+    List<TreeLabel> jsontree;
+    TreeItem<String> root;
 
     @FXML
     void open(ActionEvent event) throws Exception {
@@ -697,6 +707,20 @@ public class QCController implements ChangeListener<Number> {
                 current=series.target;
                 palette=ITKLabel.parseLabels(current+File.separator+"labels.txt");
                 slicer=new Int32Slices(current+File.separator+"labels.nii.gz");
+                try(FileReader fr=new FileReader(current+File.separator+"tree.json")){
+                    jsontree=new ArrayList<>();
+                    JSON.mapList(JSON.parse(fr), jsontree, TreeLabel.class, null);
+                    root = new TreeItem<String>("Root Node");
+                    for(TreeLabel tl:jsontree)
+                    	root.getChildren().add(buildTree(tl));
+//                    root.setExpanded(true);
+//                    root.getChildren().addAll(
+//                        new TreeItem<String>("Item 1"),
+//                        new TreeItem<String>("Item 2"),
+//                        new TreeItem<String>("Item 3")
+//                    );
+                    tree.setRoot(root);
+                }
             }
             if(series.resolution.size()==0) {
                 series.resolution.add((double)slicer.XDIM);
@@ -714,6 +738,33 @@ public class QCController implements ChangeListener<Number> {
             spnVal.setValue(spnVal.getMax()/2);
             loadView();
         }
+    }
+    
+    boolean supress;
+	@Override
+	public void handle(TreeModificationEvent<String> tme) {
+		if(!supress) {
+			supress=true;
+			System.out.println(tme);
+			collapse(tme.getTreeItem());
+			System.out.println("tme");
+			supress=false;
+		}
+	}
+	
+	private void collapse(TreeItem<String> ti) {
+		ti.setExpanded(false);
+		for(TreeItem<String> n: ti.getChildren())
+			collapse(n);
+	}
+	
+    private TreeItem<String> buildTree(TreeLabel l){
+    	TreeItem<String> node=new TreeItem<String>(l.name);
+    	node.setExpanded(true);
+    	node.addEventHandler(TreeItem.branchCollapsedEvent(),this);
+    	for(TreeLabel tl: l.children)
+    		node.getChildren().add(buildTree(tl));
+    	return node;
     }
 
     void loadView() {
@@ -1041,6 +1092,6 @@ public class QCController implements ChangeListener<Number> {
     public void setTitle(String filename) {
         stage.setTitle(filename==null?title:(title+": "+filename+" (registered to "+(series.target.replaceAll("_", " ").replace(".cutlas", ""))+")"));
     }
-    public static final String version="v0.2";
+    public static final String version="v0.3";
     public static final String title="QQuality "+version;
 }

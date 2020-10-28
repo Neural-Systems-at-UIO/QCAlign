@@ -16,7 +16,7 @@
               <MenuItem onAction="#open" text="Open" />
               <!--<MenuItem onAction="#save" text="Save" />-->
               <MenuItem onAction="#saveas" text="Save As..." />
-              <MenuItem onAction="#close" text="Close" />
+              <MenuItem onAction="#close" text="Close" disable="true"/>
               <SeparatorMenuItem />
               <MenuItem onAction="#exit" text="Exit" />
             </items>
@@ -86,7 +86,10 @@
             <Label text=" of " /><Label text="${spnVal.max}" /><Label text=" " />
          </children>
       </HBox>
-      <Pane fx:id="pane" onMouseDragged="#mouseDragged" onMouseMoved="#mouseMoved" onMousePressed="#mousePressed" VBox.vgrow="ALWAYS">
+      <SplitPane dividerPositions="0.2" VBox.vgrow="ALWAYS">
+      <items>
+      <TreeView fx:id="tree" showRoot="false" />
+      <Pane fx:id="pane" onMouseDragged="#mouseDragged" onMouseMoved="#mouseMoved" onMousePressed="#mousePressed">
          <children>
             <Canvas fx:id="imgcnv" height="${pane.height}" width="${pane.width}" />
             <Canvas fx:id="ovlycnv" height="${pane.height}" width="${pane.width}" />
@@ -94,5 +97,7 @@
             <Canvas fx:id="lblcnv" height="${pane.height}" width="${pane.width}" />
          </children>
       </Pane>
+      </items>
+      </SplitPane>
    </children>
 </VBox>
