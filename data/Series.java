@@ -14,6 +14,7 @@ public class Series {
     public String name;
     public String target;
     public List<Slice> slices = new ArrayList<>();
+    public List<Double> collapsed = new ArrayList<>();
     
     public double pixelnanos = 1000;
     public double gridmicrons = 1000;
@@ -28,6 +29,7 @@ public class Series {
         JSON.writeString("target-resolution", w).append(":").append(resolution.toString()).append(',');
         JSON.writeString("pixelnanos", w).append(':').append(Integer.toString((int)pixelnanos)).append(',');
         JSON.writeString("gridmicrons", w).append(':').append(Integer.toString((int)gridmicrons)).append(',');
+        JSON.writeString("collapsed", w).append(':').append(collapsed.toString()).append(',');
 //        JSON.writeString("gridspacing", w).append(':').append(Integer.toString((int)gridspacing)).append(',');
         JSON.writeString("slices", w).append(":").append(slices.toString());
         w.append('}');

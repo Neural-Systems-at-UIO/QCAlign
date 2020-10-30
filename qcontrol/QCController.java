@@ -663,6 +663,7 @@ public class QCController implements ChangeListener<Number>, EventHandler<TreeMo
     String filename;
     List<TreeLabel> jsontree;
     TreeItem<String> root;
+    Map<Integer,TreeItem<String>> idmap;
 
     @FXML
     void open(ActionEvent event) throws Exception {
@@ -706,22 +707,25 @@ public class QCController implements ChangeListener<Number>, EventHandler<TreeMo
             if(current==null || !current.equals(series.target)) {
                 current=series.target;
                 palette=ITKLabel.parseLabels(current+File.separator+"labels.txt");
+            }
                 slicer=new Int32Slices(current+File.separator+"labels.nii.gz");
                 try(FileReader fr=new FileReader(current+File.separator+"tree.json")){
+                	simplify=new HashMap<>();
+                	simplify.put(0,0);
+                	idmap=new HashMap<>();
                     jsontree=new ArrayList<>();
                     JSON.mapList(JSON.parse(fr), jsontree, TreeLabel.class, null);
                     root = new TreeItem<String>("Root Node");
                     for(TreeLabel tl:jsontree)
                     	root.getChildren().add(buildTree(tl));
-//                    root.setExpanded(true);
-//                    root.getChildren().addAll(
-//                        new TreeItem<String>("Item 1"),
-//                        new TreeItem<String>("Item 2"),
-//                        new TreeItem<String>("Item 3")
-//                    );
+                    for(double d:series.collapsed)
+                    	idmap.get(Integer.valueOf((int)d)).setExpanded(false);
+                	root.addEventHandler(TreeItem.branchCollapsedEvent(),this);
+                	root.addEventHandler(TreeItem.branchExpandedEvent(),this);
                     tree.setRoot(root);
+                    domappings();
                 }
-            }
+            //}
             if(series.resolution.size()==0) {
                 series.resolution.add((double)slicer.XDIM);
                 series.resolution.add((double)slicer.YDIM);
@@ -744,11 +748,13 @@ public class QCController implements ChangeListener<Number>, EventHandler<TreeMo
 	@Override
 	public void handle(TreeModificationEvent<String> tme) {
 		if(!supress) {
+//			System.out.println(tme.getTreeItem());
 			supress=true;
-			System.out.println(tme);
-			collapse(tme.getTreeItem());
-			System.out.println("tme");
+			if(tme.getEventType()==TreeItem.branchCollapsedEvent())
+				collapse(tme.getTreeItem());
 			supress=false;
+			domappings();
+			loadView();
 		}
 	}
 	
@@ -760,13 +766,34 @@ public class QCController implements ChangeListener<Number>, EventHandler<TreeMo
 	
     private TreeItem<String> buildTree(TreeLabel l){
     	TreeItem<String> node=new TreeItem<String>(l.name);
+//    	Integer i=(int)l.id;
+//    	simplify.put(i,i);
+    	idmap.put((int)l.id,node);
     	node.setExpanded(true);
-    	node.addEventHandler(TreeItem.branchCollapsedEvent(),this);
+//    	node.addEventHandler(TreeItem.branchCollapsedEvent(),this);
+//    	node.addEventHandler(TreeItem.branchExpandedEvent(),this);
     	for(TreeLabel tl: l.children)
     		node.getChildren().add(buildTree(tl));
     	return node;
     }
+    
+    void domappings() {
+    	for(TreeLabel tl:jsontree)
+    		refreshmapping(tl, 0);
+    }
+    void refreshmapping(TreeLabel tl,int override) {
+    	Integer i=(int)tl.id;
+    	if(override==0) {
+    		simplify.put(i,i);
+    		TreeItem<String> ti=idmap.get(i);
+    		if(!ti.isExpanded())
+    			override=i;
+    	} else simplify.put(i,override);
+    	for(TreeLabel child:tl.children)
+    		refreshmapping(child,override);
+    }
 
+    Map<Integer, Integer> simplify;
     void loadView() {
         if(series==null)
             return; //!!
@@ -777,6 +804,9 @@ public class QCController implements ChangeListener<Number>, EventHandler<TreeMo
         drawImage();
         Double ouv[]=slice.anchoring.toArray(new Double[0]);
         x_overlay=slicer.getInt32Slice(ouv[0], ouv[1], ouv[2], ouv[3], ouv[4], ouv[5], ouv[6], ouv[7], ouv[8], false);
+        for(int line[]:x_overlay)
+        	for(int x=0;x<line.length;x++)
+        		line[x]=simplify.get(line[x]);
         fastoverlay=new int[x_overlay.length*x_overlay[0].length];
         for(int y=0;y<x_overlay.length;y++) {
             int l[]=x_overlay[y];
@@ -805,80 +835,80 @@ public class QCController implements ChangeListener<Number>, EventHandler<TreeMo
 //        }
 //    }
 
-    @FXML
-    void exprt(ActionEvent event) throws IOException {
-        DirectoryChooser dc=new DirectoryChooser();
-        dc.setInitialDirectory(baseFolder.toFile());
-        dc.setTitle("Pick folder for exporting slices");
-        File f=dc.showDialog(stage);
-        if(f!=null) {
-            List<Slice> slices=series.slices;
-            int count=0;
-            try(PrintWriter pw=new PrintWriter(f+File.separator+"report.tsv")){
-//                pw.println("snr\tname\twidth\theight\ttotal\tsegmented\tcoverage%\tchanged\tchanged%");
-                pw.println("snr\tname\tsegmented\tchanged\tstable%");
-            for(int i=0;i<slices.size();i++) {
-                Slice slice=slices.get(i);
-                if(slice.markers.size()>0) {
-                    count++;
-                    String name=slice.filename.substring(0, slice.filename.lastIndexOf('.'));
-                    Double ouv[]=slice.anchoring.toArray(new Double[0]);
-                    int overlay[][]=slicer.getInt32Slice(ouv[0], ouv[1], ouv[2], ouv[3], ouv[4], ouv[5], ouv[6], ouv[7], ouv[8], false);
-                    slice.triangulate();
-                    List<Triangle> triangles=slice.triangles;
-                    int h=overlay.length;
-                    int w=overlay[0].length;
-                    byte rgb[]=new byte[w*h*3];
-                    int segmented=0;
-                    int changed=0;
-                    try(DataOutputStream dos=new DataOutputStream(new BufferedOutputStream(new FileOutputStream(f+File.separator+name+"_nl.flat")))){
-                        boolean byt=palette.fastcolors.length<=256;
-                        dos.writeByte(byt?1:2);
-                        dos.writeInt(w);
-                        dos.writeInt(h);
-                        for(int y=0;y<h;y++)
-                            for(int x=0;x<w;x++) {
-//                                SegLabel c=palette.fullmap.get(overlay[y][x]);
-                                SegLabel c=palette.fullmap.get(0);
-                                double fx = x * slice.width / w;
-                                double fy = y * slice.height / h;
-                                for (int j = 0; j < triangles.size(); j++) {
-                                    double t[] = triangles.get(j).transform(fx, fy);
-                                    if (t != null) {
-                                        int xx = (int) (t[0] * w / slice.width);
-                                        int yy = (int) (t[1] * h / slice.height);
-                                        if(xx>=0 && yy>=0 && xx<overlay[0].length && yy<overlay.length)
-                                            c=palette.fullmap.get(overlay[yy][xx]);//!!
-                                        break;
-                                    }
-                                }
-                                rgb[(x+y*w)*3]=(byte)c.red;
-                                rgb[(x+y*w)*3+1]=(byte)c.green;
-                                rgb[(x+y*w)*3+2]=(byte)c.blue;
-                                if(byt)
-                                    dos.writeByte(c.remap);
-                                else
-                                    dos.writeShort(c.remap);
-                                if(overlay[y][x]!=0 || c.index!=0)
-                                    segmented++;
-                                if(overlay[y][x]!=c.index)
-                                    changed++;
-                            }
-//                        pw.println((int)slice.nr+"\t"+slice.filename+"\t"+overlay[0].length+"\t"+overlay.length+"\t"+
-//                            overlay[0].length*overlay.length+"\t"+segmented+"\t"+segmented*100/overlay[0].length/overlay.length+"%\t"+
-//                            changed+"\t"+changed*100/segmented+"%");
-                        pw.println((int)slice.nr+"\t"+slice.filename+"\t"+segmented+"\t"+changed+"\t"+(segmented-changed)*100/segmented+"%");
-                    }
-                    BufferedImage bi=new BufferedImage(w, h, BufferedImage.TYPE_3BYTE_BGR);
-                    bi.getRaster().setDataElements(0, 0, w, h, rgb);
-                    ImageIO.write(bi, "png", new File(f+File.separator+name+"_nl.png"));
-                }
-            }
-            }
-            Alert a=new Alert(AlertType.INFORMATION, "Done. "+(count==0?"No":count)+" non-linear segmentation"+(count!=1?"s":"")+" exported.");
-            a.showAndWait();
-        }
-    }
+//    @FXML
+//    void exprt(ActionEvent event) throws IOException {
+//        DirectoryChooser dc=new DirectoryChooser();
+//        dc.setInitialDirectory(baseFolder.toFile());
+//        dc.setTitle("Pick folder for exporting slices");
+//        File f=dc.showDialog(stage);
+//        if(f!=null) {
+//            List<Slice> slices=series.slices;
+//            int count=0;
+//            try(PrintWriter pw=new PrintWriter(f+File.separator+"report.tsv")){
+////                pw.println("snr\tname\twidth\theight\ttotal\tsegmented\tcoverage%\tchanged\tchanged%");
+//                pw.println("snr\tname\tsegmented\tchanged\tstable%");
+//            for(int i=0;i<slices.size();i++) {
+//                Slice slice=slices.get(i);
+//                if(slice.markers.size()>0) {
+//                    count++;
+//                    String name=slice.filename.substring(0, slice.filename.lastIndexOf('.'));
+//                    Double ouv[]=slice.anchoring.toArray(new Double[0]);
+//                    int overlay[][]=slicer.getInt32Slice(ouv[0], ouv[1], ouv[2], ouv[3], ouv[4], ouv[5], ouv[6], ouv[7], ouv[8], false);
+//                    slice.triangulate();
+//                    List<Triangle> triangles=slice.triangles;
+//                    int h=overlay.length;
+//                    int w=overlay[0].length;
+//                    byte rgb[]=new byte[w*h*3];
+//                    int segmented=0;
+//                    int changed=0;
+//                    try(DataOutputStream dos=new DataOutputStream(new BufferedOutputStream(new FileOutputStream(f+File.separator+name+"_nl.flat")))){
+//                        boolean byt=palette.fastcolors.length<=256;
+//                        dos.writeByte(byt?1:2);
+//                        dos.writeInt(w);
+//                        dos.writeInt(h);
+//                        for(int y=0;y<h;y++)
+//                            for(int x=0;x<w;x++) {
+////                                SegLabel c=palette.fullmap.get(overlay[y][x]);
+//                                SegLabel c=palette.fullmap.get(0);
+//                                double fx = x * slice.width / w;
+//                                double fy = y * slice.height / h;
+//                                for (int j = 0; j < triangles.size(); j++) {
+//                                    double t[] = triangles.get(j).transform(fx, fy);
+//                                    if (t != null) {
+//                                        int xx = (int) (t[0] * w / slice.width);
+//                                        int yy = (int) (t[1] * h / slice.height);
+//                                        if(xx>=0 && yy>=0 && xx<overlay[0].length && yy<overlay.length)
+//                                            c=palette.fullmap.get(overlay[yy][xx]);//!!
+//                                        break;
+//                                    }
+//                                }
+//                                rgb[(x+y*w)*3]=(byte)c.red;
+//                                rgb[(x+y*w)*3+1]=(byte)c.green;
+//                                rgb[(x+y*w)*3+2]=(byte)c.blue;
+//                                if(byt)
+//                                    dos.writeByte(c.remap);
+//                                else
+//                                    dos.writeShort(c.remap);
+//                                if(overlay[y][x]!=0 || c.index!=0)
+//                                    segmented++;
+//                                if(overlay[y][x]!=c.index)
+//                                    changed++;
+//                            }
+////                        pw.println((int)slice.nr+"\t"+slice.filename+"\t"+overlay[0].length+"\t"+overlay.length+"\t"+
+////                            overlay[0].length*overlay.length+"\t"+segmented+"\t"+segmented*100/overlay[0].length/overlay.length+"%\t"+
+////                            changed+"\t"+changed*100/segmented+"%");
+//                        pw.println((int)slice.nr+"\t"+slice.filename+"\t"+segmented+"\t"+changed+"\t"+(segmented-changed)*100/segmented+"%");
+//                    }
+//                    BufferedImage bi=new BufferedImage(w, h, BufferedImage.TYPE_3BYTE_BGR);
+//                    bi.getRaster().setDataElements(0, 0, w, h, rgb);
+//                    ImageIO.write(bi, "png", new File(f+File.separator+name+"_nl.png"));
+//                }
+//            }
+//            }
+//            Alert a=new Alert(AlertType.INFORMATION, "Done. "+(count==0?"No":count)+" non-linear segmentation"+(count!=1?"s":"")+" exported.");
+//            a.showAndWait();
+//        }
+//    }
 
     @FXML
     void saveas(ActionEvent event) throws IOException {
@@ -890,6 +920,11 @@ public class QCController implements ChangeListener<Number>, EventHandler<TreeMo
         fc.getExtensionFilters().add(ef);
         File f=fc.showSaveDialog(stage);
         if(f!=null) {
+        	List<Double> collapsed=series.collapsed;
+        	collapsed.clear();
+        	for(Map.Entry<Integer, TreeItem<String>> e:idmap.entrySet())
+        		if(!e.getValue().isExpanded())
+        			collapsed.add(e.getKey().doubleValue());
             try(FileWriter fw=new FileWriter(f)){
                 series.toJSON(fw);
             }
@@ -1092,6 +1127,6 @@ public class QCController implements ChangeListener<Number>, EventHandler<TreeMo
     public void setTitle(String filename) {
         stage.setTitle(filename==null?title:(title+": "+filename+" (registered to "+(series.target.replaceAll("_", " ").replace(".cutlas", ""))+")"));
     }
-    public static final String version="v0.3";
+    public static final String version="v0.4";
     public static final String title="QQuality "+version;
 }
