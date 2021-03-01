@@ -18,6 +18,10 @@
               <MenuItem onAction="#saveas" text="Save As..." />
               <MenuItem onAction="#close" text="Close" disable="true"/>
               <SeparatorMenuItem />
+              <MenuItem onAction="#importhier" text="Import hierarchy"/>
+              <MenuItem onAction="#exportstats" text="Export statistics"/>
+              <MenuItem onAction="#exportsheet" text="Export hierarchy sheet"/>
+              <SeparatorMenuItem />
               <MenuItem onAction="#exit" text="Exit" />
             </items>
           </Menu>

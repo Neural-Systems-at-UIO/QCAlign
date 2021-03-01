@@ -15,10 +15,16 @@ import java.net.URI;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
+import java.util.Set;
+import java.util.TreeMap;
+import java.util.TreeSet;
 import java.util.prefs.Preferences;
 import java.util.stream.IntStream;
 
@@ -202,10 +208,10 @@ public class QCController implements ChangeListener<Number>, EventHandler<TreeMo
             for (int i = 0; i < triangles.size(); i++) {
                 double t[] = triangles.get(i).transform(fx, fy);
                 if (t != null) {
-                    int xx = (int) (t[0] * x_overlay[0].length / slice.width);
-                    int yy = (int) (t[1] * x_overlay.length / slice.height);
-                    if(xx>=0 && yy>=0 && xx<x_overlay[0].length && yy<x_overlay.length)
-                        l=palette.fullmap.get(x_overlay[yy][xx]);//!!
+                    int xx = (int) (t[0] * overlay_width / slice.width);
+                    int yy = (int) (t[1] * overlay_height / slice.height);
+                    if(xx>=0 && yy>=0 && xx<overlay_width && yy<overlay_height)
+                        l=palette.fullmap.get(raw_overlay[yy][xx]);//!!
                 }
             }
 //            gc.strokeText(""+nlovly[mx+my*imgw], 100, 100);
@@ -397,7 +403,9 @@ public class QCController implements ChangeListener<Number>, EventHandler<TreeMo
     int rgb[];
     int nlovly[];
 
-    int x_overlay[][];
+    int raw_overlay[][];
+    int overlay_width;
+    int overlay_height;
     int fastoverlay[];
     
     public void drawImage() {
@@ -439,12 +447,12 @@ public class QCController implements ChangeListener<Number>, EventHandler<TreeMo
         for (int i = 0; i < triangles.size(); i++) {
             double t[] = triangles.get(i).transform(fx, fy);
             if (t != null) {
-                int xx = (int) (t[0] * x_overlay[0].length / slice.width);
-                int yy = (int) (t[1] * x_overlay.length / slice.height);
-                if(xx<0 || yy<0 || xx>=x_overlay[0].length || yy>=x_overlay.length)
+                int xx = (int) (t[0] * overlay_width / slice.width);
+                int yy = (int) (t[1] * overlay_height / slice.height);
+                if(xx<0 || yy<0 || xx>=overlay_width || yy>=overlay_height)
                     return 0;
                 //return overlay[yy][xx];
-                return fastoverlay[xx+yy*x_overlay[0].length];
+                return fastoverlay[xx+yy*overlay_width];
             }
         }
         return 0;// 0x80000000;
@@ -664,6 +672,7 @@ public class QCController implements ChangeListener<Number>, EventHandler<TreeMo
     List<TreeLabel> jsontree;
     TreeItem<String> root;
     Map<Integer,TreeItem<String>> idmap;
+    Map<Integer,TreeLabel> flatmap;
 
     @FXML
     void open(ActionEvent event) throws Exception {
@@ -713,6 +722,7 @@ public class QCController implements ChangeListener<Number>, EventHandler<TreeMo
                 	simplify=new HashMap<>();
                 	simplify.put(0,0);
                 	idmap=new HashMap<>();
+                	flatmap=new LinkedHashMap<>();
                     jsontree=new ArrayList<>();
                     JSON.mapList(JSON.parse(fr), jsontree, TreeLabel.class, null);
                     root = new TreeItem<String>("Root Node");
@@ -769,6 +779,7 @@ public class QCController implements ChangeListener<Number>, EventHandler<TreeMo
 //    	Integer i=(int)l.id;
 //    	simplify.put(i,i);
     	idmap.put((int)l.id,node);
+    	flatmap.put((int)l.id, l);
     	node.setExpanded(true);
 //    	node.addEventHandler(TreeItem.branchCollapsedEvent(),this);
 //    	node.addEventHandler(TreeItem.branchExpandedEvent(),this);
@@ -803,14 +814,16 @@ public class QCController implements ChangeListener<Number>, EventHandler<TreeMo
         slice.triangulate();
         drawImage();
         Double ouv[]=slice.anchoring.toArray(new Double[0]);
-        x_overlay=slicer.getInt32Slice(ouv[0], ouv[1], ouv[2], ouv[3], ouv[4], ouv[5], ouv[6], ouv[7], ouv[8], false);
-        for(int line[]:x_overlay)
+        raw_overlay=slicer.getInt32Slice(ouv[0], ouv[1], ouv[2], ouv[3], ouv[4], ouv[5], ouv[6], ouv[7], ouv[8], false);
+        overlay_width=raw_overlay[0].length;
+        overlay_height=raw_overlay.length;
+        for(int line[]:raw_overlay)
         	for(int x=0;x<line.length;x++)
         		line[x]=simplify.get(line[x]);
-        fastoverlay=new int[x_overlay.length*x_overlay[0].length];
-        for(int y=0;y<x_overlay.length;y++) {
-            int l[]=x_overlay[y];
-            for(int x=0;x<l.length;x++)
+        fastoverlay=new int[overlay_width*overlay_height];
+        for(int y=0;y<overlay_height;y++) {
+            int l[]=raw_overlay[y];
+            for(int x=0;x<overlay_width;x++)
                 try {
                 fastoverlay[x+y*l.length]=palette.fullmap.get(l[x]).remap;
                 } catch(Exception ex) {
@@ -909,7 +922,228 @@ public class QCController implements ChangeListener<Number>, EventHandler<TreeMo
 //            a.showAndWait();
 //        }
 //    }
+    
+    @FXML
+    void importhier(ActionEvent event) throws Exception {
+        Preferences prefs=Preferences.userRoot().node("/no/uio/nesys/qcontrol");
+        File f=new File(prefs.get("lastDir", "/"));
+        FileChooser fc = new FileChooser();
+        if(f.exists())
+            fc.setInitialDirectory(f);
+        fc.setTitle("Pick JSON file");
+        ExtensionFilter ef=new ExtensionFilter("QControl JSON files", "*.json");
+        fc.getExtensionFilters().add(ef);
+        //fc.setSelectedExtensionFilter(ef);
+        /*File*/ f = fc.showOpenDialog(stage);
+        if (f != null) {
+            try (FileReader fr = new FileReader(f)) {
+            	Series temp=new Series();
+                Map<String, String> resolver = new HashMap<>();
+                resolver.put("resolution", "target-resolution");
+                JSON.mapObject(JSON.parse(fr), temp, resolver);
+                supress=true;
+                for(TreeItem<String> entry:idmap.values())
+                	entry.setExpanded(true);
+                for(double d:temp.collapsed)
+                	idmap.get(Integer.valueOf((int)d)).setExpanded(false);
+                supress=false;
+                domappings();
+            }
+            loadView();
+        }
+    }
+    
+//    @FXML
+//    void exportstats(ActionEvent event) throws Exception {
+//        if(series==null)return;
+//        FileChooser fc = new FileChooser();
+//        fc.setInitialDirectory(baseFolder.toFile());
+//        fc.setTitle("Export statistics");
+//        ExtensionFilter ef=new ExtensionFilter("Text files", "*.txt");
+//        fc.getExtensionFilters().add(ef);
+//        File f=fc.showSaveDialog(stage);
+//        if(f!=null) {
+//        	try(PrintWriter pw=new PrintWriter(f)){
+//        		pw.println("name\tall\tEmpty(0)\tOk(1)\tWrong(2)\tUndecidable(3)");
+//        		List<String> unprocessed=new ArrayList<String>();
+//        		series.slices.forEach(slice->{
+//        			if(!slice.grid.isEmpty()) {
+//	        			int[] bins=new int[4];
+//	        			slice.grid.forEach(raw->bins[raw.intValue()]++);
+//	        			pw.print(slice.filename);
+//	        			pw.print("\t");
+//	        			pw.print(slice.grid.size());
+//	        			for(int bin:bins)
+//	        				pw.print("\t"+bin);
+//	        			pw.println();
+//        			}else
+//        				unprocessed.add(slice.filename);
+//        		});
+//        		unprocessed.forEach(filename->pw.println(filename));
+//        	}
+////        	List<Double> collapsed=series.collapsed;
+////        	collapsed.clear();
+////        	for(Map.Entry<Integer, TreeItem<String>> e:idmap.entrySet())
+////        		if(!e.getValue().isExpanded())
+////        			collapsed.add(e.getKey().doubleValue());
+////            try(FileWriter fw=new FileWriter(f)){
+////                series.toJSON(fw);
+////            }
+//        }
+//    }
 
+    private int sample_raw(int x, int y, Slice slice, int[][] raw_overlay) {
+    	int overlay_height=raw_overlay.length;
+    	int overlay_width=raw_overlay[0].length;
+        List<Triangle> triangles=slice.triangles;
+        for (int i = 0; i < triangles.size(); i++) {
+            double t[] = triangles.get(i).transform(x, y);
+            if (t != null) {
+                int xx = (int) (t[0] * overlay_width / slice.width);
+                int yy = (int) (t[1] * overlay_height / slice.height);
+                if(xx<0 || yy<0 || xx>=overlay_width || yy>=overlay_height)
+                    return 0;
+                //return overlay[yy][xx];
+                return raw_overlay[yy][xx];//fastoverlay[xx+yy*overlay_width];
+            }
+        }
+        return 0;// 0x80000000;
+    }
+
+//    final String[] statuses=new String[] {"Empty","Okay","Wrong","Undecidable"};
+    final String[] statuses=new String[] {"N/A","Accurate","Inaccurate","Uncertain"};
+    @FXML
+//    void sectionstats(ActionEvent event) throws Exception {
+    void exportstats(ActionEvent event) throws Exception {
+        if(series==null)return;
+        List<Map<Integer,int[]>> seriesStats=new ArrayList<>();
+        Map<Integer,int[]> totalStats=new TreeMap<>((x,y)->simplify.get(x)-simplify.get(y));
+        List<int[]> sliceTotals=new ArrayList<>();
+        int[] seriesTotals=new int[4];
+        for(Slice slice:series.slices) {
+        	slice.triangulate(); //!!
+            Double ouv[]=slice.anchoring.toArray(new Double[0]);
+            int[][] raw_overlay=slicer.getInt32Slice(ouv[0], ouv[1], ouv[2], ouv[3], ouv[4], ouv[5], ouv[6], ouv[7], ouv[8], false);
+            for(int line[]:raw_overlay)
+            	for(int x=0;x<line.length;x++)
+            		line[x]=simplify.get(line[x]);
+	        int gridx=(int)slice.gridx;
+	        int gridy=(int)slice.gridy;
+	        int[] totals=new int[4];
+	        Map<Integer, int[]> stats=new TreeMap<>((x,y)->simplify.get(x)-simplify.get(y));
+	        Iterator<Double> it=slice.grid.iterator();
+	        for(int y=gridy;y<slice.height;y+=gridspacing)
+	            for(int x=gridx;x<slice.width;x+=gridspacing) {
+	            	int l=sample_raw(x, y,slice,raw_overlay);
+	            	if(!stats.containsKey(l))
+	            		stats.put(l, new int[4]);
+	            	if(!totalStats.containsKey(l))
+	            		totalStats.put(l, new int[4]);
+	            	int v=it.next().intValue();
+	            	stats.get(l)[v]++;
+	            	totalStats.get(l)[v]++;
+	            	totals[v]++;
+	            	seriesTotals[v]++;
+	            }
+	        sliceTotals.add(totals);
+	        seriesStats.add(stats);
+	        if(it.hasNext()) {
+	        	Alert a=new Alert(AlertType.ERROR,"Bug found, please report:\n"+slice.filename,ButtonType.OK);
+	        	a.showAndWait();
+	        }
+	        try(PrintWriter pw=new PrintWriter(baseFolder.resolve(slice.filename+"_stats.txt").toFile())){
+	        	for(int i=0;i<statuses.length;i++) {
+	        		pw.print('\t');
+	        		if(i==0)
+	        			pw.print("Total");
+        			pw.print('\t');
+        			pw.print(statuses[i]);
+        			pw.print('\t');
+        			pw.println(totals[i]);
+	        	}
+	        	stats.forEach((l,s)->{
+		        	for(int i=0;i<statuses.length;i++) {
+		        		if(i==0)
+		        			pw.print(l);
+	        			pw.print('\t');
+		        		if(i==0)
+			        		pw.print(palette.fullmap.get(l).name);
+	        			pw.print('\t');
+	        			pw.print(statuses[i]);
+	        			pw.print('\t');
+	        			pw.println(s[i]);
+		        	}
+	        	});
+	        }
+        }
+        try(PrintWriter pw=new PrintWriter(baseFolder.resolve(filename+"_stats.txt").toFile())){
+        	pw.print("ID\tStructure\tStatus\tTotal");
+        	for(Slice slice:series.slices)
+        		pw.print("\t"+slice.filename);
+        	pw.println();
+        	for(int i=0;i<statuses.length;i++) {
+        		pw.print("\tTotal\t"+statuses[i]+"\t"+seriesTotals[i]);
+        		for(int[] total:sliceTotals)
+        			pw.print("\t"+total[i]);
+        		pw.println();
+        	}
+        	totalStats.forEach((id,seriesTotal)->{
+        		for(int i=0;i<statuses.length;i++) {
+        			pw.print(id+"\t"+palette.fullmap.get(id).name+"\t"+statuses[i]+"\t"+seriesTotal[i]);
+        			for(Map<Integer,int[]> stats:seriesStats) {
+        				pw.print('\t');
+        				if(stats.containsKey(id))
+        					pw.print(stats.get(id)[i]);
+        			}
+        			pw.println();
+        		}
+        	});
+        }
+    }
+    
+    @FXML
+    void exportsheet(ActionEvent event) throws Exception {
+    	try(PrintWriter pw=new PrintWriter(baseFolder.resolve(filename+"_regions.txt").toFile())){
+    		pw.print("Custom brain region");
+    		var columns=new LinkedHashMap<Integer,List<Integer>>();
+    		flatmap.forEach((id,tl)->{
+//    			if(id!=0) {
+	    			var remap=simplify.get(id);
+	    			if(!columns.containsKey(remap)) {
+	    				columns.put(remap, new ArrayList<>());
+	    				pw.print('\t');
+	    				pw.print(tl.name);
+	    			}
+	    			columns.get(remap).add(id);
+//    			}
+    		});
+    		pw.println();
+    		pw.print("RGB colour");
+    		columns.forEach((id,list)->{
+    			pw.print('\t');
+    			var l=palette.fullmap.get(id);
+    			pw.print(l.red);
+    			pw.print(';');
+    			pw.print(l.green);
+    			pw.print(';');
+    			pw.print(l.blue);
+    		});
+    		pw.println();
+    		var max=columns.values().stream().mapToInt(List::size).max().getAsInt();
+    		for(int i=0;i<max;i++) {
+    			var j=i;
+    			if(i==0)
+    				pw.print("Atlas Ids");
+        		columns.forEach((id,list)->{
+        			pw.print('\t');
+        			if(list.size()>j)
+        				pw.print(list.get(j));
+        		});
+        		pw.println();
+    		}
+    	}
+    }
+    
     @FXML
     void saveas(ActionEvent event) throws IOException {
         if(series==null)return;
@@ -1127,6 +1361,6 @@ public class QCController implements ChangeListener<Number>, EventHandler<TreeMo
     public void setTitle(String filename) {
         stage.setTitle(filename==null?title:(title+": "+filename+" (registered to "+(series.target.replaceAll("_", " ").replace(".cutlas", ""))+")"));
     }
-    public static final String version="v0.4";
+    public static final String version="v0.5";
     public static final String title="QQuality "+version;
 }
