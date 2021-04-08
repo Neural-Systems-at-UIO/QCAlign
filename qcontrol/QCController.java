@@ -125,17 +125,23 @@ public class QCController implements ChangeListener<Number>, EventHandler<TreeMo
     @FXML
     private IntegerSpinnerValueFactory spnVal;
     
-    @FXML
-    private Spinner<Integer> nmSpn;
+//    @FXML
+//    private Spinner<Integer> nmSpn;
+//    
+//    @FXML
+//    private IntegerSpinnerValueFactory nmSpnVal;
+//
+//    @FXML
+//    private Spinner<Integer> umSpn;
+//    
+//    @FXML
+//    private IntegerSpinnerValueFactory umSpnVal;
     
     @FXML
-    private IntegerSpinnerValueFactory nmSpnVal;
-
-    @FXML
-    private Spinner<Integer> umSpn;
+    private Spinner<Integer> voxSpn;
     
     @FXML
-    private IntegerSpinnerValueFactory umSpnVal;
+    private IntegerSpinnerValueFactory voxSpnVal;
     
     @FXML
     private TreeView<String> tree;
@@ -180,11 +186,11 @@ public class QCController implements ChangeListener<Number>, EventHandler<TreeMo
         mouseY = event.getY();
         drawPop();
         
-        if(slice!=null && gridspacing!=0) {
+        if(slice!=null) {
             pickx = (mouseX - imgx) * slice.width / imgw;
-            pickx = Math.round((pickx - slice.gridx)/gridspacing);
+            pickx = Math.round((pickx - slice.gridx)/xspacing);
             picky = (mouseY - imgy) * slice.height / imgh;
-            picky = Math.round((picky - slice.gridy)/gridspacing);
+            picky = Math.round((picky - slice.gridy)/yspacing);
         }
     }
     
@@ -239,8 +245,8 @@ public class QCController implements ChangeListener<Number>, EventHandler<TreeMo
 //            basey = picked.get(3);
 //        }
 //xx        int gridspacing=(int)series.gridspacing;
-        int xp=(int)(slice.width-slice.gridx+gridspacing-1)/gridspacing;
-        int yp=(int)(slice.height-slice.gridy+gridspacing-1)/gridspacing;
+        int xp=(int)(slice.width-slice.gridx+xspacing-1)/xspacing;
+        int yp=(int)(slice.height-slice.gridy+yspacing-1)/yspacing;
         if(pickx>=0 && pickx<xp && picky>=0 && picky<yp) {
             int i=(int)(pickx+picky*xp);
             slice.grid.set(i, slice.grid.get(i)<3?slice.grid.get(i)+1:0);
@@ -302,8 +308,9 @@ public class QCController implements ChangeListener<Number>, EventHandler<TreeMo
     @FXML
     void initialize() throws Exception {
         spn.getStyleClass().clear(); //!!
-        nmSpn.getStyleClass().clear(); //!!
-        umSpn.getStyleClass().clear(); //!!
+//        nmSpn.getStyleClass().clear(); //!!
+//        umSpn.getStyleClass().clear(); //!!
+        voxSpn.getStyleClass().clear(); //!!
 //        spn.getStyleableNode().setStyle("-fx-text-alignment: center;");
         
 //        markers.add(new Marker(0, 0));
@@ -348,6 +355,45 @@ public class QCController implements ChangeListener<Number>, EventHandler<TreeMo
 
     Series series;
     Slice slice;
+    int xspacing;
+    int yspacing;
+    void setSlice(Slice slice) {
+    	this.slice=slice;
+    	if(slice!=null) {
+    		calcSpacing();
+    	} else xspacing=yspacing=0;
+    }
+    
+    int xSpacing(Slice slice) {
+    	if(slice.anchoring.size()!=9)System.out.println("non-9 in xSpacing");
+    	double ow=0;
+    	for(int i=0;i<3;i++) {
+    		ow+=slice.anchoring.get(i+3)*slice.anchoring.get(i+3);
+    	}
+    	ow=Math.sqrt(ow);
+    	return (int)(slice.width*series.gridspacing/ow);
+    }
+    int ySpacing(Slice slice) {
+    	if(slice.anchoring.size()!=9)System.out.println("non-9 in ySpacing");
+    	double oh=0;
+    	for(int i=0;i<3;i++) {
+    		oh+=slice.anchoring.get(i+6)*slice.anchoring.get(i+6);
+    	}
+    	oh=Math.sqrt(oh);
+    	return (int)(slice.height*series.gridspacing/oh);
+    }
+    boolean checkGrid(Slice slice,int xspacing,int yspacing) {
+    	return slice.grid.size()==((int)(slice.width-slice.gridx+xspacing-1)/xspacing)*((int)(slice.height-slice.gridy+yspacing-1)/yspacing);
+    }
+    
+    void calcSpacing() {
+    	if(slice.anchoring.size()!=9)System.out.println("non-9 in calcSpacing");
+    	xspacing=xSpacing(slice);
+    	yspacing=ySpacing(slice);
+    	
+    	if(!checkGrid(slice, xspacing, yspacing))
+    		makeGrid(slice, xspacing, yspacing);
+    }
     
     @Override
     public void changed(ObservableValue<? extends Number> arg0, Number arg1, Number arg2) {
@@ -377,25 +423,19 @@ public class QCController implements ChangeListener<Number>, EventHandler<TreeMo
         if(series==null || skiphack)
             return;
 //        System.out.println(series.gridspacing=arg2.intValue());
-        series.pixelnanos=nmSpnVal.getValue();
-        series.gridmicrons=umSpnVal.getValue();
+//        series.pixelnanos=nmSpnVal.getValue();
+//        series.gridmicrons=umSpnVal.getValue();
+        series.gridspacing=voxSpnVal.getValue();
+//        System.out.println(series.gridspacing);
 //        series.gridspacing=arg2.intValue();
         for(Slice s:series.slices)
             s.grid.clear();
 //        if(slice.width/series.gridspacing>150)
 //            series.gridspacing=slice.width/150;
-        setSpacing();
-        setGrid();
+        calcSpacing();
+//        setGrid();
 //        slice.gridx=slice.gridy=0;
         reDraw();
-    }
-    @FXML
-    public void gridX(ObservableValue<? extends Number> arg0, Number arg1, Number arg2) {
-        
-    }
-    @FXML
-    public void gridY(ObservableValue<? extends Number> arg0, Number arg1, Number arg2) {
-        
     }
     
     private Image image;
@@ -523,31 +563,57 @@ public class QCController implements ChangeListener<Number>, EventHandler<TreeMo
 //        }
 //    }
 
-    int gridspacing=0;
-    void setSpacing() {
-        gridspacing=0;
-        if(series.gridmicrons!=0)
-        	gridspacing=(int)(series.gridmicrons*1000/series.pixelnanos);
-    }
+//    int gridspacing=0;
+//    void setSpacing() {
+////        gridspacing=0;
+////        if(series.gridmicrons!=0)
+////        	gridspacing=(int)(series.gridmicrons*1000/series.pixelnanos);
+//    	gridspacing=(int)series.gridspacing;
+//    }
     boolean noGrid() {
-    	return slice==null || gridspacing==0;
+    	return slice==null;// || gridspacing==0;
     }
     Random rnd=new Random();
-    private void setGrid() {
-//        int gridspacing=(int)series.gridspacing;
-//        if(gridspacing==0) {
-//            System.out.println(series.gridspacing=gridspacing=(int)Math.min(slice.width, slice.height)/15);
-//        }
-        slice.gridx=rnd.nextInt(gridspacing);
-        slice.gridy=rnd.nextInt(gridspacing);
-        int xp=(int)(slice.width-slice.gridx+gridspacing-1)/gridspacing;
-        int yp=(int)(slice.height-slice.gridy+gridspacing-1)/gridspacing;
+    private void makeGrid(Slice slice,int xspacing,int yspacing) {
+    	if(slice.anchoring.size()!=9)System.out.println("non-9 in setGrid");
+        slice.gridx=rnd.nextInt(xspacing);
+        slice.gridy=rnd.nextInt(yspacing);
+        int xp=(int)(slice.width-slice.gridx+xspacing-1)/xspacing;
+        int yp=(int)(slice.height-slice.gridy+yspacing-1)/yspacing;
 //        System.out.printf("%dx%d, %f %f\n",xp,yp,slice.gridx,slice.gridy);
 //        System.out.println(slice);
         slice.grid=new ArrayList<>(xp*yp);
-        for(int i=0;i<xp*yp;i++)
+//        for(int i=0;i<xp*yp;i++)
 //            slice.grid.add((double)rnd.nextInt(3));
-            slice.grid.add((double)0);
+//            slice.grid.add((double)0);
+//        slice.grid.set(slice.grid.size()-1, 3.);
+        
+    	slice.triangulate(); //!!
+        Double ouv[]=slice.anchoring.toArray(new Double[0]);
+        int[][] raw_overlay=slicer.getInt32Slice(ouv[0], ouv[1], ouv[2], ouv[3], ouv[4], ouv[5], ouv[6], ouv[7], ouv[8], false);
+        for(int line[]:raw_overlay)
+        	for(int x=0;x<line.length;x++)
+        		line[x]=simplify.get(line[x]);
+        
+        int gridx=(int)slice.gridx;
+        int gridy=(int)slice.gridy;
+
+        for(int y=0;y<yp;y++)
+        	for(int x=0;x<xp;x++) {
+        		if(x==0 || y==0 || x==xp-1 || y==yp-1)
+        			slice.grid.add(0.);
+        		else {
+        			int w=sample_raw(gridx+x*xspacing, gridy+y*yspacing, slice, raw_overlay);
+        			if(w!=0 &&
+        					w==sample_raw(gridx+(x-1)*xspacing, gridy+y*yspacing, slice, raw_overlay) &&
+        					w==sample_raw(gridx+(x+1)*xspacing, gridy+y*yspacing, slice, raw_overlay) &&
+        					w==sample_raw(gridx+x*xspacing, gridy+(y-1)*yspacing, slice, raw_overlay) &&
+        					w==sample_raw(gridx+x*xspacing, gridy+(y+1)*yspacing, slice, raw_overlay))
+        				slice.grid.add(1.);
+        			else
+        				slice.grid.add(0.);
+        		}
+        	}
     }
 
     boolean override;
@@ -565,37 +631,37 @@ public class QCController implements ChangeListener<Number>, EventHandler<TreeMo
                 ctx.setLineWidth(2);
                 switch(gridType.getValue()) {
                     case "Grid":
-                        for(int x=gridx;x<slice.width;x+=gridspacing) {
+                        for(int x=gridx;x<slice.width;x+=xspacing) {
                             double dx=x*imgw/slice.width;
                             ctx.strokeLine(imgx+dx, imgy, imgx+dx, imgy+imgh);
                         }
-                        for(int y=gridy;y<slice.height;y+=gridspacing) {
+                        for(int y=gridy;y<slice.height;y+=yspacing) {
                             double dy=y*imgh/slice.height;
                             ctx.strokeLine(imgx, imgy+dy, imgx+imgw, imgy+dy);
                         }
                         break;
                     case "Dots":
-                        for(int x=gridx;x<slice.width;x+=gridspacing)
-                            for(int y=gridy;y<slice.height;y+=gridspacing)
+                        for(int x=gridx;x<slice.width;x+=xspacing)
+                            for(int y=gridy;y<slice.height;y+=yspacing)
                                 ctx.strokeRect(imgx+x*imgw/slice.width, imgy+y*imgh/slice.height, 1, 1);
                         break;
                     case "Circles":
-                        for(int x=gridx;x<slice.width;x+=gridspacing)
-                            for(int y=gridy;y<slice.height;y+=gridspacing)
+                        for(int x=gridx;x<slice.width;x+=xspacing)
+                            for(int y=gridy;y<slice.height;y+=yspacing)
                                 ctx.strokeOval(imgx+x*imgw/slice.width-2, imgy+y*imgh/slice.height-2, 4, 4);
                         break;
                 }
             }
-            int xp=(int)(slice.width-slice.gridx+gridspacing-1)/gridspacing;
-            int yp=(int)(slice.height-slice.gridy+gridspacing-1)/gridspacing;
+            int xp=(int)(slice.width-slice.gridx+xspacing-1)/xspacing;
+            int yp=(int)(slice.height-slice.gridy+yspacing-1)/yspacing;
             ctx.setTextAlign(TextAlignment.LEFT);
             ctx.setTextBaseline(VPos.BOTTOM);
             for(int x=0;x<xp;x++)
                 for(int y=0;y<yp;y++) {
                     int res=(int)slice.grid.get(x+y*xp).doubleValue();
                     if(!override) {
-                        double xbase=imgx+(slice.gridx+x*gridspacing)*imgw/slice.width+3;
-                        double ybase=imgy+(slice.gridy+y*gridspacing)*imgh/slice.height-2;
+                        double xbase=imgx+(slice.gridx+x*xspacing)*imgw/slice.width+3;
+                        double ybase=imgy+(slice.gridy+y*yspacing)*imgh/slice.height-2;
                         switch(res) {
                             case 0:
 //                                ctx.setStroke(Color.BLACK);
@@ -615,8 +681,8 @@ public class QCController implements ChangeListener<Number>, EventHandler<TreeMo
                                 break;
                         }
                     } else {
-                        double xbase=imgx+(slice.gridx+(x-0.5)*gridspacing)*imgw/slice.width;
-                        double ybase=imgy+(slice.gridy+(y-0.5)*gridspacing)*imgh/slice.height;
+                        double xbase=imgx+(slice.gridx+(x-0.5)*xspacing)*imgw/slice.width;
+                        double ybase=imgy+(slice.gridy+(y-0.5)*yspacing)*imgh/slice.height;
                         switch(res) {
                             case 1:
                                 ctx.setFill(Color.GREEN);
@@ -629,7 +695,7 @@ public class QCController implements ChangeListener<Number>, EventHandler<TreeMo
                                 break;
                         }
                         if(res!=0)
-                            ctx.fillRect(xbase, ybase, gridspacing*imgw/slice.width, gridspacing*imgh/slice.height);
+                            ctx.fillRect(xbase, ybase, xspacing*imgw/slice.width, yspacing*imgh/slice.height);
                     }
                 }
 //        }
@@ -716,26 +782,27 @@ public class QCController implements ChangeListener<Number>, EventHandler<TreeMo
             if(current==null || !current.equals(series.target)) {
                 current=series.target;
                 palette=ITKLabel.parseLabels(current+File.separator+"labels.txt");
-            }
                 slicer=new Int32Slices(current+File.separator+"labels.nii.gz");
-                try(FileReader fr=new FileReader(current+File.separator+"tree.json")){
-                	simplify=new HashMap<>();
-                	simplify.put(0,0);
-                	idmap=new HashMap<>();
-                	flatmap=new LinkedHashMap<>();
-                    jsontree=new ArrayList<>();
-                    JSON.mapList(JSON.parse(fr), jsontree, TreeLabel.class, null);
-                    root = new TreeItem<String>("Root Node");
-                    for(TreeLabel tl:jsontree)
-                    	root.getChildren().add(buildTree(tl));
-                    for(double d:series.collapsed)
-                    	idmap.get(Integer.valueOf((int)d)).setExpanded(false);
-                	root.addEventHandler(TreeItem.branchCollapsedEvent(),this);
-                	root.addEventHandler(TreeItem.branchExpandedEvent(),this);
-                    tree.setRoot(root);
-                    domappings();
-                }
-            //}
+            }
+            try(FileReader fr=new FileReader(current+File.separator+"tree.json")){
+            	simplify=new HashMap<>();
+            	simplify.put(0,0);
+            	idmap=new HashMap<>();
+            	flatmap=new LinkedHashMap<>();
+                jsontree=new ArrayList<>();
+                JSON.mapList(JSON.parse(fr), jsontree, TreeLabel.class, null);
+                root = new TreeItem<String>("Root Node");
+                for(TreeLabel tl:jsontree)
+                	root.getChildren().add(buildTree(tl));
+                for(double d:series.collapsed)
+                	idmap.get(Integer.valueOf((int)d)).setExpanded(false);
+            	root.addEventHandler(TreeItem.branchCollapsedEvent(),this);
+            	root.addEventHandler(TreeItem.branchExpandedEvent(),this);
+            	supress=true;
+                tree.setRoot(root);
+                supress=false;
+                domappings();
+            }
             if(series.resolution.size()==0) {
                 series.resolution.add((double)slicer.XDIM);
                 series.resolution.add((double)slicer.YDIM);
@@ -744,8 +811,9 @@ public class QCController implements ChangeListener<Number>, EventHandler<TreeMo
 //            System.out.println(series.pixelnanos);
 //            System.out.println(series.gridmicrons);
             skiphack=true;
-            nmSpnVal.setValue((int)series.pixelnanos);
-            umSpnVal.setValue((int)series.gridmicrons);
+//            nmSpnVal.setValue((int)series.pixelnanos);
+//            umSpnVal.setValue((int)series.gridmicrons);
+            voxSpnVal.setValue((int)series.gridspacing);
             skiphack=false;
             spnVal.setMin(1);
             spnVal.setMax(series.slices.size());
@@ -808,7 +876,7 @@ public class QCController implements ChangeListener<Number>, EventHandler<TreeMo
     void loadView() {
         if(series==null)
             return; //!!
-        slice=series.slices.get(spnVal.getValue()-1);
+        setSlice(series.slices.get(spnVal.getValue()-1));
         image=new Image("file:"+baseFolder.resolve(slice.filename));
         setTitle(slice.filename);
         slice.triangulate();
@@ -830,9 +898,9 @@ public class QCController implements ChangeListener<Number>, EventHandler<TreeMo
                     System.out.println(l[x]);
                 }
         }
-        setSpacing();
-        if(slice.grid.isEmpty())
-            setGrid();
+//        setSpacing();
+//        if(slice.grid.isEmpty())
+//            setGrid();
         reDraw();
     }
 
@@ -949,6 +1017,7 @@ public class QCController implements ChangeListener<Number>, EventHandler<TreeMo
                 supress=false;
                 domappings();
             }
+            gridSpacing();
             loadView();
         }
     }
@@ -1016,10 +1085,34 @@ public class QCController implements ChangeListener<Number>, EventHandler<TreeMo
 //    void sectionstats(ActionEvent event) throws Exception {
     void exportstats(ActionEvent event) throws Exception {
         if(series==null)return;
+        FileChooser fc = new FileChooser();
+        fc.setInitialDirectory(baseFolder.toFile());
+        fc.setInitialFileName(filename+"_stats.txt");
+        fc.setTitle("Pick text file");
+        ExtensionFilter ef=new ExtensionFilter("Text files", "*.txt");
+        fc.getExtensionFilters().add(ef);
+        File f=fc.showSaveDialog(stage);
+        if(f==null)
+        	return;
+//        if(f!=null) {
+//            filename=f.getName();
+//            filename=filename.substring(0, filename.length()-5);
+        
         List<Map<Integer,int[]>> seriesStats=new ArrayList<>();
-        Map<Integer,int[]> totalStats=new TreeMap<>((x,y)->simplify.get(x)-simplify.get(y));
+//        Map<Integer,int[]> totalStats=new TreeMap<>((x,y)->simplify.get(x)-simplify.get(y));
+        Map<Integer,int[]> totalStats=new LinkedHashMap<>();
+        totalStats.put(0, new int[4]);
+		flatmap.forEach((id,tl)->{
+			Integer remap=simplify.get(id);
+			if(!totalStats.containsKey(remap)) {
+				totalStats.put(remap, new int[4]);
+			}
+		});
+        
+        
         List<int[]> sliceTotals=new ArrayList<>();
         int[] seriesTotals=new int[4];
+        boolean bogus=false;
         for(Slice slice:series.slices) {
         	slice.triangulate(); //!!
             Double ouv[]=slice.anchoring.toArray(new Double[0]);
@@ -1032,51 +1125,66 @@ public class QCController implements ChangeListener<Number>, EventHandler<TreeMo
 	        int[] totals=new int[4];
 	        Map<Integer, int[]> stats=new TreeMap<>((x,y)->simplify.get(x)-simplify.get(y));
 	        Iterator<Double> it=slice.grid.iterator();
-	        for(int y=gridy;y<slice.height;y+=gridspacing)
-	            for(int x=gridx;x<slice.width;x+=gridspacing) {
-	            	int l=sample_raw(x, y,slice,raw_overlay);
-	            	if(!stats.containsKey(l))
-	            		stats.put(l, new int[4]);
-	            	if(!totalStats.containsKey(l))
-	            		totalStats.put(l, new int[4]);
-	            	int v=it.next().intValue();
-	            	stats.get(l)[v]++;
-	            	totalStats.get(l)[v]++;
-	            	totals[v]++;
-	            	seriesTotals[v]++;
-	            }
+	        if(it.hasNext()) {
+		        int xspacing=xSpacing(slice);
+		        int yspacing=ySpacing(slice);
+		        for(int y=gridy;y<slice.height;y+=yspacing)
+		            for(int x=gridx;x<slice.width;x+=xspacing) {
+		            	int l=sample_raw(x, y,slice,raw_overlay);
+		            	if(!stats.containsKey(l))
+		            		stats.put(l, new int[4]);
+//		            	if(!totalStats.containsKey(l))
+//		            		totalStats.put(l, new int[4]);
+		            	int v=it.next().intValue();
+		            	stats.get(l)[v]++;
+		            	totalStats.get(l)[v]++;
+		            	totals[v]++;
+		            	seriesTotals[v]++;
+		            }
+	        }
 	        sliceTotals.add(totals);
 	        seriesStats.add(stats);
 	        if(it.hasNext()) {
-	        	Alert a=new Alert(AlertType.ERROR,"Bug found, please report:\n"+slice.filename,ButtonType.OK);
-	        	a.showAndWait();
-	        }
-	        try(PrintWriter pw=new PrintWriter(baseFolder.resolve(slice.filename+"_stats.txt").toFile())){
-	        	for(int i=0;i<statuses.length;i++) {
-	        		pw.print('\t');
-	        		if(i==0)
-	        			pw.print("Total");
-        			pw.print('\t');
-        			pw.print(statuses[i]);
-        			pw.print('\t');
-        			pw.println(totals[i]);
+	        	if(!bogus) {
+		        	Alert a=new Alert(AlertType.ERROR,"Possible bug found, please report:\n"+slice.filename,ButtonType.OK);
+		        	a.showAndWait();
+		        	bogus=true;
 	        	}
-	        	stats.forEach((l,s)->{
-		        	for(int i=0;i<statuses.length;i++) {
-		        		if(i==0)
-		        			pw.print(l);
-	        			pw.print('\t');
-		        		if(i==0)
-			        		pw.print(palette.fullmap.get(l).name);
-	        			pw.print('\t');
-	        			pw.print(statuses[i]);
-	        			pw.print('\t');
-	        			pw.println(s[i]);
-		        	}
-	        	});
+	        	int cnt=0;
+	        	while(it.hasNext()) {
+	        		it.next();
+	        		cnt++;
+	        	}
+	        	System.out.println(slice.filename);
+	        	System.out.println(cnt);
 	        }
+//	        try(PrintWriter pw=new PrintWriter(baseFolder.resolve(slice.filename+"_stats.txt").toFile())){
+//	        	for(int i=0;i<statuses.length;i++) {
+//	        		pw.print('\t');
+//	        		if(i==0)
+//	        			pw.print("Total");
+//        			pw.print('\t');
+//        			pw.print(statuses[i]);
+//        			pw.print('\t');
+//        			pw.println(totals[i]);
+//	        	}
+//	        	stats.forEach((l,s)->{
+//		        	for(int i=0;i<statuses.length;i++) {
+//		        		if(i==0)
+//		        			pw.print(l);
+//	        			pw.print('\t');
+//		        		if(i==0)
+//			        		pw.print(palette.fullmap.get(l).name);
+//	        			pw.print('\t');
+//	        			pw.print(statuses[i]);
+//	        			pw.print('\t');
+//	        			pw.println(s[i]);
+//		        	}
+//	        	});
+//	        }
         }
-        try(PrintWriter pw=new PrintWriter(baseFolder.resolve(filename+"_stats.txt").toFile())){
+//        try(PrintWriter pw=new PrintWriter(baseFolder.resolve(filename+"_stats.txt").toFile())){
+        try(PrintWriter pw=new PrintWriter(f)){
         	pw.print("ID\tStructure\tStatus\tTotal");
         	for(Slice slice:series.slices)
         		pw.print("\t"+slice.filename);
@@ -1103,7 +1211,18 @@ public class QCController implements ChangeListener<Number>, EventHandler<TreeMo
     
     @FXML
     void exportsheet(ActionEvent event) throws Exception {
-    	try(PrintWriter pw=new PrintWriter(baseFolder.resolve(filename+"_regions.txt").toFile())){
+        if(series==null)return;
+        FileChooser fc = new FileChooser();
+        fc.setInitialDirectory(baseFolder.toFile());
+        fc.setInitialFileName(filename+"_regions.txt");
+        fc.setTitle("Pick text file");
+        ExtensionFilter ef=new ExtensionFilter("Text files", "*.txt");
+        fc.getExtensionFilters().add(ef);
+        File f=fc.showSaveDialog(stage);
+        if(f==null)
+        	return;
+//    	try(PrintWriter pw=new PrintWriter(baseFolder.resolve(filename+"_regions.txt").toFile())){
+    	try(PrintWriter pw=new PrintWriter(f)){
     		pw.print("Custom brain region");
     		var columns=new LinkedHashMap<Integer,List<Integer>>();
     		flatmap.forEach((id,tl)->{
@@ -1154,6 +1273,8 @@ public class QCController implements ChangeListener<Number>, EventHandler<TreeMo
         fc.getExtensionFilters().add(ef);
         File f=fc.showSaveDialog(stage);
         if(f!=null) {
+            filename=f.getName();
+            filename=filename.substring(0, filename.length()-5);
         	List<Double> collapsed=series.collapsed;
         	collapsed.clear();
         	for(Map.Entry<Integer, TreeItem<String>> e:idmap.entrySet())
@@ -1172,7 +1293,7 @@ public class QCController implements ChangeListener<Number>, EventHandler<TreeMo
         a.showAndWait().ifPresent(b->{
             if(b==ButtonType.YES) {
                 series=null;
-                slice=null;
+                setSlice(null);
                 baseFolder=null;
                 filename=null;
                 setTitle(null);
@@ -1247,6 +1368,27 @@ public class QCController implements ChangeListener<Number>, EventHandler<TreeMo
                 slice.markers.clear();
                 slice.triangulate();
                 reDraw();
+            }
+        });
+    }
+    
+    @FXML void resetSection () {
+        if(series==null)return;
+        Alert a=new Alert(AlertType.WARNING,"Proceed with resetting the grid on this section?",ButtonType.YES,ButtonType.NO);
+        a.showAndWait().ifPresent(b->{
+            if(b==ButtonType.YES) {
+            	makeGrid(slice, xspacing, yspacing);
+                reDraw();
+            }
+        });
+    }
+    
+    @FXML void resetSeries () {
+        if(series==null)return;
+        Alert a=new Alert(AlertType.WARNING,"Proceed with resetting the grid for the entire series?",ButtonType.YES,ButtonType.NO);
+        a.showAndWait().ifPresent(b->{
+            if(b==ButtonType.YES) {
+            	gridSpacing();
             }
         });
     }
@@ -1361,6 +1503,6 @@ public class QCController implements ChangeListener<Number>, EventHandler<TreeMo
     public void setTitle(String filename) {
         stage.setTitle(filename==null?title:(title+": "+filename+" (registered to "+(series.target.replaceAll("_", " ").replace(".cutlas", ""))+")"));
     }
-    public static final String version="v0.5";
+    public static final String version="v0.6";
     public static final String title="QQuality "+version;
 }
