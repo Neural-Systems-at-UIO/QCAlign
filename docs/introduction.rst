@@ -5,7 +5,9 @@ QCAlign was developed for validation of QUINT performance and to guide decision-
 
 1.	Quality control of the atlas maps generated with QuickNII and VisuAlign.
 
+
 2.	Quality control of the histological slice images.
+
 
 3.	Exploration of the reference atlas hierarchy.
 
