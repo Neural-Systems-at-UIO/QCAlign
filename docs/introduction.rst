@@ -1,4 +1,4 @@
-**QCAlign**
+**Introduction**
 -----------
 
 QCAlign was developed for validation of QUINT performance and to guide decision-making regarding post-processing of the QUINT results. It enables:
