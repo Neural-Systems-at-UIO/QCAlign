@@ -21,9 +21,4 @@ QCAlign has a similar setup to VisuAlign, with the histological slice images dis
    :width: 8.13333in
    :height: 4.95833in
 
-Opening an image series
-=======================
 
-To load an image series in QCAlign, open the JSON file containing the
-anchoring information exported from either QuickNII or VisuAlign. Go to:
-**File** > **Open**
