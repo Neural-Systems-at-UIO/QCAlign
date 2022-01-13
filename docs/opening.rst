@@ -1,4 +1,4 @@
-**Opening an image series in QCAlign**
+**Opening an image series**
 --------------------------------------
 
 To load an image series in QCAlign, open the JSON file containing the
