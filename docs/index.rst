@@ -7,5 +7,6 @@ QCAlign
 
    introduction
    installation
+   opening
    navigation
    QCAlign
