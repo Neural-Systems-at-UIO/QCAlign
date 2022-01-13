@@ -8,3 +8,4 @@ QCAlign
    introduction
    installation
    navigation
+   QCAlign
