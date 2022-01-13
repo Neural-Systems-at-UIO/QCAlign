@@ -9,4 +9,9 @@ QCAlign
    installation
    opening
    navigation
+   hierarchy
+   atlasoverlay
+   gridoverlay
+   QCatlasmaps
+   QCtissue
    QCAlign
