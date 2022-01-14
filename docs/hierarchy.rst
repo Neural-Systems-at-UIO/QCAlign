@@ -44,7 +44,7 @@ The purpose of hierarchy export is to generate a TXT file that is compatible wit
    
 2. The information in the TXT file may be used to create a CustomRegions.xlsx for use with Nutil Quantifier. This is used to generate customised reports. 
 
-For more information see: https://nutil.readthedocs.io/en/latest/QuantifierReports.html 
+For more information on Nutil customised reports see: https://nutil.readthedocs.io/en/latest/QuantifierReports.html 
 
 
 .. _section-1:
