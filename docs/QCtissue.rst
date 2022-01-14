@@ -1,4 +1,4 @@
-**Quality control assessment of histological slice images**
+**2. Quality control of histological slice images**
 ========================================================
 
 The tissue quality or histology integrity of the slices in a series can
