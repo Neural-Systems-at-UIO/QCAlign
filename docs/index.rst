@@ -12,6 +12,7 @@ QCAlign
 .. toctree::
    :caption: Navigation
    :maxdepth: 3
+   
    navigation
    hierarchy
    atlasverlay
@@ -20,10 +21,13 @@ QCAlign
 .. toctree::
    :caption: Quality control
    :maxdepth: 3
+   
    QCatlasmaps
    QCtissue
  
 .. toctree::
    :caption: To delete
    :maxdepth: 3 
+   
    QCAlign
+  
