@@ -8,10 +8,22 @@ QCAlign
    introduction
    installation
    opening
+   
+.. toctree::
+   :caption: Navigation
+   :maxdepth: 3
    navigation
    hierarchy
-   atlasoverlay
+   atlasverlay
    gridoverlay
+   
+.. toctree::
+   :caption: Quality control
+   :maxdepth: 3
    QCatlasmaps
    QCtissue
+ 
+.. toctree::
+   :caption: To delete
+   :maxdepth: 3 
    QCAlign
