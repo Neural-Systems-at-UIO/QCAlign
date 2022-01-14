@@ -1,4 +1,4 @@
-**Quality control of registration alignment**
+**1. Quality control of registration alignment**
 =========================================================
 
 1. Start on the first slice of the series by clicking \|<< arrow in the
