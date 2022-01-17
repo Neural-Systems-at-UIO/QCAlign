@@ -1,5 +1,3 @@
-.. include:: .special.rst
-
 **1. Quality control of registration alignment**
 =========================================================
 
@@ -12,25 +10,20 @@ How to perform the assessment
    
    Select between four options by clicking the grid points with the mouse or keyboard. For quality control assessment of
    the atlas maps, use the **(+), (-)** and **(?)** markers only.
-
-   -  :green:'**Accurate: (+)' Single click, Keyboard shortcut: 2** Use this
-      marker for grid points that are *correctly* located in the
-      assigned region: this is verified by the anatomist based on
-      landmarks. The region boundaries are distinct enough to make this
-      call.
-
-   -  **Inaccurate: (-) Double click, Keyboard shortcut: 3** Use this
-      marker for grid points that are *incorrectly* located in the
-      assigned region: this is verified by the anatomist based on
-      landmarks. The region boundaries are distinct enough to make this
-      call.
-
-   -  **Uncertain: (?) Triple click, Keyboard shortcut: 4** Use this
-      marker if you are uncertain whether the grid point is located in
-      the assigned region or not: the region boundaries are not distinct
-      enough to make this call. This does not mean that the registration
-      is incorrect, only that verification is not possible based on the
-      available imaging data alone.
+   
++-------------+---------------+-------------------+---------------------------------------------------------------------------------------------------------+   
+|  **Marker** |   **Mouse**   |    **Keyboard**   |                    **Usage**                                                                            |
+|             |               |    **shortcut**   |                                                                                                         |
++=============+===============+===================+=========================================================================================================+
+|  **(+)**    |  Single click |         2         |  Use this marker for grid points that are correctly located in the assigned region: this is verified by |      
+|             |               |                   |  the anatomist based on landmarks. The regions boundaries are distinct enough to make this call.        |       
++-------------+---------------+-------------------+---------------------------------------------------------------------------------------------------------+
+|  **(-)**    |  Double click |         3         |  Use this marker for grid points that are incorrectly located in the assigned region: this is verified  |
+|             |               |                   |  by the anatomist based on landmarks. The region boundaries are distinct enough to make this call.      |
++-------------+---------------+-------------------+---------------------------------------------------------------------------------------------------------+
+|  **(?)**    |  Triple click |         4         |  Use this marker if you are uncertain whether a grid point is located in the assigned region: the region|
+|             |               |                   |  boundaries are not distinct enough to make this call. This does not mean that the registration is      |        |             |               |                   |  incorrect: only that the verification is not possible based on the available imaging data.             |
++-------------+---------------+-------------------+---------------------------------------------------------------------------------------------------------+
       
 3. To get an overview of the grid points, and to easily identify grid points that remain unmarked within a slice, go to **View** > **Overview,** or press the spacebar.
 
@@ -94,6 +87,10 @@ have been assigned the **(?)** marker.
 The placement of the **(?)** will vary for regions from slice to slice
 depending on the distinction of visual landmarks.
 
-
-
+.. |image1| image:: vertopal_cbedec83746b4aa08b3d6abec4c06604/media/image8.jpeg
+   :width: 5.85417in
+   :height: 4.77083in
+.. |image2| image:: vertopal_cbedec83746b4aa08b3d6abec4c06604/media/image11.jpeg
+   :width: 3.84306in
+   :height: 4.51181in
 
