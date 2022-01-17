@@ -1,7 +1,7 @@
 **1. Quality control of registration alignment**
 =========================================================
 
-1. Start on the first slice of the series by clicking \|<< arrow in the
+1. Start on the first slice of the series by clicking the \|<< arrow in the
    upper-right corner. Proceed to each subsequent slice by clicking >
 
 2. In the slice viewer, only mark atlas points that overlap the
@@ -31,6 +31,17 @@
 3. To get an overview of the grid points and easily identify grid points
    that remain unmarked within a slice, go to **View** > **Overview,**
    or press the spacebar.
+
+4. Use the > in the far-right corner of the window to proceed through
+   all slices and add markers to all grid points in the series.
+
+5. Save results in a JSON file. **File** > **Save as**.
+
+6. Export statistics in txt file. **File** > **Export stats**.
+
+This generates a text file with all the regions listed vertically, with
+four rows per region titled “accurate”, “inaccurate”, “uncertain” and
+“damaged” that list the number of markers for each.
 
 Autofill grid markers
 ---------------------
