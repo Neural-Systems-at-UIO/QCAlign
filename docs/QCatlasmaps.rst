@@ -11,7 +11,7 @@
    points with the mouse or keyboard. For quality control assessment of
    the atlas maps, use the **(+), (-)** and **(?)** markers only.
 
-   -  **Accurate: :green: `(+)` Single click, Keyboard shortcut: 2** Use this
+   -  **Accurate: :green:`(+)` Single click, Keyboard shortcut: 2** Use this
       marker for grid points that are *correctly* located in the
       assigned region: this is verified by the anatomist based on
       landmarks. The region boundaries are distinct enough to make this
