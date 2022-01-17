@@ -3,8 +3,10 @@
 **1. Quality control of registration alignment**
 =========================================================
 
-1. Start on the first slice of the series by clicking the \|<< arrow in the
-   upper-right corner. Proceed to each subsequent slice by clicking >
+How to perform the assessment
+------------------------------
+
+1. Start on the first slice of the series by clicking the \|<< arrow in the upper-right corner. Proceed to each subsequent slice by clicking >
 
 2. In the slice viewer, mark points that overlap the experimental slice. Points that fall outside of the experimental slice should be left blank. 
    
@@ -32,8 +34,7 @@
       
 3. To get an overview of the grid points, and to easily identify grid points that remain unmarked within a slice, go to **View** > **Overview,** or press the spacebar.
 
-4. Use the > in the far-right corner of the window to proceed through
-   all slices.
+4. Use the > in the far-right corner of the window to proceed through all slices.
 
 5. Save the results in a JSON file. **File** > **Save as**.
 
@@ -43,31 +44,56 @@ The text file lists all the regions vertically, with
 four rows per region titled “accurate”, “inaccurate”, “uncertain” and
 “damaged” with the number of markers for each. There is a row for the whole series and a row per slice. 
       
-**IMPORTANT**
+Best practise guideline
+------------------------------
 
-The user should ONLY mark up (+) / (-) when certain of the precision of the atlas registration based on visible landmarks within the section. The (?) should be used in all instances when the user is unsure of the correct assignment due to undiscernible boundaries or limited anatomical knowledge.
+**IMPORTANT** The user should ONLY mark up (+) / (-) when certain of the precision of the atlas registration based on visible landmarks within the section. The (?) should be used in all instances when the user is unsure of the correct assignment due to undiscernible boundaries or limited anatomical knowledge.
 A useful anatomy resource when working with QCAlign is the Allen Brain Atlas Interactive Brain Viewer (coronal atlas, Nissl stain). This shows the Allen Mouse Brain Atlas applied to Nissl stained sections and can be used as a guide.
-Example images for each marker are given at the end of this section. 
 
-**RECOMMENDATION**
+- For the purpose of the assessment, it is best to switch the atlas overlay “off” so that only the brain tissue is visible. 
+- By hovering over any point on the brain tissue, a text overlay is displayed that reveals the atlas region to which the point is registered. Use this information, any visible landmarks, and your anatomical knowledge to assess whether the point is registered correctly, incorrectly, or of uncertain position. 
+- It is possible to toggle the atlas overlay “on” and off” between each point assessment to get an overview of the atlas delineations. While it can be helpful with an overview, try not to let the delineations affect your decision-making as this will bias the outcome. If in doubt, always mark up (?).
 
-For the purpose of the assessment, it is best to switch the atlas overlay “off” so that only the brain tissue is visible. By hovering over any point on the brain tissue, a text overlay is displayed that reveals the atlas region to which the point is registered. Use this information, any visible landmarks, and your anatomical knowledge to assess whether the point is registered correctly, incorrectly, or of uncertain position. 
-It is possible to toggle the atlas overlay “on” and off” between each point assessment to get an overview of the atlas delineations. While it can be helpful with an overview, try not to let the delineations affect your decision-making as this will bias the outcome. If in doubt, always mark up (?).
+Examples of Accurate, Inaccurate, and Uncertain Markings
+--------------------------------------------------------
 
-Autofill grid markers
----------------------
+|image1|\ **Example 1: Section with clearly visible landmarks
+demonstrating use of (+) and (-) markers.**
 
-To reduce the workload for the atlas map assessment, it is possible to
-autofill all the markers as **(+)**, with the exception of the markers
-that are closest to the region boundaries. To enable this feature, go to
-**Series Prefill grid, except damage markers.** The markers closest to
-the region boundaries remain unmarked. The user must manually mark up
-the points that fall along the region boundaries to ensure precise
-marker classification. Grid points along regional borders are more prone
-to registration errors.
+There are clear boundaries between all the structures in this slice due
+to differences in tissue appearance, and clearly visible cell layers in
+the case of the hippocampus. All regions can be marked up with
+certainty: (+) or (-). One of the points is registered to the ventricle
+despite being located in the fiber tract and has been marked up with
+**(-)**. All the other markers are marked up with **(+).**
 
--  This feature was introduced to increase efficiency, whilst minimizing
-   bias introduced by autofill. 
+**Example 2: Section with clearly visible landmarks and inaccurate
+registration.**
+
+.. image:: vertopal_cbedec83746b4aa08b3d6abec4c06604/media/image9.jpeg
+   :alt: Z:\NESYS_Lab\PhD_project_Yates_Sharon\Jackson_article\QControl\User_manual\Inaccurate.jpg
+   :width: 4.94697in
+   :height: 2.42422in
+
+**Example 3: Section with ambiguous boundaries demonstrating use of the
+(?) marker.**
+
+.. image:: vertopal_cbedec83746b4aa08b3d6abec4c06604/media/image10.jpeg
+   :width: 6.3in
+   :height: 4.82222in
+
+There are clear boundaries between the lateral ventricle, the
+caudoputamen, the corpus callosum, and the isocortex in this slice.
+These regions can be marked up with certainty (+) and (-).
+
+There is less certainty for the outer boundary of the cortical subplate,
+and the boundary between the isocortex, entorhinal area and olfactory
+area. These areas have been marked up with transparent red circles and
+have been assigned the **(?)** marker.
+
+The placement of the **(?)** will vary for regions from slice to slice
+depending on the distinction of visual landmarks.
+
 
 
 
