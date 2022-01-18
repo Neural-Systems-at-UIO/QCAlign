@@ -11,6 +11,12 @@ with all regions displayed (as shown in the example). From this
 position, gradually collapse the hierarchy until a customized level is
 achieved. 
 
+To go back to the finest granuality level, click **View >** **Expand Hierarchy**
+
+.. image:: vertopal_cbedec83746b4aa08b3d6abec4c06604/media/image12.jpeg
+   :width: 6.3in
+   :height: 0.77896in
+
 Once you have created a customized hierarchy level that you would like
 to work with, save the QCAlign JSON file by clicking **File > Save as**.
 
