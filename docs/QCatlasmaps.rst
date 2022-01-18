@@ -45,7 +45,7 @@ four rows per region titled “accurate”, “inaccurate”, “uncertain” an
 Best practise 
 ---------------
  
- As QCAlign is used for validation, the user’s input represents the anatomical “ground truth”.
+As QCAlign is used for validation, the user’s input represents the anatomical “ground truth”.
  
 - The user should ONLY mark up (+) / (-) when certain of the precision of the atlas registration based on visible landmarks within the section. The (?) should be used in all instances when the user is unsure of the correct assignment due to undiscernible boundaries or limited anatomical knowledge.
 - For the purpose of the assessment, it is best to switch the atlas overlay “off” so that only the brain tissue is visible. 
