@@ -14,10 +14,10 @@ achieved.
 Once you have created a customized hierarchy level that you would like
 to work with, save the QCAlign JSON file by clicking **File > Save as**.
 
-To reduce the need to adjust the hierarchy with each use, a customized hierarchy may be imported from a QCAlign JSON file. 
+To reduce the need to adjust the hierarchy with each use, a customized hierarchy may be imported from another QCAlign JSON file. 
 This feature is useful when assessing multiple brain series. 
 
-**Example: All regions of the Allen Mouse Brain Atlas are expanded and visible
+**All regions of the Allen Mouse Brain Atlas are expanded and visible
 in the viewer window**
 
 .. image:: vertopal_cbedec83746b4aa08b3d6abec4c06604/media/image2.png
@@ -39,12 +39,12 @@ in the viewer window**
 
 The purpose of hierarchy export is to generate a TXT file that is compatible with Nutil Quantifier. 
 
-1. To export a customized hierarchy level to be used in Nutil, go to
+1. To export a customized hierarchy level to be used in Nutil, go to:
    **File** > **export hierarchy sheet.**
    
 2. The information in the TXT file may be used to create a CustomRegions.xlsx for use with Nutil Quantifier. This is used to generate customised reports. 
 
-For more information on Nutil customised reports see: https://nutil.readthedocs.io/en/latest/QuantifierReports.html 
+For more information on Nutil customized reports see: https://nutil.readthedocs.io/en/latest/QuantifierReports.html 
 
 
 .. _section-1:
