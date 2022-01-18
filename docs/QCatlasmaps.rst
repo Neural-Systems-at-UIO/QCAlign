@@ -37,15 +37,18 @@ The text file lists all the regions vertically, with
 four rows per region titled “accurate”, “inaccurate”, “uncertain” and
 “damaged” with the number of markers for each. There is a row for the whole series and a row per slice. 
       
-Best practise guideline
-------------------------------
+Best practise 
+---------------
 
-**IMPORTANT** The user should ONLY mark up (+) / (-) when certain of the precision of the atlas registration based on visible landmarks within the section. The (?) should be used in all instances when the user is unsure of the correct assignment due to undiscernible boundaries or limited anatomical knowledge.
-A useful anatomy resource when working with QCAlign is the Allen Brain Atlas Interactive Brain Viewer (coronal atlas, Nissl stain). This shows the Allen Mouse Brain Atlas applied to Nissl stained sections and can be used as a guide.
+**IMPORTANT**
 
+As QCAlign is used for validation, the user’s input represents the anatomical “ground truth” for assessing the quality of the reference atlas registration to the sections. 
+
+- The user should ONLY mark up (+) / (-) when certain of the precision of the atlas registration based on visible landmarks within the section. The (?) should be used in all instances when the user is unsure of the correct assignment due to undiscernible boundaries or limited anatomical knowledge.
 - For the purpose of the assessment, it is best to switch the atlas overlay “off” so that only the brain tissue is visible. 
 - By hovering over any point on the brain tissue, a text overlay is displayed that reveals the atlas region to which the point is registered. Use this information, any visible landmarks, and your anatomical knowledge to assess whether the point is registered correctly, incorrectly, or of uncertain position. 
 - It is possible to toggle the atlas overlay “on” and off” between each point assessment to get an overview of the atlas delineations. While it can be helpful with an overview, try not to let the delineations affect your decision-making as this will bias the outcome. If in doubt, always mark up (?).
+- A useful anatomy resource when working with QCAlign is the Allen Brain Atlas Interactive Brain Viewer (coronal atlas, Nissl stain). This shows the Allen Mouse Brain Atlas applied to Nissl stained sections and can be used as a guide.
 
 Examples of Accurate, Inaccurate, and Uncertain Markings
 --------------------------------------------------------
