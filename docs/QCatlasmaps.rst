@@ -53,7 +53,7 @@ As QCAlign is used for validation, the user’s input represents the anatomical 
 Examples of Accurate, Inaccurate, and Uncertain Markings
 --------------------------------------------------------
 
-**Example 1: Section with clearly visible landmarks
+**Section with clearly visible landmarks
 demonstrating use of (+) and (-) markers.**
 
 |image1|\ 
@@ -65,7 +65,7 @@ certainty: (+) or (-). One of the points is registered to the ventricle
 despite being located in the fiber tract and has been marked up with
 **(-)**. All the other markers are marked up with **(+).**
 
-**Example 2: Section with clearly visible landmarks and inaccurate
+**Section with clearly visible landmarks and inaccurate
 registration.**
 
 .. image:: vertopal_cbedec83746b4aa08b3d6abec4c06604/media/image9.jpeg
@@ -73,7 +73,7 @@ registration.**
    :width: 4.94697in
    :height: 2.42422in
 
-**Example 3: Section with ambiguous boundaries demonstrating use of the
+**ESection with ambiguous boundaries demonstrating use of the
 (?) marker.**
 
 .. image:: vertopal_cbedec83746b4aa08b3d6abec4c06604/media/image10.jpeg
