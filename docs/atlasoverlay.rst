@@ -20,7 +20,7 @@ The atlas overlay may be switched “on” or “off” with the opacity slider:
 By hovering over any part of the slice image, the region name to which
 that point is registered to will be displayed.
 
-**Example: The user’s cursor is located in a position registered as the
+**The user’s cursor is located in a position registered as the
 caudoputamen**
 
 .. image:: vertopal_cbedec83746b4aa08b3d6abec4c06604/media/image4.png
