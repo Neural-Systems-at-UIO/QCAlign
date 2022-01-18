@@ -7,9 +7,15 @@ QCAlign viewer window. To adjust the regions click the ▼ arrow next to each re
 automatically adjusts to match the customized hierarchy selected.
 
 The default setting reveals the finest granularity level of the atlas,
-with all regions displayed (as shown in the example). From this
-position, gradually collapse the hierarchy until a customized level is
+with all regions displayed. From this position, gradually collapse the hierarchy until a customized level is
 achieved. 
+
+**All regions of the Allen Mouse Brain Atlas are expanded and visible
+in the viewer window**
+
+.. image:: vertopal_cbedec83746b4aa08b3d6abec4c06604/media/image2.png
+   :width: 5.04087in
+   :height: 3.20833in
 
 To go back to the finest granuality level, click **View >** **Expand Hierarchy**
 
@@ -28,12 +34,6 @@ to work with, save the QCAlign JSON file by clicking **File > Save as**.
 To reduce the need to adjust the hierarchy with each use, a customized hierarchy may be imported from another QCAlign JSON file. 
 This feature is useful when assessing multiple brain series. 
 
-**All regions of the Allen Mouse Brain Atlas are expanded and visible
-in the viewer window**
-
-.. image:: vertopal_cbedec83746b4aa08b3d6abec4c06604/media/image2.png
-   :width: 5.04087in
-   :height: 3.20833in
 
 **Hierarchy import**
 -----------------
