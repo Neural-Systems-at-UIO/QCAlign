@@ -17,7 +17,7 @@ To go back to the finest granuality level, click **View >** **Expand Hierarchy**
    :width: 6.3in
    :height: 0.77896in
 
-The hierarchy will automatically lock when grid points are marked up. To override this feature go to **View > Unlock**
+The hierarchy will automatically lock when grid points are marked up. To lock and unlock the hierarchy, click **View > Lock hierarchy**
 
 Customized hierarchy
 ---------------------
