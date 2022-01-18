@@ -7,12 +7,12 @@ QCAlign
 
    introduction
    installation
-   opening
-   
+
 .. toctree::
    :caption: Navigation
    :maxdepth: 3
    
+   opening
    navigation
    hierarchy
    atlasverlay
