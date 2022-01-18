@@ -8,7 +8,9 @@ How to perform the assessment
 
 2. In the slice viewer, mark points that overlap the experimental slice. Points that fall outside of the experimental slice should be left blank. 
    
-Select between four options by clicking the grid points with the mouse or keyboard. For quality control of the atlas maps, use the **(+), (-)** and **(?)** markers only. Whether a grid point **is** located in the assigned region, **is not** located in the assigned region, or is uncertain (?) is verified by the user  based on visible landmarks within the section. Only mark up (+) or (-) if the region boundaries are distinct enough to make this call. 
+Select between four options by clicking the grid points with the mouse or keyboard. 
+
+For quality control of the atlas maps, use the **(+), (-)** and **(?)** markers only. Whether a grid point is located in the assigned region, is not located in the assigned region, or whether this is uncertain is verified by the user based on visible landmarks within the section. Only mark up (+) or (-) if the region boundaries are distinct enough to make this call. 
 
 +------------+--------------+-------------------+-------------------+
 | **Marker** | **Mouse**    | **Keyboard**      | **Usage**         |
@@ -36,7 +38,7 @@ Select between four options by clicking the grid points with the mouse or keyboa
 
 5. Save the results in a JSON file. **File** > **Save as**.
 
-6. Export statistics in txt file. **File** > **Export stats**.
+6. Export statistics in txt format. **File** > **Export stats**.
 
 The text file lists all the regions vertically, with
 four rows per region titled “accurate”, “inaccurate”, “uncertain” and
@@ -62,13 +64,13 @@ demonstrating use of (+) and (-) markers.**
 |image1|\ 
 
 There are clear boundaries between all the structures in this slice due
-to differences in tissue appearance, and clearly visible cell layers in
-the case of the hippocampus. All regions can be marked up with
+to differences in tissue appearance and clearly visible cell layers in
+the case of the hippocampus. All regions can be marked with
 certainty: (+) or (-). One of the points is registered to the ventricle
-despite being located in the fiber tract and has been marked up with
+despite being located in the fiber tract and has been marked with
 **(-)**. All the other markers are marked up with **(+).**
 
-**Section with clearly visible landmarks and inaccurate
+**Section with clearly visible landmarks and inprecise
 registration.**
 
 .. image:: vertopal_cbedec83746b4aa08b3d6abec4c06604/media/image9.jpeg
@@ -76,7 +78,7 @@ registration.**
    :width: 4.94697in
    :height: 2.42422in
 
-**ESection with ambiguous boundaries demonstrating use of the
+**Section with ambiguous boundaries demonstrating use of the
 (?) marker.**
 
 .. image:: vertopal_cbedec83746b4aa08b3d6abec4c06604/media/image10.jpeg
