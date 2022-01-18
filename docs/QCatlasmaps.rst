@@ -11,19 +11,64 @@ How to perform the assessment
    Select between four options by clicking the grid points with the mouse or keyboard. For quality control assessment of
    the atlas maps, use the **(+), (-)** and **(?)** markers only.
    
-+-------------+---------------+-------------------+---------------------------------------------------------------------------------------------------------+   
-|  **Marker** |   **Mouse**   |    **Keyboard**   |                    **Usage**                                                                            |
-|             |               |    **shortcut**   |                                                                                                         |
-+=============+===============+===================+=========================================================================================================+
-|  **(+)**    |  Single click |         2         |  Use this marker for grid points that are correctly located in the assigned region: this is verified by |      
-|             |               |                   |  the anatomist based on landmarks. The regions boundaries are distinct enough to make this call.        |       
-+-------------+---------------+-------------------+---------------------------------------------------------------------------------------------------------+
-|  **(-)**    |  Double click |         3         |  Use this marker for grid points that are incorrectly located in the assigned region: this is verified  |
-|             |               |                   |  by the anatomist based on landmarks. The region boundaries are distinct enough to make this call.      |
-+-------------+---------------+-------------------+---------------------------------------------------------------------------------------------------------+
-|  **(?)**    |  Triple click |         4         |  Use this marker if you are uncertain whether a grid point is located in the assigned region: the region|
-|             |               |                   |  boundaries are not distinct enough to make this call. This does not mean that the registration is      |        |             |               |                   |  incorrect: only that the verification is not possible based on the available imaging data.             |
-+-------------+---------------+-------------------+---------------------------------------------------------------------------------------------------------+
+
++------------+--------------+-------------------+-------------------+
+| **Marker** | **Mouse**    | **Keyboard        | **Usage**         |
+|            |              | shortcut**        |                   |
++============+==============+===================+===================+
+| (+)        | Single click | 2                 | Use this marker   |
+|            |              |                   | for grid points   |
+|            |              |                   | that are          |
+|            |              |                   | correctly located |
+|            |              |                   | in the assigned   |
+|            |              |                   | region: this is   |
+|            |              |                   | verified by the   |
+|            |              |                   |                   |
+|            |              |                   | user based on     |
+|            |              |                   | landmarks. The    |
+|            |              |                   | regions           |
+|            |              |                   | boundaries are    |
+|            |              |                   | distinct enough   |
+|            |              |                   | to make this      |
+|            |              |                   | call.             |
++------------+--------------+-------------------+-------------------+
+| (-)        | Double click | 3                 | Use this marker   |
+|            |              |                   | for grid points   |
+|            |              |                   | that are          |
+|            |              |                   | incorrectly       |
+|            |              |                   | located in the    |
+|            |              |                   | assigned region:  |
+|            |              |                   | this is verified  |
+|            |              |                   | by the user based |
+|            |              |                   | on landmarks. The |
+|            |              |                   | region boundaries |
+|            |              |                   | are distinct      |
+|            |              |                   | enough to make    |
+|            |              |                   | this call.        |
++------------+--------------+-------------------+-------------------+
+| (?)        | Triple click | 4                 | Use this marker   |
+|            |              |                   | if you are        |
+|            |              |                   | uncertain whether |
+|            |              |                   | a grid point is   |
+|            |              |                   | located in the    |
+|            |              |                   | assigned region:  |
+|            |              |                   | the region        |
+|            |              |                   | boundaries are    |
+|            |              |                   | not distinct      |
+|            |              |                   | enough to make    |
+|            |              |                   | this call. This   |
+|            |              |                   | does not mean     |
+|            |              |                   | that the          |
+|            |              |                   | registration is   |
+|            |              |                   | incorrect: only   |
+|            |              |                   | that the          |
+|            |              |                   | verification is   |
+|            |              |                   | not possible      |
+|            |              |                   | based on the      |
+|            |              |                   | available imaging |
+|            |              |                   | data.             |
++------------+--------------+-------------------+-------------------+
+
       
 3. To get an overview of the grid points, and to easily identify grid points that remain unmarked within a slice, go to **View** > **Overview,** or press the spacebar.
 
@@ -40,9 +85,13 @@ four rows per region titled “accurate”, “inaccurate”, “uncertain” an
 Best practise 
 ---------------
 
-**IMPORTANT**
-
-As QCAlign is used for validation, the user’s input represents the anatomical “ground truth” for assessing the quality of the reference atlas registration to the sections. 
++----------------------------------------------------------------------+
+| **IMPORTANT**                                                        |
+|                                                                      |
+| As QCAlign is used for validation, the user’s input represents the   |
+| anatomical “ground truth” for assessing the quality of the reference |
+| atlas registration to the sections.                                  |
++----------------------------------------------------------------------+
 
 - The user should ONLY mark up (+) / (-) when certain of the precision of the atlas registration based on visible landmarks within the section. The (?) should be used in all instances when the user is unsure of the correct assignment due to undiscernible boundaries or limited anatomical knowledge.
 - For the purpose of the assessment, it is best to switch the atlas overlay “off” so that only the brain tissue is visible. 
