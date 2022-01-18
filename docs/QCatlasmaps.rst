@@ -53,8 +53,10 @@ As QCAlign is used for validation, the user’s input represents the anatomical 
 Examples of Accurate, Inaccurate, and Uncertain Markings
 --------------------------------------------------------
 
-|image1|\ **Example 1: Section with clearly visible landmarks
+**Example 1: Section with clearly visible landmarks
 demonstrating use of (+) and (-) markers.**
+
+|image1|\ 
 
 There are clear boundaries between all the structures in this slice due
 to differences in tissue appearance, and clearly visible cell layers in
