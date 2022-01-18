@@ -17,6 +17,11 @@ To go back to the finest granuality level, click **View >** **Expand Hierarchy**
    :width: 6.3in
    :height: 0.77896in
 
+The hierarchy will automatically lock when grid points are marked up. To override this feature go to **View > Unlock**
+
+Customized hierarchy
+---------------------
+
 Once you have created a customized hierarchy level that you would like
 to work with, save the QCAlign JSON file by clicking **File > Save as**.
 
