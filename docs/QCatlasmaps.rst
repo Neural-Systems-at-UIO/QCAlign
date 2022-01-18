@@ -23,7 +23,6 @@ How to perform the assessment
 |            |              |                   | in the assigned   |
 |            |              |                   | region: this is   |
 |            |              |                   | verified by the   |
-|            |              |                   |                   |
 |            |              |                   | user based on     |
 |            |              |                   | landmarks. The    |
 |            |              |                   | regions           |
