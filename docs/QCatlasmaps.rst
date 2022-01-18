@@ -6,7 +6,7 @@ How to perform the assessment
 
 1. Start on the first slice of the series by clicking the \|<< arrow in the upper-right corner. Proceed to each subsequent slice by clicking >
 
-2. In the slice viewer, mark points that overlap the experimental slice. Points that fall outside of the experimental slice should be left blank. 
+2. In the slice viewer, mark up points that overlap the experimental slice. Points that fall outside of the experimental slice should be left blank. 
    
 Select between four options by clicking the grid points with the mouse or keyboard. 
 
@@ -36,6 +36,8 @@ For quality control of the atlas maps, use the **(+), (-)** and **(?)** markers 
 
 4. Use the > in the far-right corner of the window to proceed through all slices.
 
+5. Proceed until all the slices have been marked up. 
+
 5. Save the results in a JSON file. **File** > **Save as**.
 
 6. Export statistics in txt format. **File** > **Export stats**.
@@ -47,19 +49,16 @@ four rows per region titled “accurate”, “inaccurate”, “uncertain” an
 Best practise 
 ---------------
  
-As QCAlign is used for validation, the user’s input represents the anatomical “ground truth”.
+As QCAlign is used for validation the user’s input represents the anatomical “ground truth”.
  
-- The user should ONLY mark up (+) / (-) when certain of the precision of the atlas registration based on visible landmarks within the section. The (?) should be used in all instances when the user is unsure of the correct assignment due to undiscernible boundaries or limited anatomical knowledge.
+- Only mark up (+) / (-) when certain of the precision of the atlas registration based on visible landmarks within the section. Use the (?) in all instances when you are unsure of the correct assignment due to undiscernible boundaries or limited anatomical knowledge.
 - For the purpose of the assessment, it is best to switch the atlas overlay “off” so that only the brain tissue is visible. 
 - By hovering over any point on the brain tissue, a text overlay is displayed that reveals the atlas region to which the point is registered. Use this information, any visible landmarks, and your anatomical knowledge to assess whether the point is registered correctly, incorrectly, or of uncertain position. 
 - It is possible to toggle the atlas overlay “on” and off” between each point assessment to get an overview of the atlas delineations. While it can be helpful with an overview, try not to let the delineations affect your decision-making as this will bias the outcome. If in doubt, always mark up (?).
 - A useful anatomy resource when working with QCAlign is the Allen Brain Atlas Interactive Brain Viewer (coronal atlas, Nissl stain). This shows the Allen Mouse Brain Atlas applied to Nissl stained sections and can be used as a guide.
 
-Examples of Accurate, Inaccurate, and Uncertain Markings
---------------------------------------------------------
-
-**Section with clearly visible landmarks
-demonstrating use of (+) and (-) markers.**
+Example 1: Section with clearly visible landmarks  
+--------------------------------------------------
 
 |image1|\ 
 
@@ -70,16 +69,16 @@ certainty: (+) or (-). One of the points is registered to the ventricle
 despite being located in the fiber tract and has been marked with
 **(-)**. All the other markers are marked up with **(+).**
 
-**Section with clearly visible landmarks and inprecise
-registration.**
+Example 2: Section with clearly visible landmarks 
+-------------------------------------------------
 
 .. image:: vertopal_cbedec83746b4aa08b3d6abec4c06604/media/image9.jpeg
    :alt: Z:\NESYS_Lab\PhD_project_Yates_Sharon\Jackson_article\QControl\User_manual\Inaccurate.jpg
    :width: 4.94697in
    :height: 2.42422in
 
-**Section with ambiguous boundaries demonstrating use of the
-(?) marker.**
+Example 3: Section with ambiguous boundaries
+-------------------------------------------
 
 .. image:: vertopal_cbedec83746b4aa08b3d6abec4c06604/media/image10.jpeg
    :width: 6.3in
