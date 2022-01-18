@@ -15,7 +15,7 @@ The quality control steps are based on systematic sampling, with a grid of point
 
 - For quality control of the histological slice images there is a damage marker for marking up areas that should be excluded from the analysis due to tissue damage, artifacts, or errors in image aquisition. 
 
-As output, QCAlign generates reports with marker counts per region. This enables calculation of percentage (%) accuracy, % inaccuracy and % uncertainty for the atlas-registration per region, for the whole brain and per slice; and % damage per region based on the quality control of the slice images. 
+- As output, QCAlign generates reports with marker counts per region. This enables calculation of percentage (%) accuracy, % inaccuracy and % uncertainty for the atlas-registration per region, for the whole brain and per slice; and % damage per region based on the quality control of the slice images. 
 
 As an additional feature, QCAlign may be used to explore the reference atlas hierarchy. This can be done as part of quality control, or as an independent procedure. QCAlign enables export of customized atlas hierarchy files that are compatible with the Nutil software used in the QUINT workflow. 
 
