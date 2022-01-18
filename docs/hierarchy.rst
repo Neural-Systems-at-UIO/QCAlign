@@ -34,6 +34,13 @@ to work with, save the QCAlign JSON file by clicking **File > Save as**.
 To reduce the need to adjust the hierarchy with each use, a customized hierarchy may be imported from another QCAlign JSON file. 
 This feature is useful when assessing multiple brain series. 
 
+**Customized hierarchy with select regions, including the
+isocortex, olfactory areas, and Ammon’s horn, collapsed**
+
+.. image:: vertopal_cbedec83746b4aa08b3d6abec4c06604/media/image14.jpeg
+   :width: 5.90683in
+   :height: 3.7093in
+
 
 **Hierarchy import**
 -----------------
