@@ -27,7 +27,7 @@ For this assessment, use the (X) marker only. Mark up all the grid points that a
 
 5. Proceed until all the slices have been marked up. 
 
-6. Adjust the atlas hierarchy to the level that you're interest in: this is typically the same level that you will use for Nutil analysis. If you'd like results for several hierarchy levels, it is possible to export the statistics several times. Simply adjust the hierarchy between exports (unlock the hierarchy in the "View" menu).  
+6. Adjust the atlas hierarchy to the level that you're interest in: this is typically the same level that you will use for Nutil analysis. If you'd like results for several hierarchy levels it's possible to export the statistics several times. Simply adjust the hierarchy between exports (unlock the hierarchy in the "View" menu).  
 
 5. Save the results in a JSON file. **File** > **Save as**.
 
