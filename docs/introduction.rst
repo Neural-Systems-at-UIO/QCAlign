@@ -9,7 +9,7 @@ QCAlign was developed for validation of QUINT performance and to guide decision-
 
 3.	Quality control of the histological slice images.
 
-The quality control steps are based on systematic sampling, with a grid of points with a fixed spacing positioned at random over the section images, with the option to superimpose the atlas maps. 
+The quality control steps are based on systematic sampling, with a grid of points with fixed spacing positioned at random over the section images, with the option to superimpose the atlas maps. 
 
 - For quality control of the atlas maps there is functionality for marking up whether a point is registered correctly, incorrectly, or of uncertain position based on visible landmarks within the section. In effect, the user working with the tool represents the “ground truth”, and uses the appearance of visible landmarks and their anatomical knowledge to validate the quality of the registration. 
 
