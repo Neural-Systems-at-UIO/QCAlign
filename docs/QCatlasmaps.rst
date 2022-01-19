@@ -1,16 +1,18 @@
-**1. Quality control of registration alignment**
+**1. Quality control of the atlas maps**
 =========================================================
 
 How to perform the assessment
 ------------------------------
 
+1. Open the JSON file in QCAlign that corresponds to the image series and the delineations that you would like to assess. Adjust the atlas hierarchy, the grid spacing and the grid aesthetics: see the navigation section for information. Use the opacity slider to adjust the appearance of the atlas overlay in the viewer window.  
+
 1. Start on the first slice of the series by clicking the \|<< arrow in the upper-right corner. Proceed to each subsequent slice by clicking >
 
 2. In the slice viewer, mark up points that overlap the experimental slice. Points that fall outside of the experimental slice should be left blank. 
    
-Select between four options by clicking the grid points with the mouse or keyboard. 
+Select between four options by clicking the grid points with the mouse or keyboard shortcuts.  
 
-For quality control of the atlas maps, use the **(+), (-)** and **(?)** markers only. Whether a grid point is located in the assigned region, is not located in the assigned region, or whether this is uncertain is verified by the user based on visible landmarks within the section. Only mark up (+) or (-) if the region boundaries are distinct enough to make this call. 
+For quality control of the atlas maps, use the **(+), (-)** and **(?)** markers only. Whether a grid point is located in the assigned region, is not located in the assigned region, or whether this is uncertain is verified by the user based on visible landmarks within the section. Only mark up (+) or (-) if the region boundaries are distinct enough to make this call. See the **Best practise** section below for guidance.  
 
 +------------+--------------+-------------------+-------------------+
 | **Marker** | **Mouse**    | **Keyboard**      | **Usage**         |
@@ -51,10 +53,9 @@ Best practise
  
 As QCAlign is used for validation the user’s input represents the anatomical “ground truth”.
  
-- Only mark up (+) / (-) when certain of the precision of the atlas registration based on visible landmarks within the section. Use the (?) in all instances when you are unsure of the correct assignment due to undiscernible boundaries or limited anatomical knowledge.
-- For the purpose of the assessment, it is best to switch the atlas overlay “off” so that only the brain tissue is visible. 
-- By hovering over any point on the brain tissue, a text overlay is displayed that reveals the atlas region to which the point is registered. Use this information, any visible landmarks, and your anatomical knowledge to assess whether the point is registered correctly, incorrectly, or of uncertain position. 
-- It is possible to toggle the atlas overlay “on” and off” between each point assessment to get an overview of the atlas delineations. While it can be helpful with an overview, try not to let the delineations affect your decision-making as this will bias the outcome. If in doubt, always mark up (?).
+- Only mark up (+) / (-) when certain of the precision of the atlas registration based on visible landmarks within the section. Use the (?) in all instances when you are unsure of the correct assignment due to undiscernible boundaries or limited anatomical knowledge. If in doubt, always mark up (?).
+- For the purpose of the assessment, toggle the region outlines "on" and "off" with the opacity slider to get an overview of the atlas delineations. While it can be helpful with an overview, try not to let the delineations affect your decision-making as this will bias the outcome. 
+-Make the decision for each grid point with the region outlines switched "off" as the outlines may obscure the boundaries. By hovering over any point on the brain tissue, a text overlay is displayed that reveals the atlas region to which the point is registered. Use this information, any visible landmarks, and your anatomical knowledge to assess whether the point is registered correctly, incorrectly, or of uncertain position.  
 - A useful anatomy resource when working with QCAlign is the Allen Brain Atlas Interactive Brain Viewer (coronal atlas, Nissl stain). This shows the Allen Mouse Brain Atlas applied to Nissl stained sections and can be used as a guide.
 
 Example 1: Section with clearly visible landmarks  
