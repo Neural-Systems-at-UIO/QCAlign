@@ -6,13 +6,13 @@ How to perform the assessment
 
 1. Open the JSON file in QCAlign that corresponds to the image series and the delineations that you would like to assess. Adjust the atlas hierarchy, the grid spacing and the grid aesthetics: see the navigation section for information. Use the opacity slider to adjust the appearance of the atlas overlay in the viewer window.  
 
-1. Start on the first slice of the series by clicking the \|<< arrow in the upper-right corner. Proceed to each subsequent slice by clicking >
+2. Start on the first slice of the series by clicking the \|<< arrow in the upper-right corner. Proceed to each subsequent slice by clicking >
 
-2. In the slice viewer, mark up points that overlap the experimental slice. Points that fall outside of the experimental slice should be left blank. 
+3. In the slice viewer, mark up points that overlap the experimental slice. Points that fall outside of the experimental slice should be left blank. 
    
 Select between four options by clicking the grid points with the mouse or keyboard shortcuts. It is fastest to work with the keyboard shortcuts: by holding down the shortcut and scrolling over points in turn you activate “paint” functionality. 
 
-For quality control of the atlas maps, use the **(+), (-)** and **(?)** markers only. Whether a grid point is located in the assigned region, is not located in the assigned region, or whether this is uncertain is verified by the user based on visible landmarks within the section. Only mark up (+) or (-) if the region boundaries are distinct enough to make this call. See the **Best practise** section below for guidance.  
+For quality control of the atlas maps, use the **(+), (-)** and **(?)** markers only. Whether a grid point is located in the assigned region, is not located in the assigned region, or whether this is uncertain is verified by the user based on visible landmarks within the section. Only mark up (+) or (-) if the region boundaries are distinct enough to make this call. See the **Best Practise** section below for guidance.  
 
 +------------+--------------+-------------------+-------------------+
 | **Marker** | **Mouse**    | **Keyboard**      | **Usage**         |
@@ -34,21 +34,21 @@ For quality control of the atlas maps, use the **(+), (-)** and **(?)** markers 
 |            |              |                   | region            |
 +------------+--------------+-------------------+-------------------+
 
-3. To get an overview of the grid points, and to easily identify grid points that remain unmarked within a slice, go to **View** > **Overview,** or press the spacebar.
+4. To get an overview of the grid points, and to easily identify grid points that remain unmarked within a slice, go to **View** > **Overview,** or press the spacebar.
 
-4. Use the > in the far-right corner of the window to proceed through all slices.
+5. Use the > in the far-right corner of the window to proceed through all slices.
 
-5. Proceed until all the slices have been marked up. 
+6. Proceed until all the slices have been marked up. 
 
-5. Save the results in a JSON file. **File** > **Save as**.
+7. Save the results in a JSON file. **File** > **Save as**.
 
-6. Export statistics in txt format. **File** > **Export stats**.
+8. Export statistics in txt format. **File** > **Export stats**.
 
 The text file lists all the regions vertically, with
 four rows per region titled “accurate”, “inaccurate”, “uncertain” and
 “damaged” with the number of markers for each. There is a row for the whole series and a row per slice. 
       
-Best practise 
+Best Practise 
 ---------------
  
 As QCAlign is used for validation the user’s input represents the anatomical “ground truth”.
