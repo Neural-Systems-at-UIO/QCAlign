@@ -1,4 +1,4 @@
-**2. Quality control of the brain tissue and of the images**
+**2. Quality control of the brain tissue images**
 =================================================================
 
 To assess the integrity of the tissue and the quality of the histological slice images use the **(X)** marker. The output of the assessment may be used to calculate % damage per region, which is useful for identifying regions to exclude from the QUINT results. This assessment is performed independently of the atlas map assessment, with the atlas delineations switched off. 
@@ -18,7 +18,7 @@ For this assessment, use the (X) marker only. Mark up all the grid points that a
 | **Marker** | **Mouse**    | **Keyboard**      | **Usage**         |
 |            |              |                   |                   |
 +============+==============+===================+===================+
-| (X)        | Quadruple    | 5                 | Tissue damage,    |
+| (x)        | Quadruple    | 5                 | Tissue damage,    |
 |            | click        |                   | artifact or image |
 |            |              |                   | out-of-focus      |
 +------------+--------------+-------------------+-------------------+
