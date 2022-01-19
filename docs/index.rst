@@ -26,9 +26,4 @@ QCAlign
    QCatlasmaps
    QCtissue
  
-.. toctree::
-   :caption: To delete
-   :maxdepth: 3 
-   
-   QCAlign
   
