@@ -15,9 +15,9 @@ QCAlign
    
    opening
    navigation
-   hierarchy
-   atlasverlay
+   atlasoverlay
    gridoverlay
+   hierarchy
    
 .. toctree::
    :caption: Quality control
