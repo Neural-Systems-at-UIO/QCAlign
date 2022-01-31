@@ -3,15 +3,13 @@
 
 The QuickNII - ilastik - Nutil (QUINT) workflow enables regional-quantification of labelled features in histological section images based on extraction of the labelled features by segmentation (with ilastik) and registration of the section images to a reference atlas (with QuickNII and VisuAlign). 
 
-QCAlign was developed to support systematic post-processing of the QUINT results. As the quality of the QUINT results is dependent on the quality of the feature extraction, as well as the quality of the atlas-registration, QCAlign enables quality control of the section images (which has implications for the feature extraction), in addition to quality control of the atlas-registration. It also enables adjustment of the reference atlas hierarchy, which is a useful feature for exploring the hierarchy and for designing a customized level of the hierarchy for QUINT analysis. This feature was introduced as reference atlases contain boundaries that are not possible to discern in individual image series, which means that the hierarchy has to be adjusted for quality control of the atlas-registration.  
-
-It enables:
+QCAlign was developed to support systematic post-processing of the QUINT results. As the quality of the QUINT results is dependent on the quality of the feature extraction, as well as the quality of the atlas-registration, QCAlign enables quality control of the section images (which has implications for the feature extraction), in addition to quality control of the atlas-registration. It also enables adjustment of the reference atlas hierarchy, which is a useful feature for exploring the hierarchy and for designing a customized level of the hierarchy for QUINT analysis. This feature was introduced as reference atlases contain boundaries that are not possible to discern in individual image series, which means that the hierarchy has to be adjusted for meaningful quality control of the atlas-registration.  
 
 1. Quality control of the section images: detection of regions that are affected by tissue damage, labelling defects or errors in image acqusition (e.g. out-of-focus). 
 
 2. Quality control of atlas-registration to the section images: detection of regions that are poorly registered or where the registration cannot be verified. This process involves adjusting the reference atlas hierarchy.
 
-3. Exploring the reference atlas hierarchy. 
+3. Exploring the reference atlas hierarchy: required for quality control of the atlas-registration, but also useful as a standalone procedure. 
 
 The quality control steps are based on systematic sampling, with a grid of points with fixed spacing positioned at random over the section images, with the option to superimpose the delineations from QuickNII or VisuAlign.
 
