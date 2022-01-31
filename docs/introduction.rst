@@ -23,6 +23,7 @@ The quality control steps are based on systematic sampling, with a grid of point
 -------------------
 
 1. QCAlign generates reports in .txt format with marker counts per region for each section and for all the sections combined. 
+
 - For the quality control of the section images this enables calculation of percentage (%) damage per region for each section and for all the sections combined. 
 - For the quality control of the atlas-registration this enables calculation of % verified as accurate, % verified as inaccurate and % uncertainty per region, for each section and for all the sections combined.  
 
