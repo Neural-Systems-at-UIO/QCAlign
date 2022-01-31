@@ -27,8 +27,8 @@ The quality control steps are based on systematic sampling, with a grid of point
 
 2. QCAlign generates customized atlas hierarchy files in .txt format that are compatible with the Nutil software used in the QUINT workflow.
 
-**More information**
----------------------
+**More information on QUINT**
+-----------------------------
 
 Currently QCAlign supports the Allen Mouse Brain Atlas CCFv3, 2015 and 2017 and the Waxholm Space Atlas of the Spraque Dawley Rat v2 and v3. 
 
