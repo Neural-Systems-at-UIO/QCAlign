@@ -4,11 +4,13 @@
 How to perform the assessment
 ------------------------------
 
-1. Open the JSON file in QCAlign that corresponds to the image series and the delineations that you would like to assess. Adjust the atlas hierarchy, the grid spacing and the grid aesthetics: see the navigation section for information. Use the opacity slider to adjust the appearance of the atlas overlay in the viewer window.  
+1. Open the JSON file in QCAlign that corresponds to the image series and the delineations that you would like to assess. 
 
-2. Start on the first section of the series by clicking the \|<< arrow in the upper-right corner. Proceed to each subsequent section by clicking >
+2. Adjust the atlas hierarchy, the grid spacing and the grid aesthetics: see the navigation section for information. Use the opacity slider to adjust the appearance of the atlas overlay in the viewer window: switch the delineations "off" for the assessment. 
 
-3. In the section viewer, mark up points that overlap the experimental section. Points that fall outside of the experimental section should be left blank. 
+3. Start on the first section of the series by clicking the \|<< arrow in the upper-right corner. Proceed to each subsequent section by clicking >
+
+4. In the section viewer, mark up points that overlap the section. Points that fall outside of the experimental section should be left blank. 
    
 Select between four options by clicking the grid points with the mouse or keyboard shortcuts. It is fastest to work with the keyboard shortcuts: by holding down the shortcut and scrolling over points in turn you activate “paint” functionality. 
 
@@ -34,15 +36,15 @@ For QC assessment of the atlas-registration, use the **(+), (-)** and **(?)** ma
 |            |              |                   | region            |
 +------------+--------------+-------------------+-------------------+
 
-4. To get an overview of the grid points, and to easily identify grid points that remain unmarked within a section, go to **View** > **Overview,** or press the spacebar.
+5. To get an overview of the grid points, and to easily identify grid points that remain unmarked within a section, go to **View** > **Overview,** or press the spacebar.
 
-5. Use the > in the far-right corner of the window to proceed through all sections.
+6. Use the > in the far-right corner of the window to proceed through all sections.
 
-6. Proceed until all the sections have been marked up. 
+7. Proceed until all the sections have been marked up. 
 
-7. Save the results in a JSON file. **File** > **Save as**.
+8. Save the results in a JSON file. **File** > **Save as**.
 
-8. Export statistics in txt format. **File** > **Export stats**.
+9. Export statistics in txt format. **File** > **Export stats**.
 
 The text file lists all the regions vertically, with
 four rows per region titled “accurate”, “inaccurate”, “uncertain” and
