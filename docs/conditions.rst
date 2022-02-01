@@ -1,7 +1,7 @@
 **Conditions of use**
 =====================
 
-QCAlign was developed for validation of QUINT workflow performance by the Neural Systems Laboratory at the Institute of Basic Medical Sciences, University of Oslo, Norway in collaboration with the Kaczorowski Lab at the Jackson Laboratory, Bar Harbor, Maine, US. 
+QCAlign was developed to support systematic post-processing of the QUINT results. It was developed by the Neural Systems Laboratory at the Institute of Basic Medical Sciences at the University of Oslo in Norway, in collaboration with the Kaczorowski Lab at the Jackson Laboratory in Bar Harbor, Maine, in the USA. 
 
 Authors
 ---------
@@ -18,12 +18,13 @@ Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International
 Acknowledgements
 -----------------
 
-QCAlign was developed with support from the EBRAINS infrastructure, and funding from the European Union’s Horizon 2020 Framework Programme for Research and Innovation under the Framework Partnership Agreement No. 650003 (HBP FPA).
+QCAlign was developed with support from the EBRAINS infrastructure, with funding from the European Union’s Horizon 2020 Framework Programme for Research and Innovation under the Framework Partnership Agreement No. 650003 (HBP FPA).
 
 How to cite the tool
 ---------------------
 
-To come. 
+Manuscript in preparation. 
+
 
 How to cite the reference atlases
 ----------------------------------
