@@ -1,7 +1,7 @@
 **Conditions of use**
 =====================
 
-QCAlign was developed to support systematic post-processing of the QUINT results. It was developed by the Neural Systems Laboratory at the Institute of Basic Medical Sciences at the University of Oslo in Norway, in collaboration with the Kaczorowski Lab at the Jackson Laboratory in Bar Harbor, Maine, in the USA. 
+QCAlign supports systematic post-processing of the QUINT results. It was developed by the Neural Systems Laboratory at the Institute of Basic Medical Sciences at the University of Oslo in Norway, in collaboration with the Kaczorowski Lab at the Jackson Laboratory in Bar Harbor, Maine, in the USA. 
 
 Authors
 ---------
