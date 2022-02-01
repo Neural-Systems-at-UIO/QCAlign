@@ -10,17 +10,17 @@ The atlas overlay may be switched “on” or “off” with the opacity slider:
    :width: 6.30055in
    :height: 0.44004in
 
--  In the far-left position, the overlay visibility is switched “off”.
+-  In the far-left position, the overlay is switched “off”.
 
 -  In the middle position, the regions are displayed in the colors of
    the reference atlas, with the slider adjusting the color opacity.
 
 -  In the far-right position, only the region outlines are visible.
 
-By hovering over any part of the slice image, the region name to which
+By hovering over any part of the section image, the region name to which
 that point is registered to will be displayed.
 
-**The user’s cursor is located in a position registered as the
+**In the image below, the researcher's cursor is located in a position registered as the
 caudoputamen**
 
 .. image:: vertopal_cbedec83746b4aa08b3d6abec4c06604/media/image4.png
