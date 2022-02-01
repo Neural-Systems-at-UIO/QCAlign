@@ -1,7 +1,7 @@
 **What is QCAlign?**
 ====================
 
-The QuickNII - ilastik - Nutil (QUINT) workflow enables quantification of labelled features in section images based on extraction of the features by segmentation (with ilastik), and registration of the section images to a reference atlas (with QuickNII and VisuAlign). 
+The QuickNII - ilastik - Nutil (QUINT) workflow enables quantification of labelled features in section images from rodent brains based on extraction of the features by segmentation (with ilastik), and registration of the section images to a reference atlas (with QuickNII and VisuAlign). 
 
 QCAlign was developed to support systematic post-processing of the QUINT results. As the quality of the QUINT results depends on the quality of the feature extraction, as well as the quality of the atlas-registration, QCAlign enables quality control of the section images (which has implications for the extraction), as well as quality control of the registration. As reference atlases contain boundaries that are not possible to discern in individual image series, QCAlign has functionality for adjusting the reference atlas hierarchy to a level that enables verification of the registration. This feature is also useful for exploring the hierarchy, and for designed a customized level to use for QUINT analysis. 
 
