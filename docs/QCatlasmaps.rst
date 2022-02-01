@@ -1,4 +1,4 @@
-**2. QC assessment of the atlas-registration**
+**2. QC Assessment of the Atlas-Registration**
 =========================================================
 
 How to perform the assessment
