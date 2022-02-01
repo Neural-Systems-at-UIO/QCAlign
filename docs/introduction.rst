@@ -20,7 +20,7 @@ The quality control steps are based on systematic sampling, with a grid of point
 
 - For quality control of the section images there is a "damage" marker for marking up areas that should be excluded from the analysis due to tissue damage, artifacts, or errors in image aquisition. 
 
-- For quality control of the atlas-registration there is functionality for marking up whether a point is registered correctly, incorrectly, or of uncertain position based on visible landmarks within the section. In effect, the researcher working with the tool represents the “ground truth”, and uses the appearance of visible landmarks and their anatomical knowledge to assess the quality of the registration.
+- For quality control of the atlas-registration there are "accurate", "inaccurate" and "uncertain" markers for verifying the precision of the registration based on visible landmarks within the section. In effect, the researcher working with the tool represents the “ground truth”, and uses the appearance of visible landmarks and their anatomical knowledge to assess the quality of the registration.
 
 **What do you do with the output?**
 -----------------------------------
@@ -29,12 +29,12 @@ QCAlign generates two types of reports:
 
 1. Reports in .txt format with marker counts per region for each section and for all the sections combined. 
 
-- For the quality control of the section images this enables calculation of percentage (%) damage per region for each section and for all the sections combined. 
-- For the quality control of the registration this enables calculation of % verified as accurate, % verified as inaccurate and % that is uncertain for each region, for each section and for all the sections combined.  
+- For the quality control of the section images this enables calculation of percentage (%) "damage" per region for each section and for all the sections combined. 
+- For the quality control of the registration this enables calculation of % "verified as accurate", % "verified as inaccurate" and % that is uncertain for each region for each section and for all the sections combined.  
 
-This information can be used to guide decision-making regarding post-processing of the QUINT results. For example, exclude all regions that have more than 30% damage. 
+This information can be used to guide decision-making regarding post-processing of the QUINT results. For example, a researcher may choose to exclude all regions that have more than 30% damage from their QUINT results. 
 
-2. QCAlign also generates hierarchy files in .txt format that correspond to the customized level that is selected in QCAlign. These are compatible with the Nutil software used in the QUINT workflow, and may be used to generate customized reports with QUINT.
+2. QCAlign also generates hierarchy files in .txt format: these correspond to the customized level that is selected in the QCAlign tool. The .txt files are compatible with the Nutil software, and may be used to generate customized Nutil reports.
 
 **More information on QUINT**
 -----------------------------
