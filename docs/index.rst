@@ -23,7 +23,8 @@ QCAlign
    :caption: Quality control
    :maxdepth: 3
    
-   QCatlasmaps
    QCtissue
+   QCatlasmaps
+
  
   
