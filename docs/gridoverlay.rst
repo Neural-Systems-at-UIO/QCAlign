@@ -25,11 +25,11 @@ means that a grid spacing of 10 voxels is equivalent to 10 x 25
 µm\ :sup:`3` = 250µm\ :sup:`3` (250 µm in each of the x, y and z
 directions).
 
-While a finer grid spacing will give a more accurate results, finer grid
-spacing also increases the workload required, and will not significantly
+While a finer grid spacing will give more accurate results, finer grid
+spacing also increases the workload, and will not significantly
 alter the result beyond a certain point. The optimal grid spacing is
-established based on the user’s needs and requires the consideration of
-workload and accuracy.
+established based on the researcher’s needs (for example: the size of the regions-of-interest) and requires consideration of
+the workload and desired accuracy level.
 
 For meaningful results, aim for > 50 points per region-of-interest (e.g.
 broad regions) across the whole series.
