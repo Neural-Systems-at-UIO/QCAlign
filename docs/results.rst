@@ -1,4 +1,4 @@
-**QC Results**
+**Results**
 ===============
 
 To export the results of the QC assessment go to: **File > Export stats**.
