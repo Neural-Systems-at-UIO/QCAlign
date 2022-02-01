@@ -20,7 +20,7 @@ QCAlign
    hierarchy
    
 .. toctree::
-   :caption: Quality control
+   :caption: Quality control (QC)
    :maxdepth: 3
    
    QCtissue
