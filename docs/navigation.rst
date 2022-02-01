@@ -1,7 +1,7 @@
 **Navigation**
 ---------------
 
-QCAlign has a similar setup to VisuAlign, with the histological slice images displayed in a Viewer Window. An adjustable hierarchy panel is provided on the left-hand side, with functionality for adjusting the appearance, spacing, and transparency of the grid and/or reference atlas overlay located above the list of regions. Functionality for navigating between the slices is enabled in the top right-hand corner.
+QCAlign has a Main Window for viewing the histological section images, with an adjustable hierarchy panel on the left-hand side. Functionality for adjusting the appearance, spacing, and transparency of the grid and/or reference atlas overlay is located above the list of regions. Functionality for navigating between the slices is enabled in the top right-hand corner.
 
 -  The **File** button provides “save as”, “import” and “export”
    functionality.
