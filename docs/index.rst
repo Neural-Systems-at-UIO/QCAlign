@@ -25,6 +25,7 @@ QCAlign
    
    QCtissue
    QCatlasmaps
+   results
 
  
   
