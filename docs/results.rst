@@ -1,7 +1,7 @@
 **Results**
 ===============
 
-To export the results of the QC assessment go to: **File > Export stats**.
+To export the results of either of the QC assessments go to: **File > Export stats**.
 
 This generates a .TXT file that lists all the regions vertically, with four rows per region titled “accurate”, “inaccurate”, “uncertain” and “damaged” with marker counts for each. There is a row for the whole series and a row per section. 
 
