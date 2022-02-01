@@ -20,16 +20,14 @@ The quality control steps are based on systematic sampling, with a grid of point
 
 - For quality control of the atlas-registration there are "accurate", "inaccurate" and "uncertain" markers for verifying the precision of the registration based on visible landmarks within the section. In effect, the researcher working with the tool represents the “ground truth”, and uses the appearance of visible landmarks and their anatomical knowledge to assess the quality of the registration.
 
-**What do you do with the results?**
+**What can you do with the results?**
 -----------------------------------
 
 QCAlign generates two types of reports:
 
-1. Reports with marker counts per region for each section and for all the sections combined (.TXT format): they regions correspond to the customized hierarchy level selected in QCAlign.
+1. Reports with marker counts per region for each section and for all the sections combined (.TXT format). This can be used to calculate percentage (%) damage per region based on the QC assessment of the section images; and % verified as accurate, % verified as inaccurate, and % that is uncertain for each region based on the QC assessment of the atlas-registration.
 
-2. Hierarchy files that are compatible with the customized region feature in Nutil (.TXT format). The files correspond to the customized hierarchy level that is selected in QCAlign.
-
-For the quality control of the section images, the first report enables calculation of percentage (%) "damage" per region for each section and for all the sections combined. For the quality control of the registration, it enables calculation of % "verified as accurate", % "verified as inaccurate" and % that is uncertain for each region for each section and for all the sections combined. This information can be used to guide decision-making regarding post-processing of the QUINT results, for example: a researcher may choose to exclude all regions that have more than 30% damage from their QUINT results. 
+2. Hierarchy files in .TXT format. These are compatible with the customized report feature in Nutil and correspond to the customized hierarchy level that is selected in QCAlign. It may therefore be used to perform customized analysis for this hierarchy level. 
 
 
 **More information on QUINT**
