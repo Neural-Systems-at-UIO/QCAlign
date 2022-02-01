@@ -5,7 +5,7 @@ The QuickNII - ilastik - Nutil (QUINT) workflow enables quantification of labell
 
 QCAlign was developed to support systematic post-processing of the QUINT results. As the quality of the QUINT results depends on the quality of the feature extraction, as well as the quality of the atlas-registration, QCAlign enables quality control of the section images (which has implications for the extraction), as well as quality control of the registration. As atlases contain boundaries that are not possible to discern in individual sections, QCAlign has functionality for adjusting the reference atlas hierarchy to a level that allows verification of the registration. This feature is also useful for exploring the hierarchy, and for designed a customized level to use for QUINT analysis. 
 
-To summarise, QCAlign enables:
+QCAlign enables:
 
 1. Quality control of the section images: detection of regions that are affected by tissue damage, labelling defects, or errors in image acqusition (e.g. out-of-focus). 
 
@@ -22,7 +22,7 @@ The quality control steps are based on systematic sampling, with a grid of point
 
 - For quality control of the atlas-registration there are "accurate", "inaccurate" and "uncertain" markers for verifying the precision of the registration based on visible landmarks within the section. In effect, the researcher working with the tool represents the “ground truth”, and uses the appearance of visible landmarks and their anatomical knowledge to assess the quality of the registration.
 
-**What do you do with the output?**
+**What do you do with the results?**
 -----------------------------------
 
 QCAlign generates two types of reports:
