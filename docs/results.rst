@@ -12,7 +12,7 @@ For the QC assessment of the atlas-registration the counts may be used to calcul
 **Post-processing of the QUINT results**
 ----------------------------------------
 
-This information can be used to guide decision-making regarding post-processing of the QUINT results. For example:
+Thhe results from QCAlign can be used to guide decision-making regarding post-processing of the QUINT results. For example:
 
 - a researcher may choose to exclude all regions that have more than 30% damage from the QUINT results.
 
