@@ -34,7 +34,7 @@ the workload and desired accuracy level.
 For meaningful results, aim for > 50 points per region-of-interest (e.g.
 broad regions) across the whole series.
 
-1. Select **Setup mode** to reveal the grid spacing panel.
+1. Select **Setup Mode** to reveal the grid spacing panel.
 
 .. image:: vertopal_cbedec83746b4aa08b3d6abec4c06604/media/image7.png
    :width: 6.06719in
@@ -45,5 +45,4 @@ broad regions) across the whole series.
 3. The appearance of the grid point overlay in the viewer window
    automatically adjusts to match the selected grid spacing.
 
-4. Unselect Setup Mode when a value has been input to lock in that grid
-   spacing level.
+4. Unselect the **Setup Mode** to return to the atlas overlay panel. 
