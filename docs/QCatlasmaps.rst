@@ -1,4 +1,4 @@
-**1. Quality control of the atlas maps**
+**2. QC assessment of the atlas-registration**
 =========================================================
 
 How to perform the assessment
@@ -6,13 +6,13 @@ How to perform the assessment
 
 1. Open the JSON file in QCAlign that corresponds to the image series and the delineations that you would like to assess. Adjust the atlas hierarchy, the grid spacing and the grid aesthetics: see the navigation section for information. Use the opacity slider to adjust the appearance of the atlas overlay in the viewer window.  
 
-2. Start on the first slice of the series by clicking the \|<< arrow in the upper-right corner. Proceed to each subsequent slice by clicking >
+2. Start on the first section of the series by clicking the \|<< arrow in the upper-right corner. Proceed to each subsequent section by clicking >
 
-3. In the slice viewer, mark up points that overlap the experimental slice. Points that fall outside of the experimental slice should be left blank. 
+3. In the section viewer, mark up points that overlap the experimental section. Points that fall outside of the experimental section should be left blank. 
    
 Select between four options by clicking the grid points with the mouse or keyboard shortcuts. It is fastest to work with the keyboard shortcuts: by holding down the shortcut and scrolling over points in turn you activate “paint” functionality. 
 
-For quality control of the atlas maps, use the **(+), (-)** and **(?)** markers only. Whether a grid point is located in the assigned region, is not located in the assigned region, or whether this is uncertain is verified by the user based on visible landmarks within the section. Only mark up (+) or (-) if the region boundaries are distinct enough to make this call. See the **Best Practise** section below for guidance.  
+For QC assessment of the atlas-registration, use the **(+), (-)** and **(?)** markers only. Whether a grid point is located in the assigned region, is not located in the assigned region, or whether this is uncertain is verified by the researcher based on visible landmarks within the section. Only mark up (+) or (-) if the region boundaries are distinct enough to make this call. See the **Best Practise** section below for guidance.  
 
 +------------+--------------+-------------------+-------------------+
 | **Marker** | **Mouse**    | **Keyboard**      | **Usage**         |
@@ -34,11 +34,11 @@ For quality control of the atlas maps, use the **(+), (-)** and **(?)** markers 
 |            |              |                   | region            |
 +------------+--------------+-------------------+-------------------+
 
-4. To get an overview of the grid points, and to easily identify grid points that remain unmarked within a slice, go to **View** > **Overview,** or press the spacebar.
+4. To get an overview of the grid points, and to easily identify grid points that remain unmarked within a section, go to **View** > **Overview,** or press the spacebar.
 
-5. Use the > in the far-right corner of the window to proceed through all slices.
+5. Use the > in the far-right corner of the window to proceed through all sections.
 
-6. Proceed until all the slices have been marked up. 
+6. Proceed until all the sections have been marked up. 
 
 7. Save the results in a JSON file. **File** > **Save as**.
 
@@ -51,20 +51,20 @@ four rows per region titled “accurate”, “inaccurate”, “uncertain” an
 Best Practise 
 ---------------
  
-As QCAlign is used for validation, the user’s input represents the anatomical “ground truth”.
+As QCAlign is used for validation, the researcher's input represents the anatomical “ground truth”.
 
-- As a rule of thumb make the decision for each grid point with the region outlines switched "off". By hovering over any point on the brain tissue, a text overlay is displayed that reveals the atlas region to which the point is registered. Use this information, any visible landmarks, and your anatomical knowledge to assess whether the point is registered correctly, incorrectly, or of uncertain position.
-- Only mark up (+) / (-) when certain of the precision of the atlas registration based on visible landmarks within the section. Use the (?) in all instances when you are unsure of the correct assignment due to undiscernible boundaries or limited anatomical knowledge. If in doubt, always mark up (?).
+- Make the decision for each grid point with the region outlines switched "off". By hovering over any point on the brain tissue, a text overlay is displayed that reveals the atlas region to which the point is registered. Use this information, any visible landmarks, and your anatomical knowledge to assess whether the point is registered correctly, incorrectly, or of uncertain position.
+- Only mark up (+) / (-) when certain of the precision of the atlas-registration based on visible landmarks within the section. Use the (?) in all instances when you are unsure of the correct assignment due to undiscernible boundaries or limited anatomical knowledge. If in doubt, always mark up (?).
 - For an overview of the atlas delineations toggle the region outlines "on" and "off" with the opacity slider. While it can be helpful with an overview, try not to let the delineations affect your decision-making as this will bias the outcome. 
-- A useful anatomy resource when working with QCAlign is the Allen Brain Atlas Interactive Brain Viewer (coronal atlas, Nissl stain). This shows the Allen Mouse Brain Atlas applied to Nissl stained sections and can be used as a guide: http://mouse.brain-map.org/static/atlas
+- A useful anatomy resource when working with QCAlign is the Allen Brain Atlas Interactive Brain Viewer (coronal atlas, Nissl stain). This shows the Allen Mouse Brain Atlas applied to Nissl stained sections and can be used as a guide and to refresh your anatomical expertise: http://mouse.brain-map.org/static/atlas
 
 Example 1: Section with clearly visible landmarks  
 --------------------------------------------------
 
 |image1|\ 
 
-There are clear boundaries between all the structures in this slice due
-to differences in tissue appearance and clearly visible cell layers in
+There are clear boundaries between all the structures in this section due
+to differences in tissue appearance, and clearly visible cell layers in
 the case of the hippocampus. All regions can be marked with
 certainty: (+) or (-). One of the points is registered to the ventricle
 despite being located in the fiber tract and has been marked with
@@ -86,7 +86,7 @@ Example 3: Section with ambiguous boundaries
    :height: 4.82222in
 
 There are clear boundaries between the lateral ventricle, the
-caudoputamen, the corpus callosum, and the isocortex in this slice.
+caudoputamen, the corpus callosum, and the isocortex in this section.
 These regions can be marked up with certainty (+) and (-).
 
 There is less certainty for the outer boundary of the cortical subplate,
@@ -94,7 +94,7 @@ and the boundary between the isocortex, entorhinal area and olfactory
 area. These areas have been marked up with transparent red circles and
 have been assigned the **(?)** marker.
 
-The placement of the **(?)** will vary for regions from slice to slice
+The placement of the **(?)** will vary for regions from section to section
 depending on the distinction of visual landmarks.
 
 .. |image1| image:: vertopal_cbedec83746b4aa08b3d6abec4c06604/media/image8.jpeg
