@@ -1,18 +1,18 @@
-**2. Quality control of the brain tissue images**
-=================================================================
+**1. QC Assessment of the Section Images**
+============================================
 
-To assess the integrity of the tissue and the quality of the histological slice images use the **(X)** marker. The output of the assessment may be used to calculate % damage per region, which is useful for identifying regions to exclude from the QUINT results. This assessment is performed independently of the atlas map assessment, with the atlas delineations switched off. 
+The preparation of section images is technically difficult: involving sectioning, labelling, mounting and imaging. Even with the utmost care taken during preparation, brain sections may be deformed or torn, poorly labelled or covered by artifacts, or affected by imaging defects such as parts of the image being out-of-focus. Defects such as these have implications for the quality of the segmentations that can be achieved. The QC assessment of the section images detects regions that are affected by defects, and enables calculation of % damage per region.
+
+This assessment is performed independently of the atlas-registration assessment with the atlas delineations switched off.   
 
 How to perform the assessment
 ------------------------------
 
-1. Start on the first slice of the series by clicking the \|<< arrow in the upper-right corner. Proceed to each subsequent slice by clicking >
+1. Start on the first section of the series by clicking the \|<< arrow in the upper-right corner. Proceed to each subsequent section by clicking >
 
-2. In the slice viewer switch off the atlas overlay and mark up points that overlap the experimental slice. Points that fall outside of the experimental slice, or that do not overlay areas of damage, should be left blank. 
-   
-Select between four options by clicking the grid points with the mouse or keyboard: 
+2. In the section viewer switch off the atlas overlay and mark up points that overlap areas of damage on the experimental section. Points that fall outside of the experimental section, or that do not overlay areas of damage, should be left blank. 
 
-For this assessment, use the (X) marker only. Mark up all the grid points that are positioned over areas that should not be included in the analysis. For example, overlaying areas with tissue damage, artifacts such as air bubbles, or parts of the image that are out-of-focus.
+For this assessment, use the **(x)** marker only. Mark up all the grid points that are positioned over areas that should not be included in the analysis: for example, as they are overlaying areas of tissue damage, artifacts such as air bubbles, or parts of the image that are out-of-focus.
 
 +------------+--------------+-------------------+-------------------+
 | **Marker** | **Mouse**    | **Keyboard**      | **Usage**         |
@@ -23,9 +23,9 @@ For this assessment, use the (X) marker only. Mark up all the grid points that a
 |            |              |                   | out-of-focus      |
 +------------+--------------+-------------------+-------------------+
 
-4. Use the > in the far-right corner of the window to proceed through all slices.
+4. Use the > in the far-right corner of the window to proceed through all sections.
 
-5. Proceed until all the slices have been marked up. 
+5. Proceed until all the sections have been marked up. 
 
 6. Adjust the atlas hierarchy to the level that you're interest in: this is typically the same level that you will use for Nutil analysis. If you'd like results for several hierarchy levels it's possible to export the statistics several times. Simply adjust the hierarchy between exports (unlock the hierarchy in the "View" menu).  
 
