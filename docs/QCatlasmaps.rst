@@ -4,7 +4,7 @@
 How to perform the assessment
 ------------------------------
 
-1. Open the JSON file in QCAlign that corresponds to the image series and the delineations that you would like to assess. 
+1. Open the JSON file from QuickNII or VisuAlign that corresponds to the image series and the delineations that you would like to assess. 
 
 2. Adjust the atlas hierarchy, the grid spacing and the grid aesthetics: see the navigation section for information. Use the opacity slider to adjust the appearance of the atlas overlay in the viewer window: switch the delineations "off" for the assessment. 
 
@@ -14,7 +14,7 @@ How to perform the assessment
    
 Select between four options by clicking the grid points with the mouse or keyboard shortcuts. It is fastest to work with the keyboard shortcuts: by holding down the shortcut and scrolling over points in turn you activate “paint” functionality. 
 
-For QC assessment of the atlas-registration, use the **(+), (-)** and **(?)** markers only. Whether a grid point is located in the assigned region, is not located in the assigned region, or whether this is uncertain is verified by the researcher based on visible landmarks within the section. Only mark up (+) or (-) if the region boundaries are distinct enough to make this call. See the **Best Practise** section below for guidance.  
+For assessment of the registration, use the **(+), (-)** and **(?)** markers only. Whether a grid point is located in the assigned region, is not located in the assigned region, or whether this is uncertain is verified by the researcher based on visible landmarks within the section. Only mark up (+) or (-) if the region boundaries are distinct enough to make this call. See the **Best Practise** section below for guidance.  
 
 +------------+--------------+-------------------+-------------------+
 | **Marker** | **Mouse**    | **Keyboard**      | **Usage**         |
