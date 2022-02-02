@@ -24,6 +24,12 @@ To go back to the finest granuality level, click **View >** **Expand Hierarchy**
 .. image:: vertopal_cbedec83746b4aa08b3d6abec4c06604/media/image12.jpeg
    :width: 6.3in
    :height: 0.77896in
+   
+**Creating a Customized Hierarchy**
+-----------------------------------
+Reference atlases are developed and refined over time based on input from multiple disparate datasets; and are structured in adjustable hierarchies with smaller sub-regions belonging to larger "parent" structures (for example, the thalamic nuclei belong to the thalamus). Reference atlases contain boundaries that are not possible to discern in individual series, which are typically labelled to reveal one or two features only (for example, a particular cell type). For this reason, it is necessary to adjust the hierarchy to a level that supports verification for assessment of the atlas-registration. 
+
+For QC assessment of the registration the goal is to create a hierarchy level that matches the region boundaries that are visible in the series, but is also as detailed as possible. Creating a customized level is done in a step-by-step process, starting at the finest granularity level, with each region collapsed in turn to a level that matches the boundaries visible in that region. While it will not be possible to achieve a perfect match, it is possible to achieve a good match that supports verification. The "uncertainty" marker is avaiable for areas of uncertainty. 
 
 **Saving the Hierarchy**
 ------------------------------
