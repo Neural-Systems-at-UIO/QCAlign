@@ -55,10 +55,10 @@ Best Practise
  
 As QCAlign is used for validation, the researcher's input represents the anatomical “ground truth”.
 
-- Make the decision for each grid point with the region outlines switched "off". By hovering over any point on the brain tissue, a text overlay is displayed that reveals the region to which the point is registered. Use this information, any visible landmarks, and your anatomical knowledge to assess whether the point is registered correctly, incorrectly, or of uncertain position.
-- Only mark up (+) / (-) when certain of the precision of the atlas-registration based on visible landmarks within the section. Use the (?) in all instances when you are unsure of the correct assignment due to undiscernible boundaries or limited anatomical knowledge. If in doubt, always mark up (?).
+- Make the decision for each point with the region outlines switched "off". By hovering over any point on the brain tissue, a text overlay is displayed that reveals the region to which the point is registered. Use this information, any visible landmarks, and your anatomical knowledge to assess whether the point is registered correctly, incorrectly, or of uncertain position.
+- Use the (?) in all instances when you are unsure of the correct assignment due to undiscernible boundaries or limited anatomical knowledge. If in doubt, always mark up (?).
 - For an overview of the atlas delineations toggle the region outlines "on" and "off" with the opacity slider. While it can be helpful with an overview, try not to let the delineations affect your decision-making as this will bias the outcome. 
-- A useful anatomy resource is the Allen Brain Atlas Interactive Brain Viewer (coronal atlas, Nissl stain). This shows the Allen Mouse Brain Atlas applied to Nissl stained sections and can be used as a guide and to refresh your anatomical knowledge: http://mouse.brain-map.org/static/atlas
+- A useful anatomy resource is the Allen Brain Atlas Interactive Brain Viewer (coronal atlas, Nissl stain). This shows the Allen Mouse Brain Atlas applied to Nissl stained sections. It can be used as a guide and to refresh your anatomical knowledge: http://mouse.brain-map.org/static/atlas
 
 Example 1: Section with visible landmarks  
 --------------------------------------------------
