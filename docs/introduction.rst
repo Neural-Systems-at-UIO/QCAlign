@@ -18,7 +18,7 @@ The quality control steps are based on systematic sampling, with a grid of point
 
 - For quality control of the section images there is a "damage" marker for marking up areas that should be excluded from the analysis due to tissue damage, artifacts, or errors in image aquisition. 
 
-- For quality control of the atlas-registration there are "accurate", "inaccurate" and "uncertain" markers for verifying the precision of the registration based on visible landmarks within the section. In effect, the researcher working with the tool represents the “ground truth”, and uses the appearance of visible landmarks and their anatomical knowledge to assess the quality of the registration.
+- For quality control of the atlas-registration there are "accurate", "inaccurate" and "uncertain" markers for verifying the registration based on visible landmarks within the section. In effect, the researcher working with the tool represents the “ground truth”, and uses the appearance of visible landmarks and their anatomical knowledge to assess the quality of the registration.
 
 **What can you do with the results?**
 -----------------------------------
