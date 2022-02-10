@@ -16,7 +16,7 @@ How to perform the assessment
 
 .. image:: vertopal_cbedec83746b4aa08b3d6abec4c06604/media/image16.PNG
 
-For assessment of the registration, use the **+**, **-** and **?** markers only. Whether a grid point is located in the assigned region, is not located in the assigned region, or whether this is uncertain is verified by the researcher based on visible landmarks within the section. 
+For assessment of the registration, use the **+**, **-** and **?** markers only. Whether a grid point is located in the assigned region (+), is not located in the assigned region (-), or whether this is uncertain (?) is verified by the researcher based on visible landmarks within the section. 
 
 Read the **Best Practise** section before starting the assessment. 
 
@@ -24,16 +24,16 @@ Read the **Best Practise** section before starting the assessment.
 | **Marker** | **Mouse**    | **Keyboard**      | **Usage**         |
 |            |              |                   |                   |
 +============+==============+===================+===================+
-|  +         | Single click | 2                 | The grid point    |
+| (+)        | Single click | 2                 | The grid point    |
 |            |              |                   | is located in the |
 |            |              |                   | assigned region   |
 +------------+--------------+-------------------+-------------------+
-|  -         | Double click | 3                 | The grid point    |
+| (-)        | Double click | 3                 | The grid point    |
 |            |              |                   | is not located    |
 |            |              |                   | in the assigned   |
 |            |              |                   | region            |
 +------------+--------------+-------------------+-------------------+
-|  ?         | Triple click | 4                 | It is uncertain   |
+| (?)        | Triple click | 4                 | It is uncertain   |
 |            |              |                   | whether the grid  |
 |            |              |                   | point is located  |
 |            |              |                   | in the assigned   |
