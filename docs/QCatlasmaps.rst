@@ -6,19 +6,19 @@ How to perform the assessment
 
 1. Open the JSON file from QuickNII or VisuAlign that corresponds to the image series and the delineations that you would like to assess. 
 
-2. Adjust the atlas hierarchy, the grid spacing and the grid aesthetics: see the navigation section for information. 
+2. Adjust the atlas hierarchy, the grid spacing and the grid aesthetics: see **Navigation** 
 
-3. Use the opacity slider to adjust the appearance of the atlas overlay in the viewer window: switch the delineations "off" for the assessment. 
+3. Use the opacity slider to adjust the appearance of the atlas overlay in the viewer window: see **Atlas overlay**. Switch the delineations "OFF" for the assessment. 
 
 4. Start on the first section of the series by clicking the \|<< arrow in the upper-right corner. Proceed to each subsequent section by clicking >
 
 5. In the section viewer, mark up points that overlap the section. Points that fall outside of the experimental section should be left blank. 
 
-.. image:: vertopal_cbedec83746b4aa08b3d6abec4c06604/media/image16.PNG
+Read the **Best Practise** section before starting the assessment. 
 
 For assessment of the registration, use the **+**, **-** and **?** markers only. Whether a grid point is located in the assigned region (+), is not located in the assigned region (-), or whether this is uncertain (?) is verified by the researcher based on visible landmarks within the section. 
 
-Read the **Best Practise** section before starting the assessment. 
+.. image:: vertopal_cbedec83746b4aa08b3d6abec4c06604/media/image16.PNG
 
 +------------+--------------+-------------------+-------------------+
 | **Marker** | **Mouse**    | **Keyboard**      | **Usage**         |
