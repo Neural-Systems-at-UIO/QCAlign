@@ -3,6 +3,7 @@
 
 How to perform the assessment
 ------------------------------
+.. image:: vertopal_cbedec83746b4aa08b3d6abec4c06604/media/image16.PNG
 
 1. Open the JSON file from QuickNII or VisuAlign that corresponds to the image series and the delineations that you would like to assess. 
 
