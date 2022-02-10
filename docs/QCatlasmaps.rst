@@ -3,7 +3,6 @@
 
 How to perform the assessment
 ------------------------------
-.. image:: vertopal_cbedec83746b4aa08b3d6abec4c06604/media/image16.PNG
 
 1. Open the JSON file from QuickNII or VisuAlign that corresponds to the image series and the delineations that you would like to assess. 
 
@@ -12,25 +11,27 @@ How to perform the assessment
 3. Start on the first section of the series by clicking the \|<< arrow in the upper-right corner. Proceed to each subsequent section by clicking >
 
 4. In the section viewer, mark up points that overlap the section. Points that fall outside of the experimental section should be left blank. 
-   
-Select between four options by clicking the grid points with the mouse or keyboard shortcuts. It is fastest to work with the keyboard shortcuts: by holding down the shortcut and scrolling over points in turn you activate “paint” functionality. 
 
-For assessment of the registration, use the **(+), (-)** and **(?)** markers only. Whether a grid point is located in the assigned region, is not located in the assigned region, or whether this is uncertain is verified by the researcher based on visible landmarks within the section. Only mark up (+) or (-) if the region boundaries are distinct enough to make this call. See the **Best Practise** section below for guidance.  
+.. image:: vertopal_cbedec83746b4aa08b3d6abec4c06604/media/image16.PNG
+
+For assessment of the registration, use the **+**, **-** and **?** markers only (the **x** marker is used for the assessment of the section images only). Whether a grid point is located in the assigned region, is not located in the assigned region, or whether this is uncertain is verified by the researcher based on visible landmarks within the section. Only mark up (+) or (-) if the region boundaries are distinct enough to make this call. It is fastest to work with the keyboard shortcuts: by holding down the shortcut and scrolling over points in turn you activate “paint” functionality.  
+
+See the **Best Practise** section below for guidance. 
 
 +------------+--------------+-------------------+-------------------+
 | **Marker** | **Mouse**    | **Keyboard**      | **Usage**         |
 |            |              |                   |                   |
 +============+==============+===================+===================+
-| (+)        | Single click | 2                 | The grid point    |
+|  +         | Single click | 2                 | The grid point    |
 |            |              |                   | is located in the |
 |            |              |                   | assigned region   |
 +------------+--------------+-------------------+-------------------+
-| (-)        | Double click | 3                 | The grid point    |
+|  -         | Double click | 3                 | The grid point    |
 |            |              |                   | is not located    |
 |            |              |                   | in the assigned   |
 |            |              |                   | region            |
 +------------+--------------+-------------------+-------------------+
-| (?)        | Triple click | 4                 | It is uncertain   |
+|  ?         | Triple click | 4                 | It is uncertain   |
 |            |              |                   | whether the grid  |
 |            |              |                   | point is located  |
 |            |              |                   | in the assigned   |
