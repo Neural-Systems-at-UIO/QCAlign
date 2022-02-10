@@ -1,6 +1,8 @@
 **2. QC Assessment of the Atlas-Registration**
 =========================================================
 
+The atlas-registration to the section images is performed with QuickNII and VisuAlign: https://ebrains.eu/service/quicknii-and-visualign 
+
 How to perform the assessment
 ------------------------------
 
