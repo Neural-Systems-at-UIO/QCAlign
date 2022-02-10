@@ -6,17 +6,19 @@ How to perform the assessment
 
 1. Open the JSON file from QuickNII or VisuAlign that corresponds to the image series and the delineations that you would like to assess. 
 
-2. Adjust the atlas hierarchy, the grid spacing and the grid aesthetics: see the navigation section for information. Use the opacity slider to adjust the appearance of the atlas overlay in the viewer window: switch the delineations "off" for the assessment. 
+2. Adjust the atlas hierarchy, the grid spacing and the grid aesthetics: see the navigation section for information. 
 
-3. Start on the first section of the series by clicking the \|<< arrow in the upper-right corner. Proceed to each subsequent section by clicking >
+3. Use the opacity slider to adjust the appearance of the atlas overlay in the viewer window: switch the delineations "off" for the assessment. 
 
-4. In the section viewer, mark up points that overlap the section. Points that fall outside of the experimental section should be left blank. 
+4. Start on the first section of the series by clicking the \|<< arrow in the upper-right corner. Proceed to each subsequent section by clicking >
+
+5. In the section viewer, mark up points that overlap the section. Points that fall outside of the experimental section should be left blank. 
 
 .. image:: vertopal_cbedec83746b4aa08b3d6abec4c06604/media/image16.PNG
 
-For assessment of the registration, use the **+**, **-** and **?** markers only (the **x** marker is used for the assessment of the section images only). Whether a grid point is located in the assigned region, is not located in the assigned region, or whether this is uncertain is verified by the researcher based on visible landmarks within the section. Only mark up (+) or (-) if the region boundaries are distinct enough to make this call. It is fastest to work with the keyboard shortcuts: by holding down the shortcut and scrolling over points in turn you activate “paint” functionality.  
+For assessment of the registration, use the **+**, **-** and **?** markers only. Whether a grid point is located in the assigned region, is not located in the assigned region, or whether this is uncertain is verified by the researcher based on visible landmarks within the section. 
 
-See the **Best Practise** section below for guidance. 
+Read the **Best Practise** section before starting the assessment. 
 
 +------------+--------------+-------------------+-------------------+
 | **Marker** | **Mouse**    | **Keyboard**      | **Usage**         |
@@ -38,19 +40,17 @@ See the **Best Practise** section below for guidance.
 |            |              |                   | region            |
 +------------+--------------+-------------------+-------------------+
 
-5. To get an overview of the grid points, and to easily identify grid points that remain unmarked within a section, go to **View** > **Overview,** or press the spacebar.
+It is fastest to work with the keyboard shortcuts: by holding down the shortcut and scrolling over points in turn you activate “paint” functionality.  
 
-6. Use the > in the far-right corner of the window to proceed through all sections.
+6. To get an overview of the grid points, and to easily identify grid points that remain unmarked within a section, go to **View** > **Overview,** or press the spacebar.
 
-7. Proceed until all the sections have been marked up. 
+7. Use the > in the far-right corner of the window to proceed through all sections.
 
-8. Save the results in a JSON file. **File** > **Save as**.
+8. Proceed until all the sections have been marked up. 
 
-9. Export statistics in txt format. **File** > **Export stats**.
+9. Save the results in a JSON file. **File** > **Save as**.
 
-The text file lists all the regions vertically, with
-four rows per region titled “accurate”, “inaccurate”, “uncertain” and
-“damaged” with the number of markers for each. There is a row for the whole series and a row per slice. 
+10. Export statistics in txt format. **File** > **Export stats**.
       
 Best Practise 
 ---------------
@@ -58,7 +58,7 @@ Best Practise
 As QCAlign is used for validation, the researcher's input represents the anatomical “ground truth”.
 
 - Make the decision for each point with the region outlines switched "off". By hovering over any point on the brain tissue, a text overlay is displayed that reveals the region to which the point is registered. Use this information, any visible landmarks, and your anatomical knowledge to assess whether the point is registered correctly, incorrectly, or of uncertain position.
-- Use the (?) in all instances when you are unsure of the correct assignment due to undiscernible boundaries or limited anatomical knowledge. If in doubt, always mark up (?).
+- Use the (?) in all instances when you are unsure of the correct assignment due to undiscernible boundaries or limited anatomical knowledge. **If in doubt, always mark up (?)**.
 - For an overview of the atlas delineations toggle the region outlines "on" and "off" with the opacity slider. While it can be helpful with an overview, try not to let the delineations affect your decision-making as this will bias the outcome. 
 - A useful anatomy resource is the Allen Brain Atlas Interactive Brain Viewer (coronal atlas, Nissl stain). This shows the Allen Mouse Brain Atlas applied to Nissl stained sections. It can be used as a guide and to refresh your anatomical knowledge: http://mouse.brain-map.org/static/atlas
 
