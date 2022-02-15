@@ -12,7 +12,7 @@ How to perform the assessment
 
 2. Adjust the `atlas hierarchy <https://qcalign.readthedocs.io/en/latest/hierarchy.html>`_, the `grid spacing <https://qcalign.readthedocs.io/en/latest/gridoverlay.html#selecting-and-adjusting-the-grid-spacing>`_ and the `grid aesthetics. <https://qcalign.readthedocs.io/en/latest/gridoverlay.html#grid-aesthetics>`_
 
-3. Use the opacity slider to adjust the appearance of the atlas overlay in the viewer window: see **Atlas overlay**. Switch the delineations "OFF" for the assessment. 
+3. Use the opacity slider to adjust the appearance of the `atlas overlay <https://qcalign.readthedocs.io/en/latest/atlasoverlay.html>`_ in the viewer window. Switch the delineations "off" for the assessment. 
 
 4. Start on the first section of the series by clicking the \|<< arrow in the upper-right corner. Proceed to each subsequent section by clicking >
 
