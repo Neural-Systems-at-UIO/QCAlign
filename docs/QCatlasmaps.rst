@@ -12,13 +12,13 @@ How to perform the assessment
 
 2. Adjust the `atlas hierarchy <https://qcalign.readthedocs.io/en/latest/hierarchy.html>`_, the `grid spacing <https://qcalign.readthedocs.io/en/latest/gridoverlay.html#selecting-and-adjusting-the-grid-spacing>`_ and the `grid aesthetics. <https://qcalign.readthedocs.io/en/latest/gridoverlay.html#grid-aesthetics>`_
 
-3. Use the opacity slider to adjust the appearance of the `atlas overlay <https://qcalign.readthedocs.io/en/latest/atlasoverlay.html>`_ in the viewer window. Switch the delineations "off" for the assessment. 
+3. Use the opacity slider to adjust the appearance of the `atlas overlay <https://qcalign.readthedocs.io/en/latest/atlasoverlay.html> in the viewer window. Switch the delineations "off" for the assessment. 
 
 4. Start on the first section of the series by clicking the \|<< arrow in the upper-right corner. Proceed to each subsequent section by clicking >
 
 5. In the section viewer, mark up points that overlap the section. Points that fall outside of the experimental section should be left blank. 
 
-Read the **Best Practise** section before starting the assessment. 
+Read the `**Best Practise** <https://qcalign.readthedocs.io/en/latest/QCatlasmaps.html#best-practise>`_ section before starting the assessment. 
 
 For assessment of the registration, use the **+**, **-** and **?** markers only. Whether a grid point is located in the assigned region (+), is not located in the assigned region (-), or whether this is uncertain (?) is verified by the researcher based on visible landmarks within the section. 
 
