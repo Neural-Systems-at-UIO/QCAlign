@@ -35,6 +35,6 @@ QCAlign generates two types of reports:
 
 Currently QCAlign supports the Allen Mouse Brain Atlas CCFv3, 2015 and 2017 and the Waxholm Space Atlas of the Spraque Dawley Rat v2 and v3. 
 
-**PLEASE visit our `EBRAINS page <https://ebrains.eu/service/quint/>`_ for more information about the QUINT workflow; and to find tutorials, examples of use, demo 
+**PLEASE visit our `EBRAINS page <https://ebrains.eu/service/quint/>`_ for more information about the QUINT workflow; and to find tutorials, examples of use, demo videos and software download information.
 
 
