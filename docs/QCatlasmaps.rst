@@ -18,7 +18,7 @@ How to perform the assessment
 
 5. In the section viewer, mark up points that overlap the section. Points that fall outside of the experimental section should be left blank. 
 
-Read the `**Best Practise** <https://qcalign.readthedocs.io/en/latest/QCatlasmaps.html#best-practise>`_ section before starting the assessment. 
+Read the `Best Practise <https://qcalign.readthedocs.io/en/latest/QCatlasmaps.html#best-practise>`_ section before starting the assessment. 
 
 For assessment of the registration, use the **+**, **-** and **?** markers only. Whether a grid point is located in the assigned region (+), is not located in the assigned region (-), or whether this is uncertain (?) is verified by the researcher based on visible landmarks within the section. 
 
