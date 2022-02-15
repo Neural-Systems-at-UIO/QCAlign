@@ -1,7 +1,7 @@
 **1. QC Assessment of the Section Images**
 ============================================
 
-The preparation of section images is technically difficult, involving sectioning, labelling, mounting and imaging. Even with the utmost care taken during preparation, brain sections may be deformed or torn, poorly labelled or covered by artifacts, or affected by imaging defects such as parts of the image being out-of-focus. Defects such as these have implications for the quality of the segmentations that can be achieved. This assessment detects regions that are affected, and enables calculation of % damage per region.
+The preparation of section images is technically difficult, involving sectioning, labelling, mounting and imaging. Even with the utmost care taken during preparation, brain sections may be deformed or torn, poorly labelled or covered by artifacts, or affected by imaging defects such as parts of the image being out-of-focus. Defects such as these have implications for the segmentation quality that can be achieved. This assessment identifies regions that are affected, and enables calculation of % damage per region.
 
 The assessment is performed independently of the atlas-registration assessment with the atlas delineations switched off.   
 
