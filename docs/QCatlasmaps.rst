@@ -10,7 +10,7 @@ How to perform the assessment
 
 1. Open the JSON file from QuickNII or VisuAlign that corresponds to the image series and the delineations that you would like to assess. 
 
-2. Adjust the atlas hierarchy, the grid spacing and the grid aesthetics: see **Navigation** 
+2. Adjust the `atlas hierarchy <https://qcalign.readthedocs.io/en/latest/hierarchy.html>`_, the grid spacing and the grid aesthetics: see **Navigation** 
 
 3. Use the opacity slider to adjust the appearance of the atlas overlay in the viewer window: see **Atlas overlay**. Switch the delineations "OFF" for the assessment. 
 
