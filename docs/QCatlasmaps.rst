@@ -3,7 +3,18 @@
 
 The registration of the section images to a reference atlas is performed with `QuickNII and VisuAlign. <https://ebrains.eu/service/quicknii-and-visualign/>`_ Even with both the linear (QuickNII) and nonlinear (VisuAlign) steps applied, it can be difficult to achieve a good match due to mechanical distortions occurring during slice preparation, but also due to anatomical differences between the experimental models and the standard animals used to prepare the atlas. The QC assessment enables detection of regions that are poorly registered, or where the registration cannot be verified as there are no boundaries in the sections that match the delineations at the hierarchy level selected for QCAlign.
 
-**Read the** `Best Practise <https://qcalign.readthedocs.io/en/latest/QCatlasmaps.html#best-practise>`_ **section before starting the assessment.**
+**Read the Best Practise section before starting the assessment.**
+
+Best Practise 
+---------------
+ 
+As QCAlign is used for validation, the researcher's input represents the anatomical “ground truth”.
+
+- A useful anatomy resource while working with the tool is the `Allen Brain Atlas Interactive Brain Viewer <http://mouse.brain-map.org/static/atlas>`_ (coronal atlas, Nissl stain). This can be used as a guide and to refresh your anatomical knowledge.
+- Make the decision for each point with the region outlines switched "off". By hovering over any point on the brain tissue, a text overlay is displayed that reveals the region to which the point is registered. Use this information, any visible landmarks, and your anatomical knowledge to assess whether the point is registered correctly, incorrectly, or of uncertain position.
+- Use the (?) in all instances when you are unsure of the correct assignment due to undiscernible boundaries or limited anatomical knowledge. **If in doubt, always mark up (?)**.
+- For an overview of the atlas delineations toggle the region outlines "on" and "off" with the opacity slider. While it can be helpful with an overview, try not to let the delineations affect your decision-making as this will bias the outcome. 
+
 
 How to perform the assessment
 ------------------------------
@@ -54,15 +65,7 @@ It is fastest to work with the keyboard shortcuts: by holding down the shortcut 
 
 10. Export statistics in txt format. **File** > **Export stats**.
       
-Best Practise 
----------------
- 
-As QCAlign is used for validation, the researcher's input represents the anatomical “ground truth”.
 
-- A useful anatomy resource while working with the tool is the `Allen Brain Atlas Interactive Brain Viewer <http://mouse.brain-map.org/static/atlas>`_ (coronal atlas, Nissl stain). This shows the Allen Mouse Brain Atlas applied to Nissl stained sections and can be used as a guide.
-- Make the decision for each point with the region outlines switched "off". By hovering over any point on the brain tissue, a text overlay is displayed that reveals the region to which the point is registered. Use this information, any visible landmarks, and your anatomical knowledge to assess whether the point is registered correctly, incorrectly, or of uncertain position.
-- Use the (?) in all instances when you are unsure of the correct assignment due to undiscernible boundaries or limited anatomical knowledge. **If in doubt, always mark up (?)**.
-- For an overview of the atlas delineations toggle the region outlines "on" and "off" with the opacity slider. While it can be helpful with an overview, try not to let the delineations affect your decision-making as this will bias the outcome. 
 
 Example 1: Section with visible landmarks  
 --------------------------------------------------
