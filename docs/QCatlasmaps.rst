@@ -3,8 +3,6 @@
 
 The registration of the section images to a reference atlas is performed with `QuickNII and VisuAlign. <https://ebrains.eu/service/quicknii-and-visualign/>`_ Even with both the linear (QuickNII) and nonlinear (VisuAlign) steps applied, it can be difficult to achieve a good match due to mechanical distortions occurring during slice preparation, but also due to anatomical differences between the experimental models and the standard animals used to prepare the atlas. The QC assessment enables detection of regions that are poorly registered, or where the registration cannot be verified as there are no boundaries in the sections that match the delineations at the hierarchy level selected for QCAlign.
 
-**Read the Best Practise section before starting the assessment.**
-
 Best Practise 
 ---------------
  
@@ -18,6 +16,8 @@ As QCAlign is used for validation, the researcher's input represents the anatomi
 
 How to perform the assessment
 ------------------------------
+
+**Read the Best Practise section before starting the assessment.**
 
 1. Open the JSON file from QuickNII or VisuAlign that corresponds to the image series and the delineations that you would like to assess. 
 
