@@ -3,6 +3,8 @@
 
 The registration of the section images to a reference atlas is performed with `QuickNII and VisuAlign. <https://ebrains.eu/service/quicknii-and-visualign/>`_ Even with both the linear (QuickNII) and nonlinear (VisuAlign) steps applied, it can be difficult to achieve a good match due to mechanical distortions occurring during slice preparation, but also due to anatomical differences between the experimental models and the standard animals used to prepare the atlas. The QC assessment enables detection of regions that are poorly registered, or where the registration cannot be verified as there are no boundaries in the sections that match the delineations at the selected hierarchy level.
 
+**Read the** `Best Practise <https://qcalign.readthedocs.io/en/latest/QCatlasmaps.html#best-practise>`_ **section before starting the assessment.**
+
 How to perform the assessment
 ------------------------------
 
@@ -15,8 +17,6 @@ How to perform the assessment
 4. Start on the first section of the series by clicking the \|<< arrow in the upper-right corner. Proceed to each subsequent section by clicking >
 
 5. In the section viewer, mark up points that overlap the section. Points that fall outside of the experimental section should be left blank. 
-
-**Read the** `Best Practise <https://qcalign.readthedocs.io/en/latest/QCatlasmaps.html#best-practise>`_ **section before starting the assessment.** 
 
 For assessment of the registration, use the **+**, **-** and **?** markers only. Whether a grid point is located in the assigned region (+), is not located in the assigned region (-), or whether this is uncertain (?) is verified by the researcher based on visible landmarks within the section. 
 
