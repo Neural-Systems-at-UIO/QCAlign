@@ -1,7 +1,7 @@
 **2. QC Assessment of the Atlas-Registration**
 =========================================================
 
-The registration of the section images to a reference atlas is performed with `QuickNII and VisuAlign. <https://ebrains.eu/service/quicknii-and-visualign/>`_ Even with both the linear (QuickNII) and nonlinear (VisuAlign) registration steps applied, it is sometimes difficult to achieve a good match between the sections and the atlas, due to mechanical distortions occurring during slice preparation, but also due to real anatomical differences between the experimental models and the standard animals used to prepare the atlases. The QC assessment enables detection of regions that are poorly registered, or where the registration cannot be verified due to a lack of landmarks in the sections. 
+The registration of the section images to a reference atlas is performed with `QuickNII and VisuAlign. <https://ebrains.eu/service/quicknii-and-visualign/>`_ Even with both the linear (QuickNII) and nonlinear (VisuAlign) steps applied, it can be difficult to achieve a good match due to mechanical distortions occurring during slice preparation, but also due to anatomical differences between the experimental models and the standard animals used to prepare the atlas. The QC assessment enables detection of regions that are poorly registered, or where the registration cannot be verified as there are no boundaries in the sections that match the delineations at the selected hierarchy level.
 
 How to perform the assessment
 ------------------------------
