@@ -3,6 +3,13 @@
 
 The QuickNII - ilastik - Nutil (QUINT) workflow enables quantification of labelled features in section images from rodent brains based on extraction of the features by segmentation (with ilastik), and registration of the section images to a reference atlas (with QuickNII and VisuAlign). 
 
+**QUINT tutorial**
+
+.. raw:: html
+
+   <iframe width="560" height="315" src="https://www.youtube.com/embed/n-gQigcGMJ0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+
 QCAlign was developed to support systematic post-processing of the QUINT results. As the quality of the QUINT results depends on the quality of the feature extraction, as well as the quality of the atlas-registration, QCAlign enables quality control of the section images (which has implications for the extraction), as well as quality control of the registration. As reference atlases contain boundaries that are not possible to discern in individual sections, QCAlign has functionality for adjusting the atlas hierarchy to a level that allows verification of the registration. This feature is also useful for exploring the hierarchy, and for designed a customized level to use for QUINT analysis. 
 
 **1. Quality control assessment of the section images:** detection of regions that are affected by tissue damage, labelling defects, or errors in image acqusition (e.g. out-of-focus). 
@@ -35,6 +42,7 @@ QCAlign generates two types of reports:
 
 Currently QCAlign supports the Allen Mouse Brain Atlas CCFv3, 2015 and 2017 and the Waxholm Space Atlas of the Spraque Dawley Rat v2 and v3. 
 
-**PLEASE visit our EBRAINS page for more information about the** `QUINT workflow; <https://ebrains.eu/service/quint/>`_ **and to find tutorials, examples of use, demo videos and software download information.**
+.. note::
+    **PLEASE visit our EBRAINS page for more information about the** `QUINT workflow; <https://ebrains.eu/service/quint/>`_ **and to find tutorials, examples of use, and software download information.**
 
 
