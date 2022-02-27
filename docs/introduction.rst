@@ -1,7 +1,7 @@
 **What is QCAlign?**
 ====================
 
-The QuickNII - ilastik - Nutil (QUINT) workflow enables quantification of labelled features in section images from rodent brains based on extraction of the features by segmentation (with ilastik), and registration of the section images to a reference atlas (with QuickNII and VisuAlign). 
+QCAlign was developed to support systematic post-processing of the results from the QuickNII - ilastik - Nutil (QUINT) workflow. QUINT enables quantification of labelled features in section images from rodent brains based on extraction of the features by segmentation, and registration of the section images to a reference atlas. As the quality of the QUINT results depends on the quality of the feature extraction, as well as the quality of the atlas-registration, QCAlign enables quality control of the section images (which has implications for the extraction), as well as quality control of the registration. As reference atlases contain boundaries that are not possible to discern in individual sections, QCAlign has functionality for adjusting the atlas hierarchy to a level that allows verification of the registration. This feature is also useful for exploring the hierarchy, and for designed a customized level to use for QUINT analysis. 
 
 **QUINT tutorial**
 
@@ -9,9 +9,6 @@ The QuickNII - ilastik - Nutil (QUINT) workflow enables quantification of labell
 
    <iframe width="560" height="315" src="https://www.youtube.com/embed/n-gQigcGMJ0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
-
-
-QCAlign was developed to support systematic post-processing of the QUINT results. As the quality of the QUINT results depends on the quality of the feature extraction, as well as the quality of the atlas-registration, QCAlign enables quality control of the section images (which has implications for the extraction), as well as quality control of the registration. As reference atlases contain boundaries that are not possible to discern in individual sections, QCAlign has functionality for adjusting the atlas hierarchy to a level that allows verification of the registration. This feature is also useful for exploring the hierarchy, and for designed a customized level to use for QUINT analysis. 
 
 **1. Quality control assessment of the section images:** detection of regions that are affected by tissue damage, labelling defects, or errors in image acqusition (e.g. out-of-focus). 
 
