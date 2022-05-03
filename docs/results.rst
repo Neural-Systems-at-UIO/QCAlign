@@ -17,7 +17,7 @@ This generates a .TXT file that lists all the regions vertically, with five rows
      - All markers that fall outside of the atlas maps
      
 .. note::
-   Total no. of markers within the atlas maps = total - clear label
+   Total no. of markers within the atlas maps = Total - Clear label
      
 For the QC assessment of the section images the counts may be used to calculate (%) damage per region for each section and for all the sections combined. The damage here represents tissue damage, poor quality labelling and imaging defects. 
 
