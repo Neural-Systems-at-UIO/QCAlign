@@ -12,9 +12,9 @@ This generates a .TXT file that lists all the regions vertically, with four rows
    * - Structure
      - Definition
    * - Total 
-     - Clear Label 
-   * - All markers in grid
-     - Markers that fall outside of atlas
+     - Total no. of markers in the grid
+   * - Clear Label
+     - Markers that fall outside of the atlas area
 
 For the QC assessment of the section images the counts may be used to calculate (%) damage per region for each section and for all the sections combined. The damage here represents tissue damage, poor quality labelling and imaging defects. 
 
