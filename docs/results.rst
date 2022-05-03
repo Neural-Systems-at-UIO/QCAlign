@@ -5,7 +5,7 @@ To export the results of either of the QC assessments go to: **File > Export sta
 
 This generates a .TXT file that lists all the regions vertically, with five rows per region titled "N/A", “accurate”, “inaccurate”, “uncertain” and “damaged” with marker counts for each. There is a row for the whole series and a row per section. 
 
-.. list-table:: Structure definitions
+.. list-table:: 
    :widths: 50 50
    :header-rows: 1
 
