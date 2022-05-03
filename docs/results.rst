@@ -16,6 +16,9 @@ This generates a .TXT file that lists all the regions vertically, with five rows
    * - Clear Label
      - All markers that fall outside of the atlas maps
      
+.. note::
+   Total no. of markers within the atlas maps = total - clear label
+     
 For the QC assessment of the section images the counts may be used to calculate (%) damage per region for each section and for all the sections combined. The damage here represents tissue damage, poor quality labelling and imaging defects. 
 
 For the QC assessment of the atlas-registration the counts may be used to calculate % “verified as accurate”, % “verified as inaccurate” and % that is uncertain for each region for each section and for all the sections combined. The calculations may be performed for smaller regions (a particular nuclei) or for broader regions subdivided into smaller regions (for example, the thalamus subdivided into thalamic nuclei).
