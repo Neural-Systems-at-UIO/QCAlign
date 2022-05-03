@@ -11,7 +11,6 @@ This generates a .TXT file that lists all the regions vertically, with four rows
 
    * - Structure
      - Definition
-     - Heading row 1, column 3
    * - Total markers within grid 
      - 
      - Row 1, column 3
