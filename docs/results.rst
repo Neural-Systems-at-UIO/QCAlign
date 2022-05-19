@@ -7,8 +7,6 @@ This generates a .TXT file that lists all the regions vertically. For each regio
 
 
 .. image:: vertopal_cbedec83746b4aa08b3d6abec4c06604/media/Results.PNG
-   :width: 5.04087in
-   :height: 3.20833in
 
 .. list-table:: 
    :widths: 50 50
