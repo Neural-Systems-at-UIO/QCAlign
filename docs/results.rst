@@ -1,10 +1,9 @@
-**Results**
+**QCAlign Results**
 ===============
 
 To export the results of either of the QC assessments go to: **File > Export stats**.
 
 This generates a .TXT file that lists all the regions vertically. For each region there are five rows titled **N/A**, **Accurate**, **Inaccurate**, **Uncertain**, and **Damaged** with corresponding marker counts. There is a row for the whole series and a row per section. 
-
 
 .. image:: vertopal_cbedec83746b4aa08b3d6abec4c06604/media/Results.PNG
    
@@ -21,19 +20,29 @@ This generates a .TXT file that lists all the regions vertically. For each regio
    * - Clear Label
      - All markers that fall outside of the atlas maps
      
-.. note::
-   Total no. of markers within the atlas maps = Sum of all **Total** markers - Sum of all **Clear label** markers
+
+**How to calculate % accuracy /inaccuracy / uncertainty?**
+------------------------------------------------------------
+
+For the QC assessment of the atlas-registration the counts may be used to calculate % “verified as accurate”, % “verified as inaccurate” and % that is uncertain for each region for the whole series and for each section. The calculations may be performed for individual regions or for broader regions subdivided into smaller regions (for example, the thalamus subdivided into thalamic nuclei).
+
+**How to calculate % damage**
+------------------------------
      
-For the QC assessment of the section images the counts may be used to calculate (%) damage per region for each section and for all the sections combined. The damage here represents tissue damage, poor quality labelling and imaging defects. 
+For the QC assessment of the sections the counts may be used to calculate % damage for the whole series, for each section, per region, or per region for each section. 
 
-For the QC assessment of the atlas-registration the counts may be used to calculate % “verified as accurate”, % “verified as inaccurate” and % that is uncertain for each region for each section and for all the sections combined. The calculations may be performed for smaller regions (a particular nuclei) or for broader regions subdivided into smaller regions (for example, the thalamus subdivided into thalamic nuclei).
+.. note::
+   % damage per section = no. of damage markers for section / total no. of markers per section * 100
+   % damage per region = no. of damage markers per region / total no. of markers per region * 100
+   
+The damage here represents tissue damage, poor quality labelling and imaging defects. 
 
-**Post-processing the QUINT results**
-----------------------------------------
+**How to use the results?**
+----------------------------
 
 The results from QCAlign can be used to guide decision-making regarding post-processing of the QUINT results. For example:
 
-- a researcher may choose to exclude all regions that have more than 30% damage from the QUINT results.
+- exclude all sections or regions that have more than 30% damage from the QUINT results.
 
 - They may also choose to improve the registration of regions with > 5% inaccuracy. 
 
