@@ -12,11 +12,11 @@ This generates a .TXT file that lists all the regions vertically with correspond
    * - Structure
      - Definition
    * - Total grid
-     - Total no. of markers in the whole grid
+     - Markers in the whole grid
    * - Total atlas
-     - Total no. of markers within the atlas map
+     - Markers within the atlas map
    * - Clear Label
-     - All markers that fall outside of the atlas maps
+     - Markers that fall outside of the atlas maps
 
 .. image:: vertopal_cbedec83746b4aa08b3d6abec4c06604/media/Results.PNG
 
