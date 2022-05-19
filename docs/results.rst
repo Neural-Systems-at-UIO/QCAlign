@@ -11,8 +11,10 @@ This generates a .TXT file that lists all the regions vertically, with five rows
 
    * - Structure
      - Definition
-   * - Total 
+   * - Total grid
      - Total no. of markers in the whole grid
+   * - Total atlas
+     - Total no. of markers within the atlas map
    * - Clear Label
      - All markers that fall outside of the atlas maps
      
