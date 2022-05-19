@@ -31,8 +31,6 @@ QCAlign generates two types of reports:
 
 2. Hierarchy file in .TXT format. This represents the customized hierarchy level that is selected in QCAlign. They are compatible with Nutil and can be imported during QUINT analysis to generate customized reports. 
 
-Currently QCAlign supports the Allen Mouse Brain Atlas CCFv3, 2015 and 2017 and the Waxholm Space Atlas of the Spraque Dawley Rat v2, v3 and v4. 
-
 
 **More information on QUINT**
 -----------------------------
