@@ -5,8 +5,6 @@ To export the results of either of the QC assessments go to: **File > Export sta
 
 This generates a .TXT file that lists all the regions vertically. 
 
-.. image:: vertopal_cbedec83746b4aa08b3d6abec4c06604/media/Results.PNG
-
 .. list-table:: 
    :widths: 50 50
    :header-rows: 1
@@ -19,6 +17,8 @@ This generates a .TXT file that lists all the regions vertically.
      - Total no. of markers within the atlas map
    * - Clear Label
      - All markers that fall outside of the atlas maps
+
+.. image:: vertopal_cbedec83746b4aa08b3d6abec4c06604/media/Results.PNG
 
 For each region there are five rows titled **N/A**, **Accurate**, **Inaccurate**, **Uncertain**, and **Damaged** with corresponding marker counts. There is a row for the whole series and a row per section. 
 
