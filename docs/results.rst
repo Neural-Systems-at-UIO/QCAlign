@@ -51,8 +51,7 @@ For the QC assessment of the atlas-registration the counts may be used to calcul
 For the QC assessment of the sections the counts may be used to calculate % damage for the whole series, for each section, per region, or per region for each section. 
 
 .. note::
-   % damage per section = no. of damage markers for section / total no. of markers per section * 100
-   % damage per region = no. of damage markers per region / total no. of markers per region * 100
+   % damage = no. of damage markers / total markers  * 100
    
 The damage here represents tissue damage, poor quality labelling and imaging defects. 
 
