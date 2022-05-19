@@ -3,7 +3,7 @@
 
 To export the results of either of the QC assessments go to: **File > Export stats**.
 
-This generates a .TXT file that lists all the regions vertically. 
+This generates a .TXT file that lists all the regions vertically with corresponding marker counts. 
 
 .. list-table:: 
    :widths: 50 50
