@@ -3,13 +3,9 @@
 
 QCAlign was developed to support the use of the QuickNII - ilastik - Nutil workflow (QUINT) for high-throughput studies. It is a quality control tool that provides information about:
 
-**1. The quality of the section images used as input to the QUINT workflow:** 
+**1. The quality of the section images used as input to the QUINT workflow:** detect regions that are affected by tissue damage, labelling defects, artifacts, or errors in image acqusition (e.g. out-of-focus).
 
-Detect regions that are affected by tissue damage, labelling defects, artifacts, or errors in image acqusition (e.g. out-of-focus). This may affect the quality of the feature extraction. 
-
-**2. The quality of the atlas-registration performed in the QUINT workflow:** 
-
-Detect regions that are poorly registered, or where the registration cannot be verified. 
+**2. The quality of the atlas-registration performed in the QUINT workflow:** detect regions that are poorly registered, or where the registration cannot be verified. 
 
 In addition (not related to the quality control), QCAlign makes it easier for the user to explore the atlas hierarchy and decide on a customized hierarchy level for the investigation.
 
