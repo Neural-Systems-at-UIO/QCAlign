@@ -1,7 +1,9 @@
 **Conditions of use**
 =====================
 
-QCAlign supports systematic post-processing of the QUINT results. It was developed by the Neural Systems Laboratory at the Institute of Basic Medical Sciences at the University of Oslo in Norway, in collaboration with the Kaczorowski Lab at the Jackson Laboratory in Bar Harbor, Maine, in the USA. 
+QCAlign supports systematic post-processing of the QUINT results. It was developed by the Neural Systems Laboratory at the Institute of Basic Medical Sciences at the University of Oslo in Norway, in collaboration with the Kaczorowski Lab at the Jackson Laboratory in Bar Harbor, Maine, in the USA.
+
+Currently QCAlign supports the Allen Mouse Brain Atlas CCFv3, 2015 and 2017 and the Waxholm Space Atlas of the Spraque Dawley Rat v2, v3 and v4. 
 
 Authors
 ---------
