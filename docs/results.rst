@@ -26,14 +26,18 @@ For each region there are five rows titled **N/A**, **Accurate**, **Inaccurate**
    :widths: 50 50
    :header-rows: 1
 
-   * - 
+   * - Status
      - Definition
-   * - Total grid
-     - Total no. of markers in the whole grid
-   * - Total atlas
-     - Total no. of markers within the atlas map
-   * - Clear Label
-     - All markers that fall outside of the atlas maps
+   * - N/A
+     - No. of markers that have not been assigned a category.
+   * - Accurate
+     - No. of markers assigned as accurate.
+   * - Inaccurate
+     - No. of markers assigned as inaccurate.
+   * - Uncertain
+     - No. of markers assigned as uncertain.
+   * - Damaged
+     - No. of markers representing damage.
      
 
 **How to calculate % accuracy /inaccuracy / uncertainty?**
