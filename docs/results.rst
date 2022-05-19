@@ -20,7 +20,7 @@ This generates a .TXT file that lists all the regions vertically with correspond
 
 .. image:: vertopal_cbedec83746b4aa08b3d6abec4c06604/media/Results.PNG
 
-For each region there are five rows titled **N/A**, **Accurate**, **Inaccurate**, **Uncertain**, and **Damaged** with corresponding marker counts. There is a row for the whole series and a row per section. 
+For each region there are five rows titled **N/A**, **Accurate**, **Inaccurate**, **Uncertain**, and **Damaged**. There is a row for the whole series and a row per section. 
 
 .. list-table:: 
    :widths: 50 50
@@ -59,11 +59,11 @@ The damage here represents tissue damage, poor quality labelling and imaging def
 **How to use the results?**
 ----------------------------
 
-The results from QCAlign can be used to guide decision-making regarding post-processing of the QUINT results. For example:
+The results from QCAlign may be used to guide decision-making regarding post-processing of the QUINT results. For example:
 
 - exclude all sections or regions that have more than 30% damage from the QUINT results.
 
-- They may also choose to improve the registration of regions with > 5% inaccuracy. 
+- improve the registration of regions with < 90% accuracy. 
 
 - If a lot of uncertainty is detected for a particular region (for example, the thalamus subdivided into thalamic nuclei), the results may prompt reporting at a coarser granularity level if higher confidence in the atlas-registration is required.  
 
