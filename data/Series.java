@@ -4,10 +4,12 @@ import java.io.IOException;
 import java.io.Writer;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import math.LinInter;
 import math.LinReg;
 import parsers.JSON;
+import qcontrol.QCController;
 
 public class Series {
     public List<Double> resolution = new ArrayList<>();
@@ -15,6 +17,7 @@ public class Series {
     public String target;
     public List<Slice> slices = new ArrayList<>();
     public List<Double> collapsed = new ArrayList<>();
+    public double version10=QCController.version10;
     
 //    public double pixelnanos = 1000;
 //    public double gridmicrons = 1000;
@@ -22,6 +25,7 @@ public class Series {
     
     public void toJSON(Writer w) throws IOException {
         w.append('{');
+        JSON.writeString("version10", w).append(':').append(String.format(Locale.ENGLISH, "%.0f", QCController.version10)).append(',');
         JSON.writeString("name", w).append(':');
         JSON.writeString(name, w).append(',');
         JSON.writeString("target", w).append(':');

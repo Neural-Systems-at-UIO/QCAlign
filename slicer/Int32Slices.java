@@ -5,6 +5,8 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.zip.GZIPInputStream;
 
 import nii.Nifti1Dataset;
@@ -27,7 +29,7 @@ public class Int32Slices {
      * @throws Exception if file access fails, unsupported data format encountered,
      *                   or XML does not contain description for id.
      */
-    public Int32Slices(String aNiftiFile) throws Exception {
+    private Int32Slices(String aNiftiFile) throws Exception {
         Nifti1Dataset n1d = new Nifti1Dataset(aNiftiFile);
         n1d.readHeader();
 //        blob = n1d.ds_datname;
@@ -55,6 +57,44 @@ public class Int32Slices {
         }
         blob=ByteBuffer.wrap(bytes);
         blob.order(n1d.big_endian?ByteOrder.BIG_ENDIAN:ByteOrder.LITTLE_ENDIAN);
+    }
+    
+    public Set<Integer> stats;
+    public final boolean hasLabel(Integer label) {
+    	return stats.contains(label);
+    }
+    
+    public Int32Slices(String aNiftiFile, boolean aNeedStats) throws Exception {
+    	this(aNiftiFile);
+    	stats=new HashSet<Integer>();
+//    	System.out.println(blob.position());
+//    	System.out.println(blob.capacity());
+//    	System.out.println(Nifti1Dataset.decodeDatatype(type));
+    	if(aNeedStats)
+			while (blob.position() < blob.capacity())
+				switch (type) {
+				case Nifti1Dataset.NIFTI_TYPE_INT8:
+					stats.add(Integer.valueOf(blob.get()));
+					break;
+				case Nifti1Dataset.NIFTI_TYPE_UINT8:
+					stats.add(Integer.valueOf(blob.get() & 0xFF));
+					break;
+				case Nifti1Dataset.NIFTI_TYPE_INT16:
+					stats.add(Integer.valueOf(blob.getShort()));
+					break;
+				case Nifti1Dataset.NIFTI_TYPE_UINT16:
+					stats.add(Integer.valueOf(blob.getShort() & 0xFFFF));
+					break;
+				case Nifti1Dataset.NIFTI_TYPE_INT32:
+				case Nifti1Dataset.NIFTI_TYPE_UINT32:
+					stats.add(blob.getInt());
+					break;
+				default:
+					throw new Exception("Unsupported type for statistics: " + Nifti1Dataset.decodeDatatype(type));
+				}
+//    	System.out.println(stats);
+//    	System.out.println(blob.position());
+//    	System.out.println(blob.capacity());
     }
 
     /**

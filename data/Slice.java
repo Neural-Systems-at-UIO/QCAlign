@@ -19,12 +19,14 @@ public class Slice implements Comparable<Slice> {
     public double gridx;
     public double gridy;
     public List<Double> grid = new ArrayList<>();
+    public boolean clear=true;
 
     public String toString() {
         return "\n{\"filename\":\"" + filename + "\",\"nr\":" + (int) nr + ",\"width\":" + (int) width + ",\"height\":"
                 + (int) height + (noanchoring ? "" : ",\"anchoring\":" + anchoring)
                 + (markers.size() > 0 ? ",\"markers\":" + markers : "")
                 + (grid.size() > 0 ? ",\"gridx\":" + (int) gridx + ",\"gridy\":" + (int) gridy + ",\"grid\":" + grid : "")
+                + ",\"clear\":" + clear 
                 + "}";
     }
 
@@ -148,5 +150,25 @@ public class Slice implements Comparable<Slice> {
             return true;
         }
         return false;
+    }
+    
+    //
+    
+    public int xspacing,yspacing;
+    public void updateSpacing(double gridSpacing) {
+    	if(anchoring.size()!=9)System.out.println("non-9 in updateSpacing");
+    	double ow=0;
+    	for(int i=0;i<3;i++) {
+    		ow+=anchoring.get(i+3)*anchoring.get(i+3);
+    	}
+    	ow=Math.sqrt(ow);
+    	xspacing=(int)(width*gridSpacing/ow);
+    	if(anchoring.size()!=9)System.out.println("non-9 in ySpacing");
+    	double oh=0;
+    	for(int i=0;i<3;i++) {
+    		oh+=anchoring.get(i+6)*anchoring.get(i+6);
+    	}
+    	oh=Math.sqrt(oh);
+    	yspacing=(int)(height*gridSpacing/oh);
     }
 }
