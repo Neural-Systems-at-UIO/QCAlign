@@ -46,7 +46,9 @@ For each region there are five rows titled **N/A**, **Accurate**, **Inaccurate**
 For the QC assessment of the atlas-registration the counts may be used to calculate % “verified as accurate”, % “verified as inaccurate” and "% that is uncertain" for each region for the complete series and for each section. The calculations may be performed for refeence atlas regions or for compilations of reference atlas regions. The calculations are performed as follows:
 
 Accuracy Score = (no. of accurate markers)/ (no. of accurate markers + no. of inaccurate markers)
+
 Inaccuracy Score = (no. of inaccurate markers)/ (no. of accurate markers + no. of inaccurate markers)
+
 Uncertainty Score = (no. of uncertain markers)/ (no. of accurate markers + no. of inaccurate markers + no. of uncertain markers)
 
 
