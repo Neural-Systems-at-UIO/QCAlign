@@ -7,7 +7,7 @@ QCAlign was developed to support the use of the QuickNII - ilastik - Nutil workf
 
 **2. The quality of the atlas-registration performed in the QUINT workflow:** detect regions that are poorly registered, or where the registration cannot be verified. 
 
-In addition (not related to the quality control), QCAlign makes it easier for the user to explore the atlas hierarchy and decide on a customized hierarchy level for the investigation.
+In addition (not related to the quality control), QCAlign makes it easier for the user to explore the atlas hierarchy and decide on a customized hierarchy level to use for the investigation.
 
 **How does it work?**
 ---------------------
@@ -16,14 +16,14 @@ The quality control steps are based on systematic sampling, with a grid of point
 
 - For quality control of the section images there is a "damage" marker for marking up areas that are affected by tissue damage, artifacts, or errors in image aquisition. 
 
-- For quality control of the atlas-registration there are "accurate", "inaccurate" and "uncertain" markers. The researcher working with the tool represents the “ground truth”, and uses the appearance of visible landmarks in the sections and their anatomical expertise to assess the quality of the registration. 
+- For quality control of the atlas-registration there are "accurate", "inaccurate" and "uncertain" markers. The researcher working with the tool represents the “ground truth”, and uses visible landmarks in the sections and their anatomical expertise to assess the quality of the registration. 
 
 **What can you do with the results?**
 -----------------------------------
 
 QCAlign generates two types of reports:
 
-1. Reports with marker counts per region for the whole series and per section (.TXT format). This can be used to calculate percentage (%) damage per region based on the QC assessment of the section images; and % verified as accurate, % verified as inaccurate, and % that is uncertain for each region based on the QC assessment of the atlas-registration.
+1. Reports with marker counts per region for the complete image series and per section (.TXT format). This can be used to calculate percentage (%) damage per region based on the QC assessment of the section images; and % verified as accurate, % verified as inaccurate, and % that is uncertain for each region based on the QC assessment of the atlas-registration.
 
 2. Hierarchy file in .TXT format. This represents the customized hierarchy level that is selected in QCAlign. They are compatible with Nutil and can be imported during QUINT analysis to generate customized reports. 
 
