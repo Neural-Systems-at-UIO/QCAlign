@@ -3,9 +3,9 @@
 
 QCAlign was developed to support the use of the `QUINT workflow <https://quint-workflow.readthedocs.io/en/latest/#>`_ for high-throughput studies. It is a quality control tool that provides information about:
 
-**1. The quality of the section images used as input to the QUINT workflow:** detect regions that are affected by tissue damage, labelling defects, artifacts, or errors in image acqusition (e.g. out-of-focus).
+1. The quality of the section images used as input to the QUINT workflow: detect regions that are affected by tissue damage, labelling defects, artifacts, or errors in image acqusition (e.g. out-of-focus).
 
-**2. The quality of the atlas-registration performed in the QUINT workflow:** detect regions that are poorly registered, or where the registration cannot be verified. 
+2. The quality of the atlas-registration performed in the QUINT workflow: detect regions that are poorly registered, or where the registration cannot be verified. 
 
 3. In addition (not related to the quality control), QCAlign provides functionality for exploring the atlas hierarchy and deciding on a customized hierarchy level to use for the investigation.
 
