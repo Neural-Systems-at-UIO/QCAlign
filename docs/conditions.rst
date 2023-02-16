@@ -25,6 +25,7 @@ QCAlign was developed with support from the EBRAINS infrastructure, with funding
 How to cite the tool
 ---------------------
 
+RRID:SCR_023088
 Manuscript in preparation. 
 
 
