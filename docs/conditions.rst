@@ -35,3 +35,7 @@ How to cite the reference atlases
 Allen Mouse Brain Atlas: © 2004 Allen Institute for Brain Science. Allen Mouse Brain Atlas. Available from: http://download.alleninstitute.org/informatics-archive/current-release/mouse_ccf/annotation/.
 
 Waxholm Space atlas of the Sprague Dawley rat brain version 2 , 3 and 4: RRID: SCR_017124; Papp et al., NeuroImage 97, 374-386, 2014; Papp et al., NeuroImage 105, 561–562, 2015; Kjonigsen et al., NeuroImage 108, 441-449, 2015; Osen et al., NeuroImage 199, 38-56, 2019; Kleven et al., in preparation.
+
+Contact us
+-----------
+email: support@ebrains.eu
