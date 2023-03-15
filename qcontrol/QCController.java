@@ -15,17 +15,21 @@ import java.net.URI;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Random;
 import java.util.Set;
 import java.util.TreeMap;
 import java.util.TreeSet;
 import java.util.prefs.Preferences;
+import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 import javax.imageio.ImageIO;
@@ -48,6 +52,7 @@ import javafx.scene.control.ColorPicker;
 import javafx.scene.control.Dialog;
 import javafx.scene.control.DialogPane;
 import javafx.scene.control.Hyperlink;
+import javafx.scene.control.Label;
 import javafx.scene.control.RadioMenuItem;
 import javafx.scene.control.Slider;
 import javafx.scene.control.Spinner;
@@ -66,6 +71,7 @@ import javafx.scene.image.PixelWriter;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.Background;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
@@ -125,6 +131,20 @@ public class QCController implements ChangeListener<Number>, EventHandler<TreeMo
     @FXML
     private IntegerSpinnerValueFactory spnVal;
     
+    @FXML
+    private RadioMenuItem lockHier;
+    
+    @FXML
+    private RadioMenuItem overview;
+    
+    @FXML
+    private void overview(ActionEvent event) {
+    	drawGrid();
+    }
+    
+//    @FXML
+//    private RadioMenuItem keepMarkers;
+    
 //    @FXML
 //    private Spinner<Integer> nmSpn;
 //    
@@ -145,10 +165,25 @@ public class QCController implements ChangeListener<Number>, EventHandler<TreeMo
     
     @FXML
     private TreeView<String> tree;
+    
+    @FXML
+    private Label prg;
 
     @FXML
     void onClick(MouseEvent event) {
         System.out.println(event);
+    }
+    
+    void updateProgress() {
+    	if(series==null || series.slices.isEmpty()) {
+    		prg.setText("");
+    		return;
+    	}
+    	int cnt=0;
+    	for(Slice s:series.slices)
+    		if(!s.clear)
+    			cnt++;
+    	prg.setText(cnt+" of "+series.slices.size()+", "+(slice.clear?"Clear":"Changed"));
     }
 
     int pick = -1;
@@ -188,9 +223,9 @@ public class QCController implements ChangeListener<Number>, EventHandler<TreeMo
         
         if(slice!=null) {
             pickx = (mouseX - imgx) * slice.width / imgw;
-            pickx = Math.round((pickx - slice.gridx)/xspacing);
+            pickx = Math.round((pickx - slice.gridx)/slice.xspacing);
             picky = (mouseY - imgy) * slice.height / imgh;
-            picky = Math.round((picky - slice.gridy)/yspacing);
+            picky = Math.round((picky - slice.gridy)/slice.yspacing);
         }
     }
     
@@ -245,11 +280,15 @@ public class QCController implements ChangeListener<Number>, EventHandler<TreeMo
 //            basey = picked.get(3);
 //        }
 //xx        int gridspacing=(int)series.gridspacing;
-        int xp=(int)(slice.width-slice.gridx+xspacing-1)/xspacing;
-        int yp=(int)(slice.height-slice.gridy+yspacing-1)/yspacing;
+        int xp=(int)(slice.width-slice.gridx+slice.xspacing-1)/slice.xspacing;
+        int yp=(int)(slice.height-slice.gridy+slice.yspacing-1)/slice.yspacing;
         if(pickx>=0 && pickx<xp && picky>=0 && picky<yp) {
+        	slice.clear=false;
+        	lockHier.setSelected(true);
+        	lockHier(null);
+        	updateProgress();
             int i=(int)(pickx+picky*xp);
-            slice.grid.set(i, slice.grid.get(i)<3?slice.grid.get(i)+1:0);
+            slice.grid.set(i, (slice.grid.get(i)+1)%statuses.length);
         }
         drawGrid();
     }
@@ -266,12 +305,45 @@ public class QCController implements ChangeListener<Number>, EventHandler<TreeMo
     }
 
     @FXML
-    void keyPressed(KeyEvent event) {
-        if(slice==null)return;
-        if(event.getCode()==KeyCode.SPACE) {
-            override=!override;
-            drawGrid();
-        }
+	void keyPressed(KeyEvent event) {
+		if (slice == null)
+			return;
+		double code=0;
+		switch (event.getCode()) {
+		case SPACE:
+			overview.setSelected(!overview.isSelected());
+			drawGrid();
+			break;
+//		case LEFT:
+//			spnVal.decrement(1);
+//			break;
+//		case RIGHT:
+//			spnVal.increment(1);
+//			break;
+		case DIGIT5:
+			code++;
+		case DIGIT4:
+			code++;
+		case DIGIT3:
+			code++;
+		case DIGIT2:
+			code++;
+		case DIGIT1:{
+	        int xp=(int)(slice.width-slice.gridx+slice.xspacing-1)/slice.xspacing;
+	        int yp=(int)(slice.height-slice.gridy+slice.yspacing-1)/slice.yspacing;
+	        if(pickx>=0 && pickx<xp && picky>=0 && picky<yp) {
+	        	slice.clear=false;
+	        	lockHier.setSelected(true);
+	        	lockHier(null);
+	        	updateProgress();
+	            int i=(int)(pickx+picky*xp);
+	            slice.grid.set(i, code);
+	        }
+	        drawGrid();
+			break;
+		}
+		default:
+		}
 //        List<ArrayList<Double>> markers=slice.markers;
 //        List<Triangle> triangles=slice.triangles;
 //        updatePick();
@@ -355,45 +427,50 @@ public class QCController implements ChangeListener<Number>, EventHandler<TreeMo
 
     Series series;
     Slice slice;
-    int xspacing;
-    int yspacing;
+//    int xspacing;
+//    int yspacing;
     void setSlice(Slice slice) {
     	this.slice=slice;
     	if(slice!=null) {
-    		calcSpacing();
-    	} else xspacing=yspacing=0;
+    		updateProgress();
+    		slice.updateSpacing(series.gridspacing);
+    	}
+//        	if(slice.anchoring.size()!=9)System.out.println("non-9 in calcSpacing");
+//        	xspacing=xSpacing(slice);
+//        	yspacing=ySpacing(slice);
+//    	} else xspacing=yspacing=0;
     }
     
-    int xSpacing(Slice slice) {
-    	if(slice.anchoring.size()!=9)System.out.println("non-9 in xSpacing");
-    	double ow=0;
-    	for(int i=0;i<3;i++) {
-    		ow+=slice.anchoring.get(i+3)*slice.anchoring.get(i+3);
-    	}
-    	ow=Math.sqrt(ow);
-    	return (int)(slice.width*series.gridspacing/ow);
-    }
-    int ySpacing(Slice slice) {
-    	if(slice.anchoring.size()!=9)System.out.println("non-9 in ySpacing");
-    	double oh=0;
-    	for(int i=0;i<3;i++) {
-    		oh+=slice.anchoring.get(i+6)*slice.anchoring.get(i+6);
-    	}
-    	oh=Math.sqrt(oh);
-    	return (int)(slice.height*series.gridspacing/oh);
-    }
-    boolean checkGrid(Slice slice,int xspacing,int yspacing) {
-    	return slice.grid.size()==((int)(slice.width-slice.gridx+xspacing-1)/xspacing)*((int)(slice.height-slice.gridy+yspacing-1)/yspacing);
-    }
+//    int xSpacing(Slice slice) {
+//    	if(slice.anchoring.size()!=9)System.out.println("non-9 in xSpacing");
+//    	double ow=0;
+//    	for(int i=0;i<3;i++) {
+//    		ow+=slice.anchoring.get(i+3)*slice.anchoring.get(i+3);
+//    	}
+//    	ow=Math.sqrt(ow);
+//    	return (int)(slice.width*series.gridspacing/ow);
+//    }
+//    int ySpacing(Slice slice) {
+//    	if(slice.anchoring.size()!=9)System.out.println("non-9 in ySpacing");
+//    	double oh=0;
+//    	for(int i=0;i<3;i++) {
+//    		oh+=slice.anchoring.get(i+6)*slice.anchoring.get(i+6);
+//    	}
+//    	oh=Math.sqrt(oh);
+//    	return (int)(slice.height*series.gridspacing/oh);
+//    }
+//    boolean checkGrid(Slice slice,int xspacing,int yspacing) {
+//    	return slice.grid.size()==((int)(slice.width-slice.gridx+xspacing-1)/xspacing)*((int)(slice.height-slice.gridy+yspacing-1)/yspacing);
+//    }
     
-    void calcSpacing() {
-    	if(slice.anchoring.size()!=9)System.out.println("non-9 in calcSpacing");
-    	xspacing=xSpacing(slice);
-    	yspacing=ySpacing(slice);
-    	
-    	if(!checkGrid(slice, xspacing, yspacing))
-    		makeGrid(slice, xspacing, yspacing);
-    }
+//    void removeThisCalcSpacing() {
+//    	if(slice.anchoring.size()!=9)System.out.println("non-9 in calcSpacing");
+//    	xspacing=xSpacing(slice);
+//    	yspacing=ySpacing(slice);
+//    	
+////    	if(!checkGrid(slice, xspacing, yspacing))
+////    		makeGrid(slice, xspacing, yspacing);
+//    }
     
     @Override
     public void changed(ObservableValue<? extends Number> arg0, Number arg1, Number arg2) {
@@ -422,21 +499,16 @@ public class QCController implements ChangeListener<Number>, EventHandler<TreeMo
     public void gridSpacing() {
         if(series==null || skiphack)
             return;
-//        System.out.println(series.gridspacing=arg2.intValue());
-//        series.pixelnanos=nmSpnVal.getValue();
-//        series.gridmicrons=umSpnVal.getValue();
         series.gridspacing=voxSpnVal.getValue();
-//        System.out.println(series.gridspacing);
-//        series.gridspacing=arg2.intValue();
-        for(Slice s:series.slices)
-            s.grid.clear();
-//        if(slice.width/series.gridspacing>150)
-//            series.gridspacing=slice.width/150;
-        calcSpacing();
-//        setGrid();
-//        slice.gridx=slice.gridy=0;
-        reDraw();
+    	resetSeries();
     }
+
+	private void resetSeries() {
+		for(var slice:series.slices)
+    		resetSection(slice);
+    	updateProgress();
+        reDraw();
+	}
     
     private Image image;
     int imgx, imgy, imgw, imgh;
@@ -573,57 +645,56 @@ public class QCController implements ChangeListener<Number>, EventHandler<TreeMo
     boolean noGrid() {
     	return slice==null;// || gridspacing==0;
     }
-    Random rnd=new Random();
-    private void makeGrid(Slice slice,int xspacing,int yspacing) {
-    	if(slice.anchoring.size()!=9)System.out.println("non-9 in setGrid");
-        slice.gridx=rnd.nextInt(xspacing);
-        slice.gridy=rnd.nextInt(yspacing);
-        int xp=(int)(slice.width-slice.gridx+xspacing-1)/xspacing;
-        int yp=(int)(slice.height-slice.gridy+yspacing-1)/yspacing;
-//        System.out.printf("%dx%d, %f %f\n",xp,yp,slice.gridx,slice.gridy);
-//        System.out.println(slice);
-        slice.grid=new ArrayList<>(xp*yp);
-//        for(int i=0;i<xp*yp;i++)
-//            slice.grid.add((double)rnd.nextInt(3));
-//            slice.grid.add((double)0);
-//        slice.grid.set(slice.grid.size()-1, 3.);
-        
-    	slice.triangulate(); //!!
-        Double ouv[]=slice.anchoring.toArray(new Double[0]);
-        int[][] raw_overlay=slicer.getInt32Slice(ouv[0], ouv[1], ouv[2], ouv[3], ouv[4], ouv[5], ouv[6], ouv[7], ouv[8], false);
-        for(int line[]:raw_overlay)
-        	for(int x=0;x<line.length;x++)
-        		line[x]=simplify.get(line[x]);
-        
-        int gridx=(int)slice.gridx;
-        int gridy=(int)slice.gridy;
+//    private void removeThisMakeGrid(Slice slice,int xspacing,int yspacing) {
+//    	if(slice.anchoring.size()!=9)System.out.println("non-9 in setGrid");
+//        slice.gridx=rnd.nextInt(xspacing);
+//        slice.gridy=rnd.nextInt(yspacing);
+//        int xp=(int)(slice.width-slice.gridx+xspacing-1)/xspacing;
+//        int yp=(int)(slice.height-slice.gridy+yspacing-1)/yspacing;
+////        System.out.printf("%dx%d, %f %f\n",xp,yp,slice.gridx,slice.gridy);
+////        System.out.println(slice);
+//        slice.grid=new ArrayList<>(xp*yp);
+////        for(int i=0;i<xp*yp;i++)
+////            slice.grid.add((double)rnd.nextInt(3));
+////            slice.grid.add((double)0);
+////        slice.grid.set(slice.grid.size()-1, 3.);
+//        
+//    	slice.triangulate(); //!!
+//        Double ouv[]=slice.anchoring.toArray(new Double[0]);
+//        int[][] raw_overlay=slicer.getInt32Slice(ouv[0], ouv[1], ouv[2], ouv[3], ouv[4], ouv[5], ouv[6], ouv[7], ouv[8], false);
+//        for(int line[]:raw_overlay)
+//        	for(int x=0;x<line.length;x++)
+//        		line[x]=simplify.get(line[x]);
+//        
+//        int gridx=(int)slice.gridx;
+//        int gridy=(int)slice.gridy;
+//
+//        for(int y=0;y<yp;y++)
+//        	for(int x=0;x<xp;x++) {
+//        		if(x==0 || y==0 || x==xp-1 || y==yp-1)
+//        			slice.grid.add(0.);
+//        		else {
+//        			int w=sample_raw(gridx+x*xspacing, gridy+y*yspacing, slice, raw_overlay);
+//        			if(w!=0 &&
+//        					w==sample_raw(gridx+(x-1)*xspacing, gridy+y*yspacing, slice, raw_overlay) &&
+//        					w==sample_raw(gridx+(x+1)*xspacing, gridy+y*yspacing, slice, raw_overlay) &&
+//        					w==sample_raw(gridx+x*xspacing, gridy+(y-1)*yspacing, slice, raw_overlay) &&
+//        					w==sample_raw(gridx+x*xspacing, gridy+(y+1)*yspacing, slice, raw_overlay))
+//        				slice.grid.add(1.);
+//        			else
+//        				slice.grid.add(0.);
+//        		}
+//        	}
+//    }
 
-        for(int y=0;y<yp;y++)
-        	for(int x=0;x<xp;x++) {
-        		if(x==0 || y==0 || x==xp-1 || y==yp-1)
-        			slice.grid.add(0.);
-        		else {
-        			int w=sample_raw(gridx+x*xspacing, gridy+y*yspacing, slice, raw_overlay);
-        			if(w!=0 &&
-        					w==sample_raw(gridx+(x-1)*xspacing, gridy+y*yspacing, slice, raw_overlay) &&
-        					w==sample_raw(gridx+(x+1)*xspacing, gridy+y*yspacing, slice, raw_overlay) &&
-        					w==sample_raw(gridx+x*xspacing, gridy+(y-1)*yspacing, slice, raw_overlay) &&
-        					w==sample_raw(gridx+x*xspacing, gridy+(y+1)*yspacing, slice, raw_overlay))
-        				slice.grid.add(1.);
-        			else
-        				slice.grid.add(0.);
-        		}
-        	}
-    }
-
-    boolean override;
+//    boolean override;
     private void drawGrid() {
         GraphicsContext ctx = gridcnv.getGraphicsContext2D();
         ctx.clearRect(0, 0, gridcnv.getWidth(), gridcnv.getHeight());
     	if(noGrid())
     		return;
 //        if(gridspacing>0) {
-            if(!override) {
+            if(!overview.isSelected()) {
                 int gridx=(int)slice.gridx;
                 int gridy=(int)slice.gridy;
                 ctx.setStroke(gridColor.getValue());
@@ -631,37 +702,37 @@ public class QCController implements ChangeListener<Number>, EventHandler<TreeMo
                 ctx.setLineWidth(2);
                 switch(gridType.getValue()) {
                     case "Grid":
-                        for(int x=gridx;x<slice.width;x+=xspacing) {
+                        for(int x=gridx;x<slice.width;x+=slice.xspacing) {
                             double dx=x*imgw/slice.width;
                             ctx.strokeLine(imgx+dx, imgy, imgx+dx, imgy+imgh);
                         }
-                        for(int y=gridy;y<slice.height;y+=yspacing) {
+                        for(int y=gridy;y<slice.height;y+=slice.yspacing) {
                             double dy=y*imgh/slice.height;
                             ctx.strokeLine(imgx, imgy+dy, imgx+imgw, imgy+dy);
                         }
                         break;
                     case "Dots":
-                        for(int x=gridx;x<slice.width;x+=xspacing)
-                            for(int y=gridy;y<slice.height;y+=yspacing)
+                        for(int x=gridx;x<slice.width;x+=slice.xspacing)
+                            for(int y=gridy;y<slice.height;y+=slice.yspacing)
                                 ctx.strokeRect(imgx+x*imgw/slice.width, imgy+y*imgh/slice.height, 1, 1);
                         break;
                     case "Circles":
-                        for(int x=gridx;x<slice.width;x+=xspacing)
-                            for(int y=gridy;y<slice.height;y+=yspacing)
+                        for(int x=gridx;x<slice.width;x+=slice.xspacing)
+                            for(int y=gridy;y<slice.height;y+=slice.yspacing)
                                 ctx.strokeOval(imgx+x*imgw/slice.width-2, imgy+y*imgh/slice.height-2, 4, 4);
                         break;
                 }
             }
-            int xp=(int)(slice.width-slice.gridx+xspacing-1)/xspacing;
-            int yp=(int)(slice.height-slice.gridy+yspacing-1)/yspacing;
+            int xp=(int)(slice.width-slice.gridx+slice.xspacing-1)/slice.xspacing;
+            int yp=(int)(slice.height-slice.gridy+slice.yspacing-1)/slice.yspacing;
             ctx.setTextAlign(TextAlignment.LEFT);
             ctx.setTextBaseline(VPos.BOTTOM);
             for(int x=0;x<xp;x++)
                 for(int y=0;y<yp;y++) {
                     int res=(int)slice.grid.get(x+y*xp).doubleValue();
-                    if(!override) {
-                        double xbase=imgx+(slice.gridx+x*xspacing)*imgw/slice.width+3;
-                        double ybase=imgy+(slice.gridy+y*yspacing)*imgh/slice.height-2;
+                    if(!overview.isSelected()) {
+                        double xbase=imgx+(slice.gridx+x*slice.xspacing)*imgw/slice.width+3;
+                        double ybase=imgy+(slice.gridy+y*slice.yspacing)*imgh/slice.height-2;
                         switch(res) {
                             case 0:
 //                                ctx.setStroke(Color.BLACK);
@@ -679,10 +750,14 @@ public class QCController implements ChangeListener<Number>, EventHandler<TreeMo
                                 ctx.setStroke(Color.BLACK);
                                 ctx.strokeText("?", xbase,ybase);
                                 break;
+                            case 4:
+                            	ctx.setStroke(Color.BLUE);
+                            	ctx.strokeText("x", xbase,ybase);
+                            	break;
                         }
                     } else {
-                        double xbase=imgx+(slice.gridx+(x-0.5)*xspacing)*imgw/slice.width;
-                        double ybase=imgy+(slice.gridy+(y-0.5)*yspacing)*imgh/slice.height;
+                        double xbase=imgx+(slice.gridx+(x-0.5)*slice.xspacing)*imgw/slice.width;
+                        double ybase=imgy+(slice.gridy+(y-0.5)*slice.yspacing)*imgh/slice.height;
                         switch(res) {
                             case 1:
                                 ctx.setFill(Color.GREEN);
@@ -693,9 +768,12 @@ public class QCController implements ChangeListener<Number>, EventHandler<TreeMo
                             case 3:
                                 ctx.setFill(Color.BLACK);
                                 break;
+                            case 4:
+                            	ctx.setFill(Color.BLUE);
+                            	break;
                         }
                         if(res!=0)
-                            ctx.fillRect(xbase, ybase, xspacing*imgw/slice.width, yspacing*imgh/slice.height);
+                            ctx.fillRect(xbase, ybase, slice.xspacing*imgw/slice.width, slice.yspacing*imgh/slice.height);
                     }
                 }
 //        }
@@ -770,6 +848,16 @@ public class QCController implements ChangeListener<Number>, EventHandler<TreeMo
                 a.showAndWait();
                 return;
             }
+            if(series.version10>version10) {
+            	Alert a=new Alert(AlertType.WARNING, String.format(Locale.ENGLISH,"This JSON file was created with QCAlign v%.1f.\nPlease update your copy (which is %s)",series.version10/10,title), ButtonType.OK);
+            	a.showAndWait();
+            }
+            int cnt=0;
+            for(Slice s:series.slices)
+            	if(!s.clear)
+            		cnt++;
+            lockHier.setSelected(cnt>0);
+            lockHier(null);
             series.propagate();
             if(series.target==null) {
                 DirectoryChooser dc=new DirectoryChooser();
@@ -782,7 +870,7 @@ public class QCController implements ChangeListener<Number>, EventHandler<TreeMo
             if(current==null || !current.equals(series.target)) {
                 current=series.target;
                 palette=ITKLabel.parseLabels(current+File.separator+"labels.txt");
-                slicer=new Int32Slices(current+File.separator+"labels.nii.gz");
+                slicer=new Int32Slices(current+File.separator+"labels.nii.gz",true);
             }
             try(FileReader fr=new FileReader(current+File.separator+"tree.json")){
             	simplify=new HashMap<>();
@@ -871,7 +959,24 @@ public class QCController implements ChangeListener<Number>, EventHandler<TreeMo
     	for(TreeLabel child:tl.children)
     		refreshmapping(child,override);
     }
-
+    
+    @FXML
+    void lockHier(ActionEvent event) {
+    	tree.setDisable(lockHier.isSelected());
+    }
+    
+    @FXML
+    void expandHier(ActionEvent event) {
+    	supress=true;
+    	for(var item:idmap.values())
+    		item.setExpanded(true);
+    	supress=false;
+    	lockHier.setSelected(false);
+    	lockHier(null);
+    	domappings();
+    	loadView();
+    }
+    
     Map<Integer, Integer> simplify;
     void loadView() {
         if(series==null)
@@ -899,8 +1004,8 @@ public class QCController implements ChangeListener<Number>, EventHandler<TreeMo
                 }
         }
 //        setSpacing();
-//        if(slice.grid.isEmpty())
-//            setGrid();
+        if(slice.grid.isEmpty())
+            resetSection(slice);
         reDraw();
     }
 
@@ -1017,7 +1122,7 @@ public class QCController implements ChangeListener<Number>, EventHandler<TreeMo
                 supress=false;
                 domappings();
             }
-            gridSpacing();
+//            gridSpacing();
             loadView();
         }
     }
@@ -1080,7 +1185,7 @@ public class QCController implements ChangeListener<Number>, EventHandler<TreeMo
     }
 
 //    final String[] statuses=new String[] {"Empty","Okay","Wrong","Undecidable"};
-    final String[] statuses=new String[] {"N/A","Accurate","Inaccurate","Uncertain"};
+    final String[] statuses=new String[] {"N/A","Accurate","Inaccurate","Uncertain","Damaged"};
     @FXML
 //    void sectionstats(ActionEvent event) throws Exception {
     void exportstats(ActionEvent event) throws Exception {
@@ -1101,20 +1206,21 @@ public class QCController implements ChangeListener<Number>, EventHandler<TreeMo
         List<Map<Integer,int[]>> seriesStats=new ArrayList<>();
 //        Map<Integer,int[]> totalStats=new TreeMap<>((x,y)->simplify.get(x)-simplify.get(y));
         Map<Integer,int[]> totalStats=new LinkedHashMap<>();
-        totalStats.put(0, new int[4]);
+        totalStats.put(0, new int[statuses.length]);
 		flatmap.forEach((id,tl)->{
 			Integer remap=simplify.get(id);
 			if(!totalStats.containsKey(remap)) {
-				totalStats.put(remap, new int[4]);
+				totalStats.put(remap, new int[statuses.length]);
 			}
 		});
         
         
         List<int[]> sliceTotals=new ArrayList<>();
-        int[] seriesTotals=new int[4];
+        int[] seriesTotals=new int[statuses.length];
         boolean bogus=false;
         for(Slice slice:series.slices) {
         	slice.triangulate(); //!!
+        	slice.updateSpacing(series.gridspacing); //!!
             Double ouv[]=slice.anchoring.toArray(new Double[0]);
             int[][] raw_overlay=slicer.getInt32Slice(ouv[0], ouv[1], ouv[2], ouv[3], ouv[4], ouv[5], ouv[6], ouv[7], ouv[8], false);
             for(int line[]:raw_overlay)
@@ -1122,17 +1228,15 @@ public class QCController implements ChangeListener<Number>, EventHandler<TreeMo
             		line[x]=simplify.get(line[x]);
 	        int gridx=(int)slice.gridx;
 	        int gridy=(int)slice.gridy;
-	        int[] totals=new int[4];
+	        int[] totals=new int[statuses.length];
 	        Map<Integer, int[]> stats=new TreeMap<>((x,y)->simplify.get(x)-simplify.get(y));
 	        Iterator<Double> it=slice.grid.iterator();
 	        if(it.hasNext()) {
-		        int xspacing=xSpacing(slice);
-		        int yspacing=ySpacing(slice);
-		        for(int y=gridy;y<slice.height;y+=yspacing)
-		            for(int x=gridx;x<slice.width;x+=xspacing) {
+		        for(int y=gridy;y<slice.height;y+=slice.yspacing)
+		            for(int x=gridx;x<slice.width;x+=slice.xspacing) {
 		            	int l=sample_raw(x, y,slice,raw_overlay);
 		            	if(!stats.containsKey(l))
-		            		stats.put(l, new int[4]);
+		            		stats.put(l, new int[statuses.length]);
 //		            	if(!totalStats.containsKey(l))
 //		            		totalStats.put(l, new int[4]);
 		            	int v=it.next().intValue();
@@ -1190,9 +1294,18 @@ public class QCController implements ChangeListener<Number>, EventHandler<TreeMo
         		pw.print("\t"+slice.filename);
         	pw.println();
         	for(int i=0;i<statuses.length;i++) {
-        		pw.print("\tTotal\t"+statuses[i]+"\t"+seriesTotals[i]);
+        		pw.print("\tTotal grid\t"+statuses[i]+"\t"+seriesTotals[i]);
         		for(int[] total:sliceTotals)
         			pw.print("\t"+total[i]);
+        		pw.println();
+        	}
+        	for(int i=0;i<statuses.length;i++) {
+        		pw.print("\tTotal atlas\t"+statuses[i]+"\t"+(seriesTotals[i]-totalStats.get(Integer.valueOf(0))[i]));
+//        		for(int[] total:sliceTotals)
+//        			pw.print("\t"+total[i]);
+        		for(int j=0;j<sliceTotals.size();j++) {
+        			pw.print("\t"+(sliceTotals.get(j)[i]-seriesStats.get(j).get(Integer.valueOf(0))[i]));
+        		}
         		pw.println();
         	}
         	totalStats.forEach((id,seriesTotal)->{
@@ -1221,19 +1334,36 @@ public class QCController implements ChangeListener<Number>, EventHandler<TreeMo
         File f=fc.showSaveDialog(stage);
         if(f==null)
         	return;
+        var inuse=simplify.entrySet().stream().filter(e->!e.getKey().equals(e.getValue())).map(e->e.getValue()).collect(Collectors.toSet());
+//        var inuse=simplify.entrySet().stream().filter(e->{
+//        	if(e.getKey()==375||e.getKey()==382||e.getValue()==375||e.getValue()==382) {
+//        		System.out.println(e);
+//        		System.out.println(!e.getKey().equals(e.getValue()));
+//        	}
+//        	return !e.getKey().equals(e.getValue());}).map(e->e.getValue()).collect(Collectors.toSet());
 //    	try(PrintWriter pw=new PrintWriter(baseFolder.resolve(filename+"_regions.txt").toFile())){
     	try(PrintWriter pw=new PrintWriter(f)){
+//    		pw.println(slicer.stats);
+//    		pw.println(inuse);
     		pw.print("Custom brain region");
     		var columns=new LinkedHashMap<Integer,List<Integer>>();
     		flatmap.forEach((id,tl)->{
-//    			if(id!=0) {
+//    			if(id==375)
+//    				System.out.println("Ammon");
+//    			if(id==382)
+//    				System.out.println("CA1");
+////    			if(id!=0) {
 	    			var remap=simplify.get(id);
-	    			if(!columns.containsKey(remap)) {
+//	    			if(id==375||id==382) {
+//	    				System.out.printf("%d->%d, columns %b, inuse %b, haslabel %b\n",id,remap,columns.containsKey(remap),inuse.contains(remap),slicer.hasLabel(remap));
+//	    			}
+	    			if(!columns.containsKey(remap) && (inuse.contains(remap) || slicer.hasLabel(remap))) {
 	    				columns.put(remap, new ArrayList<>());
 	    				pw.print('\t');
 	    				pw.print(tl.name);
 	    			}
-	    			columns.get(remap).add(id);
+	    			if(columns.containsKey(remap))
+	    				columns.get(remap).add(id);
 //    			}
     		});
     		pw.println();
@@ -1241,11 +1371,11 @@ public class QCController implements ChangeListener<Number>, EventHandler<TreeMo
     		columns.forEach((id,list)->{
     			pw.print('\t');
     			var l=palette.fullmap.get(id);
-    			pw.print(l.red);
+    			pw.print(255-l.red);
     			pw.print(';');
-    			pw.print(l.green);
+    			pw.print(255-l.green);
     			pw.print(';');
-    			pw.print(l.blue);
+    			pw.print(255-l.blue);
     		});
     		pw.println();
     		var max=columns.values().stream().mapToInt(List::size).max().getAsInt();
@@ -1359,142 +1489,272 @@ public class QCController implements ChangeListener<Number>, EventHandler<TreeMo
         spnVal.increment(10);
     }
 
-    @FXML
-    void clear(ActionEvent event) {
-        if(series==null)return;
-        Alert a=new Alert(AlertType.WARNING,"Proceed with dropping all markers from current section?",ButtonType.YES,ButtonType.NO);
+//    @FXML
+//    void clear(ActionEvent event) {
+//        if(series==null)return;
+//        Alert a=new Alert(AlertType.WARNING,"Proceed with dropping all markers from current section?",ButtonType.YES,ButtonType.NO);
+//        a.showAndWait().ifPresent(b->{
+//            if(b==ButtonType.YES) {
+//                slice.markers.clear();
+//                slice.triangulate();
+//                reDraw();
+//            }
+//        });
+//    }
+    
+    static class XY{
+    	final int xp;
+    	final int yp;
+    	final int n;
+    	XY(Slice slice){
+    		xp=(int)(slice.width-slice.gridx+slice.xspacing-1)/slice.xspacing;
+    		yp=(int)(slice.height-slice.gridy+slice.yspacing-1)/slice.yspacing;
+    		n=xp*yp;
+    	}
+    };    
+    XY makeGrid(Slice slice, boolean keep) {
+    	slice.updateSpacing(series.gridspacing);
+    	var xy=new XY(slice);
+        if(!keep || slice.grid.size()!=xy.n)
+        	slice.grid=new ArrayList<>(Collections.nCopies(xy.n, Double.valueOf(0)));
+        return xy;
+    }
+    
+    Random rnd=new Random();
+    void resetSection(Slice slice) {
+    	if(slice.anchoring.size()!=9)System.out.println("non-9 in resetSection");
+    	slice.clear=true;
+    	slice.updateSpacing(series.gridspacing);
+//        int xspacing=xSpacing(slice);
+//        int yspacing=ySpacing(slice);
+        slice.gridx=rnd.nextInt(slice.xspacing);
+        slice.gridy=rnd.nextInt(slice.yspacing);
+        makeGrid(slice,false);
+    }
+    
+    void clearSectionKeepDamage(Slice slice) {
+    	slice.clear=true;
+//        int xspacing=xSpacing(slice);
+//        int yspacing=ySpacing(slice);
+    	makeGrid(slice, true);
+    	for(var i=0;i<slice.grid.size();i++)
+    		if(slice.grid.get(i)!=4)
+    			slice.grid.set(i, (double)0);
+    }
+    
+    void prefillSection(Slice slice) {
+    	slice.clear=true;
+    	slice.triangulate(); //!!
+        Double ouv[]=slice.anchoring.toArray(new Double[0]);
+        int[][] raw_overlay=slicer.getInt32Slice(ouv[0], ouv[1], ouv[2], ouv[3], ouv[4], ouv[5], ouv[6], ouv[7], ouv[8], false);
+        for(int line[]:raw_overlay)
+        	for(int x=0;x<line.length;x++)
+        		line[x]=simplify.get(line[x]);
+        
+        int gridx=(int)slice.gridx;
+        int gridy=(int)slice.gridy;
+
+//        int xspacing=xSpacing(slice);
+//        int yspacing=ySpacing(slice);
+        var xy=makeGrid(slice, true);
+        for(int y=0;y<xy.yp;y++)
+        	for(int x=0;x<xy.xp;x++) {
+                int i=(int)(x+y*xy.xp);
+                if(slice.grid.get(i)!=4) {
+        		if(x==0 || y==0 || x==xy.xp-1 || y==xy.yp-1)
+        			slice.grid.set(i,0.);
+        		else {
+        			int w=sample_raw(gridx+x*slice.xspacing, gridy+y*slice.yspacing, slice, raw_overlay);
+        			if(w!=0 &&
+        					w==sample_raw(gridx+(x-1)*slice.xspacing, gridy+y*slice.yspacing, slice, raw_overlay) &&
+        					w==sample_raw(gridx+(x+1)*slice.xspacing, gridy+y*slice.yspacing, slice, raw_overlay) &&
+        					w==sample_raw(gridx+x*slice.xspacing, gridy+(y-1)*slice.yspacing, slice, raw_overlay) &&
+        					w==sample_raw(gridx+x*slice.xspacing, gridy+(y+1)*slice.yspacing, slice, raw_overlay))
+        				slice.grid.set(i,1.);
+        			else
+        				slice.grid.set(i,0.);
+        		}
+        	}}
+    }
+
+    @FXML void resetSection(ActionEvent event) {
+    	if(series==null)return;
+        Alert a=new Alert(AlertType.WARNING,"Proceed with complete reset of the grid on this section?",ButtonType.YES,ButtonType.NO);
         a.showAndWait().ifPresent(b->{
             if(b==ButtonType.YES) {
-                slice.markers.clear();
-                slice.triangulate();
+            	resetSection(slice);
+            	updateProgress();
                 reDraw();
             }
         });
     }
     
-    @FXML void resetSection () {
-        if(series==null)return;
-        Alert a=new Alert(AlertType.WARNING,"Proceed with resetting the grid on this section?",ButtonType.YES,ButtonType.NO);
+    @FXML void resetSeries(ActionEvent event) {
+    	if(series==null)return;
+        Alert a=new Alert(AlertType.WARNING,"Proceed with complete reset of the grid on all sections?",ButtonType.YES,ButtonType.NO);
+        a.showAndWait().ifPresent(b->{
+            if(b==ButtonType.YES)
+            	resetSeries();
+        });
+    }
+        
+    @FXML void clearSectionKeepDamage(ActionEvent event) {
+    	if(series==null)return;
+        Alert a=new Alert(AlertType.WARNING,"Proceed with clearing non-damage markers on this section?",ButtonType.YES,ButtonType.NO);
         a.showAndWait().ifPresent(b->{
             if(b==ButtonType.YES) {
-            	makeGrid(slice, xspacing, yspacing);
+            	clearSectionKeepDamage(slice);
+            	updateProgress();
                 reDraw();
             }
         });
     }
     
-    @FXML void resetSeries () {
-        if(series==null)return;
-        Alert a=new Alert(AlertType.WARNING,"Proceed with resetting the grid for the entire series?",ButtonType.YES,ButtonType.NO);
+    @FXML void clearSeriesKeepDamage(ActionEvent event) {
+    	if(series==null)return;
+        Alert a=new Alert(AlertType.WARNING,"Proceed with clearing non-damage markers on all sections?",ButtonType.YES,ButtonType.NO);
         a.showAndWait().ifPresent(b->{
             if(b==ButtonType.YES) {
-            	gridSpacing();
+            	for(var slice:series.slices)
+            		clearSectionKeepDamage(slice);
+            	updateProgress();
+                reDraw();
             }
         });
+    }
+    
+    @FXML void prefillSectionKeepDamage(ActionEvent event) {
+    	if(series==null)return;
+        Alert a=new Alert(AlertType.WARNING,"Proceed with prefilling non-damage markers on this section?",ButtonType.YES,ButtonType.NO);
+        a.showAndWait().ifPresent(b->{
+            if(b==ButtonType.YES) {
+            	prefillSection(slice);
+            	updateProgress();
+                reDraw();
+            }
+        });
+    }
+    
+    @FXML void prefillSeriesKeepDamage(ActionEvent event) {
+    	if(series==null)return;
+        Alert a=new Alert(AlertType.WARNING,"Proceed with prefilling non-damage markers on all sections?",ButtonType.YES,ButtonType.NO);
+        a.showAndWait().ifPresent(b->{
+            if(b==ButtonType.YES) {
+            	for(var slice:series.slices)
+            		prefillSection(slice);
+            	updateProgress();
+                reDraw();
+            }
+        });
+    }
+    
+    Hyperlink hyperlink(String text,String URL) {
+    	var h=new Hyperlink(text);
+        h.setStyle("-fx-translate-y: 0.5px");
+        h.setOnAction(e->{
+            try {
+                Desktop.getDesktop().browse(new URI(URL));
+            } catch (Exception e1) {
+                e1.printStackTrace();
+            }
+        });
+        return h;
+    }
+    Text text(String text) {
+    	return new Text(text);
+    }
+    Text bold(String text) {
+    	var t=new Text(text);
+        t.setStyle("-fx-font-weight: bold");
+        return t;
     }
 
     @FXML
     void about(ActionEvent event) {
-//        Text t1=new Text("VisuAlign is developed at the Neural Systems Laboratory, Institute of Basic Medical Sciences, University of Oslo (Norway), with funding from the European Union’s Horizon 2020 Framework Programme for Research and Innovation under the Framework Partnership Agreement No. 650003 (HBP FPA).");
-//        Text t2=new Text("\n\nCitation:");
-//        t2.setStyle("-fx-font-weight: bold");
-//        Text t3=new Text("\nSee references page on");
-//        Hyperlink t4=new Hyperlink("NITRC");
-//        t4.setOnAction(e->{
-//            try {
-//                Desktop.getDesktop().browse(new URI("https://www.nitrc.org/plugins/mwiki/index.php/qcontrol:References"));
-//            } catch (Exception e1) {
-//                e1.printStackTrace();
-//            }
-//        });
-//        Text t5=new Text("\n\nContact:");
-//        Hyperlink t6=new Hyperlink("j.g.bjaalie@medisin.uio.no");
-//        t6.setOnAction(e->{
-//            try {
-//                Desktop.getDesktop().browse(new URI("mailto:j.g.bjaalie@medisin.uio.no"));
-//            } catch (Exception e1) {
-//                e1.printStackTrace();
-//            }
-//        });
-//        Text t7=new Text("\n\nWaxholm Space atlas of the Sprague Dawley Rat brain");
-//        t7.setStyle("-fx-font-weight: bold");
-//        Text t8=new Text("\n\nWaxholm Space Atlas of the Sprague Dawley Rat brain, v2.0 (Papp et al., Neuroimage 97: 374–386, 2014; Kjonigsen et al., Neuroimage 108:441-9, 2015).\n" + 
-//                "See more at");
-//        Hyperlink t9=new Hyperlink("NITRC");
-//        t9.setOnAction(e->{
-//            try {
-//                Desktop.getDesktop().browse(new URI("https://www.nitrc.org/projects/whs-sd-atlas"));
-//            } catch (Exception e1) {
-//                e1.printStackTrace();
-//            }
-//        });
-//        Text t10=new Text("\n\nAllen Mouse Brain Atlas reference atlas version 3 (2015, 2017)");
-//        t10.setStyle("-fx-font-weight: bold");
-//        Text t11=new Text("\n\nAllen Institute Mouse Brain Atlas, v3.0 (Lein et al., Nature 445:168-76, 2007; Oh et al., Nature 508:207-14, 2015; Technical white paper: Allen mouse common coordinate framework, May 2015 v.1).\n" + 
-//                "See more at");
-//        Hyperlink t12=new Hyperlink("Allen Mouse Brain Atlas");
-//        t12.setOnAction(e->{
-//            try {
-//                Desktop.getDesktop().browse(new URI("http://mouse.brain-map.org/"));
-//            } catch (Exception e1) {
-//                e1.printStackTrace();
-//            }
-//        });
-//        Text t13=new Text("\n\n\n\n\nCreated by Gergely Csucs, NeSys\n© 2018-2019, University of Oslo");
-//        
-//        TextFlow tf=new TextFlow(t1,t2,t3,t4,t5,t6,t10,t11,t12,t7,t8,t9,t13);
+    	var tf=new TextFlow(
+    			text("QCAlign is developed at the Neural Systems Laboratory, Institute of Basic Medical Sciences, University of Oslo (Norway), with funding from the European Union’s Horizon 2020 Framework Programme for Research and Innovation under the Framework Partnership Agreement No. 650003 (HBP FPA).\n\n"),
+				bold("License:"),text(" MIT license. Source code is available on"),
+				hyperlink("GitHub","https://github.com/HumanBrainProject/QCAlign"),
+				text("\n\n"),
+				bold("Citation\n"),
+				text("Manuscript in preparation."),
+//				text("- RRID on"),
+//				hyperlink("SciCrunch","https://scicrunch.org/resolver/RRID:SCR_017978"),
+//				text("(VisuAlign, RRID:SCR_017978)\n"),
+//				text("- Puchades MA, Csucs G, Ledergerber D, Leergaard TB, Bjaalie JG (2019) Spatial registration of serial microscopic brain images to three-dimensional reference atlases with the QuickNII tool. PLoS ONE 14(5): e0216796."),
+//				hyperlink("https://doi.org/10.1371/journal.pone.0216796", "https://doi.org/10.1371/journal.pone.0216796"),
+				text(" See possible updates on"),
+				hyperlink("https://qcalign.readthedocs.io/","https://qcalign.readthedocs.io/"),
+				//text("?? (it's NITRC for other tools)"),
+//				hyperlink("NITRC","https://www.nitrc.org/plugins/mwiki/index.php/visualign:References"),
+				text("\n\n"),
+				bold("User documentation:"),
+				hyperlink("https://qcalign.readthedocs.io/","https://qcalign.readthedocs.io/"),
+				text("\n"),
+				bold("User support:"),
+				hyperlink("https://ebrains.eu/support","https://ebrains.eu/support"),
+				text("\n"),
+				bold("Contact:"),
+				hyperlink("j.g.bjaalie@medisin.uio.no","mailto:j.g.bjaalie@medisin.uio.no"),
+				text("\n\n"),
+				bold("Waxholm Space atlas of the Sprague Dawley Rat brain"),
+				text("\n\n"),
+				text("Waxholm Space Atlas of the Sprague Dawley Rat brain, v2, v3, v4 (RRID: SCR_017124; Papp et al., NeuroImage 97, 374-386, 2014; Papp et al., NeuroImage 105, 561–562, 2015; Kjonigsen et al., NeuroImage 108, 441-449, 2015; Osen et al., NeuroImage 199, 38-56, 2019; Kleven et al., in preparation)\n"),
+				text("See more on"),
+				hyperlink("NITRC","https://www.nitrc.org/projects/whs-sd-atlas"),
+				text("\n\n"),
+				bold("Allen Mouse Brain Atlas reference atlas version 3 (2015, 2017)"),
+				text("\n\n"),
+				text("Allen Institute Mouse Brain Atlas, v3.0 (Lein et al., Nature 445:168-76, 2007; Oh et al., Nature 508:207-14, 2015; Technical white paper: Allen mouse common coordinate framework, May 2015 v.1)\n"),
+				text("See more on"),
+				hyperlink("Allen Mouse Brain Atlas","http://mouse.brain-map.org/"),
+				text("\n\n\nCreated by Gergely Csucs and Sharon C Yates, NeSys\n© 2020-2022, University of Oslo")
+    	);
         
         Dialog<Void> dlg=new Dialog<>();
         dlg.setResizable(true);
         dlg.setTitle(title);
         DialogPane pane=dlg.getDialogPane();
         pane.setPrefWidth(700);
-//        pane.setContent(tf);
+        pane.setContent(tf);
         pane.getButtonTypes().add(ButtonType.OK);
         dlg.showAndWait();
     }
     
     @FXML
     void minidoc(ActionEvent event) {
-//        Text t1=new Text("VisuAlign refines an existing alignment. For creating one, please refer to");
-//        Hyperlink t2=new Hyperlink("QuickNII");
-//        t2.setOnAction(e->{
-//            try {
-//                Desktop.getDesktop().browse(new URI("https://www.nitrc.org/projects/quicknii/"));
-//            } catch (Exception e1) {
-//                e1.printStackTrace();
-//            }
-//        });
-//        Text t3=new Text("and articles/documentation related to it. Example datasets with \"before-after\" image pairs are provided at");
-//        Hyperlink t4=new Hyperlink("NITRC");
-//        t4.setOnAction(e->{
-//            try {
-//                Desktop.getDesktop().browse(new URI("https://www.nitrc.org/frs/?group_id=1426"));
-//            } catch (Exception e1) {
-//                e1.printStackTrace();
-//            }
-//        });
-//        Text t5=new Text(", in both examples section #1 shows image as registered with QuickNII and section #2 shows the result after nonlinear refinements.\n\n");
-//        Text t6=new Text("Controls:\n");
-//        Text t7=new Text("\n- Space bar: place marker\n" + 
-//                "- Backspace, Delete: remove marker under mouse cursor\n" + 
-//                "- Left arrow: navigate to previous section\n" + 
-//                "- Right arrow: navigate to next section\n" +
-//                "Drag the crosses with the mouse in order to apply nonlinear adjustments.\n");
-//        Text t8=new Text("\nMiscellaneous:\n");
-//        Text t9=new Text("\n" +
-//                "- Pull Opacity slider to the maximum (far right) in order to toggle outline mode. Only in outline mode the control for changing outline color becomes active\n" + 
-//                "- View/Debug mode shows the triangulation used for nonlinear adjustments (and the control for changing triangle color becomes active). This mode also shows the active region where markers can be placed. The region is 10% larger than the image in every direction, and will contain overlay data in the future\n" + 
-//                "- File/Close and Edit/Clear section will always ask for confirmation, regardless of having unsaved modifications");
-//        
-//        TextFlow tf=new TextFlow(t1,t2,t3,t4,t5,t6,t7,t8,t9);
+    	var tf=new TextFlow(
+//    			text("VisuAlign refines an existing alignment. For creating one, please refer to"),
+//    			hyperlink("QuickNII", "https://www.nitrc.org/projects/quicknii/"),
+//    			text("and articles/documentation related to it. Example datasets with \"before-after\" image pairs are provided at"),
+//    			hyperlink("NITRC","https://www.nitrc.org/frs/?group_id=1426"),
+//    			text(", in both examples section #1 shows image as registered with QuickNII and section #2 shows the result after nonlinear refinements.\n\n"),
+    			bold("Controls:\n"),
+    			text("\n- Click on a position to rotate marking between empty, accurate, inaccurate, uncertain, and damaged states\n"
+    					+"- Space bar: toggles an overview mode where it's easy to spot holes in the assessment\n"
+    					+"- 1: shortcut to clear marking at a position\n"
+    					+"- 2: shortcut to mark a position as accurate\n"
+    					+"- 3: shortcut to mark a position as inaccurate\n"
+    					+"- 4: shortcut to mark a position as uncertain\n"
+    					+"- 5: shortcut to mark a position as damaged\n"
+    					),
+//    			text("\n- Space bar: place marker\n" + 
+//    	                "- Backspace, Delete: remove marker under mouse cursor\n" + 
+//    	                "- Left arrow: navigate to previous section\n" + 
+//    	                "- Right arrow: navigate to next section\n" +
+//    	                "Drag the crosses with the mouse in order to apply nonlinear adjustments.\n"),
+    			bold("\nMiscellaneous:\n"),
+    			text("\n" +
+    	                "- Pull Overlay Opacity slider to the maximum (far right) in order to toggle outline mode. Only in outline mode the control for changing outline color becomes active\n" + 
+    	                "- Clear/Prefill/Reset menu items will always ask for confirmation, regardless of having or not having unsaved modifications.")
+    			);
         
         Dialog<Void> dlg=new Dialog<>();
         dlg.setResizable(true);
         dlg.setTitle(title);
         DialogPane pane=dlg.getDialogPane();
         pane.setPrefWidth(700);
-//        pane.setContent(tf);
+        pane.setContent(tf);
         pane.getButtonTypes().add(ButtonType.OK);
         dlg.showAndWait();
     }
@@ -1503,6 +1763,6 @@ public class QCController implements ChangeListener<Number>, EventHandler<TreeMo
     public void setTitle(String filename) {
         stage.setTitle(filename==null?title:(title+": "+filename+" (registered to "+(series.target.replaceAll("_", " ").replace(".cutlas", ""))+")"));
     }
-    public static final String version="v0.6";
-    public static final String title="QQuality "+version;
+    public static final double version10=8;
+    public static final String title=String.format(Locale.ENGLISH,"QCAlign v%.1f",version10/10);
 }
