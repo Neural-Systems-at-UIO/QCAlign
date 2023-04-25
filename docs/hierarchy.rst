@@ -70,8 +70,8 @@ The purpose of hierarchy export feature is to generate a .TXT file that is compa
    
 2. The TXT file can be used directly in Nutil, or may be used to create a CustomRegions.xlsx for use with Nutil Quantifier. 
 
-::Warning
-  The the CustomRegion.xlsx file has a slightly different structure to the TXT file. If the TXT file is imported in Excel, edit to match the required .xlxs structure before using in Nutil. 
+.. Warning::
+   The the CustomRegion.xlsx file has a slightly different structure to the TXT file. If the TXT file is imported in Excel, edit to match the required .xlxs structure before using in Nutil. 
 
 For more information on Nutil customized reports see: https://nutil.readthedocs.io/en/latest/QuantifierReports.html 
 
