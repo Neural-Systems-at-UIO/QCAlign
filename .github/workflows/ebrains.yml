@@ -13,5 +13,5 @@ jobs:
         with:
           source_repo: "Neural-Systems-at-UIO/QCAlign"
           source_branch: "master"
-          destination_repo: "https://ghpusher:${{ secrets.EBRAINS_GITLAB }}@gitlab.ebrains.eu/csucs/qcalign.git"
+          destination_repo: "https://ghpusher:${{ secrets.EBRAINS_GITLAB_ACCESS_TOKEN }}@gitlab.ebrains.eu/csucs/qcalign.git"
           destination_branch: "master"
