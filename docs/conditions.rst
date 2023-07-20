@@ -27,7 +27,7 @@ How to cite the tool
 
 RRID:SCR_023088
 
-Gurdon B et al. Detecting the effect of genetic diversity on brain composition in an Alzheimer's disease mouse model. BioRxiv. Feb 2023. https://doi.org/10.1101/2023.02.27.530226 
+Gurdon B, Yates SC, Csusc G, Groeneboom N, Hadad N, Telpoukhovskaia M, Ouellette A, Ouellette T, O’Connell K, Singh S, Murdy T, Merchant E, Bjerke I, Kleven H, Schlegel U, Leergaard T, Puchades M, Bjaalie J, Kaczorowski C  (2023). Detecting the effect of genetic diversity on brain composition in an Alzheimer’s disease mouse model. BioRxiv. DOI: 10.1101/2023.02.27.530226 
 
 How to cite the reference atlases
 ----------------------------------
