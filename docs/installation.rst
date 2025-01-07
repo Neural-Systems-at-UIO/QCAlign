@@ -1,5 +1,5 @@
-**Installation**
-=================
+**Installation and citation**
+===============================
 
 Availabe for download here: https://www.nitrc.org/projects/qcalign
 
