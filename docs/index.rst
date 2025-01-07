@@ -7,7 +7,6 @@ QCAlign
 
    introduction
    installation
-   conditions
 
 .. toctree::
    :caption: Navigation
