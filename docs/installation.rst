@@ -5,7 +5,7 @@ Availabe for download here: https://www.nitrc.org/projects/qcalign
 
 *QCAlign* is downloaded as a zip archive file and can be extracted and run anywhere on the computer by double click on “QCAlign.bat”. 
 
-**Basic nformation**
+**Basic information**
 -------------------------
 
 *QCAlign* supports systematic post-processing of the QUINT results. It was developed by the Neural Systems Laboratory at the Institute of Basic Medical Sciences at the University of Oslo in Norway, in collaboration with the Kaczorowski Lab at the Jackson Laboratory in Bar Harbor, Maine, in the USA. 
