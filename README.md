@@ -14,7 +14,7 @@ https://qcalign.readthedocs.io/
 
 # Contributors
 - Programming: Gergely Csucs
-- Conception, design, validation: Sharon Yates, Brianna Gurdon, Maja Puchades, Catherine Kaczorowski, Jan Bjaalie.
+- Conception, design, validation: Sharon C Yates, Brianna Gurdon, Maja Puchades, Catherine Kaczorowski, Jan Bjaalie.
 
 # Licence
 GNU General Public License version 3.
