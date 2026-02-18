@@ -91,6 +91,8 @@
   ],
   "runtimePlatform": "JRE",
   "availableOnDevice": [
-    "desktop"
+  "desktop",
+  "relatedLink": [
+    "https://qcalign.readthedocs.io"
   ]
 }
