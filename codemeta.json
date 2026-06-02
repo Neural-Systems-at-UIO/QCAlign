@@ -86,13 +86,12 @@
   },
   "version": "0.8",
   "continuousIntegration": "https://github.com/Neural-Systems-at-UIO/QCAlign.git",
-  "programmingLanguage": [
-    "Java"
-  ],
+  "programmingLanguage", 
+    "Java":
+ 
   "runtimePlatform": "JRE",
-  "availableOnDevice": [
+  "availableOnDevice":[
   "desktop",
-  "relatedLink": [
+  "relatedLink",
     "https://qcalign.readthedocs.io"
-  ]
-}
+ }
